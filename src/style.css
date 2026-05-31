@@ -1,0 +1,343 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Base ─── */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ─── Layout helpers ─── */
+@layer components {
+  .section-gap {
+    @apply mt-16 sm:mt-20;
+  }
+
+  /* ─── Fieldset cards (Andrew-inspired) ─── */
+  .site-fieldset {
+    @apply border border-slate-200 px-4 pt-3 pb-5 sm:px-6 sm:pt-4 sm:pb-6;
+    box-shadow: 2px 3px 0px rgba(0, 0, 0, 0.05);
+  }
+
+  .site-fieldset legend {
+    @apply px-2 -ml-2 text-slate-500;
+  }
+
+  /* ─── Prose article inside bio ─── */
+  .prose-article {
+    @apply text-slate-700 leading-relaxed;
+  }
+
+  .prose-article p {
+    @apply mb-4 last:mb-0;
+  }
+
+  /* ─── Profile image ─── */
+  .profile-img-wrap {
+    @apply w-28 h-28 sm:w-32 sm:h-32 overflow-hidden border border-slate-200;
+    flex-shrink: 0;
+  }
+
+  .profile-img {
+    @apply w-full h-full object-cover;
+  }
+
+  /* ─── Hero buttons ─── */
+  .hero-btn-group {
+    @apply flex flex-wrap gap-2;
+  }
+
+  .hero-btn {
+    @apply font-mono text-sm px-4 py-1.5 border border-slate-900 outline-none
+           transition-all duration-150 ease-in-out
+           hover:bg-slate-900 hover:text-white;
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.15);
+  }
+
+  .hero-btn:hover {
+    box-shadow: none;
+    transform: translate(1px, 1px);
+  }
+
+  /* ─── Sticky nav ─── */
+  .sticky-nav {
+    @apply fixed top-0 left-0 right-0 z-50 bg-white border-b border-slate-200;
+    transform: translateY(-100%);
+    transition: transform 200ms ease;
+  }
+
+  .sticky-nav.visible {
+    transform: translateY(0);
+  }
+
+  .sticky-nav-inner {
+    @apply max-w-4xl mx-auto px-4 py-2 flex items-center justify-between gap-4;
+  }
+
+  .nav-btn-group {
+    @apply flex flex-wrap gap-x-4 gap-y-1;
+  }
+
+  .nav-btn {
+    @apply font-mono text-sm text-slate-500 hover:text-slate-900 transition-colors duration-150;
+    position: relative;
+  }
+
+  .nav-btn::after {
+    content: '';
+    @apply absolute bottom-0 left-0 right-0 h-px bg-slate-900;
+    transform: scaleX(0);
+    transition: transform 150ms ease;
+    transform-origin: left;
+  }
+
+  .nav-btn:hover::after,
+  .nav-btn.active::after {
+    transform: scaleX(1);
+  }
+
+  .nav-btn.active {
+    @apply text-slate-900;
+  }
+
+  /* ─── Experience cards ─── */
+  .exp-list {
+    @apply flex flex-col gap-3;
+  }
+
+  .exp-card {
+    @apply flex gap-4 p-3 border border-slate-100 transition-all duration-150 ease-in-out cursor-default;
+    box-shadow: 1px 2px 0px rgba(0, 0, 0, 0.04);
+  }
+
+  .exp-card:hover {
+    @apply border-slate-200 bg-slate-50;
+    box-shadow: 2px 3px 0px rgba(0, 0, 0, 0.07);
+    transform: translateY(-1px);
+  }
+
+  .exp-logo-wrap {
+    @apply flex-shrink-0 w-10 h-10 border border-slate-100 bg-white flex items-center justify-center overflow-hidden;
+  }
+
+  .exp-logo {
+    @apply w-full h-full object-contain p-1;
+  }
+
+  .exp-body {
+    @apply flex-1 min-w-0;
+  }
+
+  .exp-header {
+    @apply flex flex-col sm:flex-row sm:items-start sm:justify-between gap-0.5 sm:gap-2 mb-1;
+  }
+
+  .exp-org {
+    @apply text-sm font-semibold text-slate-900 leading-snug;
+  }
+
+  .exp-role {
+    @apply text-sm text-slate-600 leading-snug;
+  }
+
+  .exp-meta {
+    @apply text-right flex-shrink-0;
+  }
+
+  .exp-date {
+    @apply text-xs text-slate-500 font-mono;
+  }
+
+  .exp-location {
+    @apply text-xs text-slate-400;
+  }
+
+  .exp-desc {
+    @apply text-sm text-slate-600 mt-1 leading-relaxed;
+  }
+
+  /* ─── Project grid ─── */
+  .project-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 gap-4;
+  }
+
+  .project-card {
+    @apply border border-slate-200 overflow-hidden transition-all duration-150 ease-in-out cursor-pointer;
+    box-shadow: 1px 2px 0px rgba(0, 0, 0, 0.04);
+  }
+
+  .project-card:hover {
+    @apply border-slate-300;
+    box-shadow: 3px 4px 0px rgba(0, 0, 0, 0.08);
+    transform: scale(1.015);
+  }
+
+  .project-thumb-wrap {
+    @apply w-full aspect-video bg-slate-100 overflow-hidden;
+  }
+
+  .project-thumb-wrap.thumb-placeholder {
+    @apply bg-slate-100;
+  }
+
+  .project-thumb {
+    @apply w-full h-full object-cover;
+  }
+
+  .project-info {
+    @apply p-3 sm:p-4;
+  }
+
+  .project-title {
+    @apply text-sm font-semibold text-slate-900 mb-1;
+  }
+
+  .project-desc {
+    @apply text-sm text-slate-600 mb-2 leading-relaxed;
+  }
+
+  .project-tags {
+    @apply flex flex-wrap gap-1 mb-2;
+  }
+
+  .tag {
+    @apply font-mono text-xs px-1.5 py-0.5 bg-slate-100 text-slate-600 border border-slate-200;
+  }
+
+  .project-links {
+    @apply flex flex-wrap gap-2;
+  }
+
+  .project-link {
+    @apply font-mono text-xs text-slate-500 border border-slate-300 px-2 py-0.5
+           hover:bg-slate-900 hover:text-white hover:border-slate-900
+           transition-all duration-150;
+  }
+
+  /* ─── Misc buttons ─── */
+  .misc-btn-group {
+    @apply flex flex-wrap gap-2;
+  }
+
+  .misc-btn {
+    @apply font-mono text-sm px-4 py-1.5 border border-slate-900 outline-none cursor-pointer
+           transition-all duration-150 ease-in-out bg-white text-slate-900
+           hover:bg-slate-900 hover:text-white;
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.15);
+  }
+
+  .misc-btn:hover {
+    box-shadow: none;
+    transform: translate(1px, 1px);
+  }
+
+  /* ─── Links section ─── */
+  .links-list {
+    @apply flex flex-col gap-1;
+  }
+
+  .link-item {
+    @apply inline-flex items-center gap-2.5 text-sm text-slate-700 py-1
+           hover:text-slate-900 transition-colors duration-150;
+    position: relative;
+    width: fit-content;
+  }
+
+  .link-item::after {
+    content: '';
+    @apply absolute bottom-0 left-0 right-0 h-px bg-slate-400;
+    transform: scaleX(0);
+    transition: transform 150ms ease;
+    transform-origin: left;
+  }
+
+  .link-item:hover::after {
+    transform: scaleX(1);
+  }
+
+  .link-icon {
+    @apply w-4 h-4 flex-shrink-0 text-slate-400;
+    transition: transform 150ms ease, opacity 150ms ease;
+  }
+
+  .link-item:hover .link-icon {
+    @apply text-slate-700;
+    transform: scale(1.1);
+  }
+
+  /* ─── Modal ─── */
+  .modal {
+    @apply fixed inset-0 z-50 flex items-center justify-center p-4;
+  }
+
+  .modal[hidden] {
+    display: none;
+  }
+
+  .modal-backdrop {
+    @apply absolute inset-0 bg-slate-900/30;
+    backdrop-filter: blur(2px);
+  }
+
+  .modal-panel {
+    @apply relative bg-white border border-slate-200 w-full max-w-lg max-h-[80vh] overflow-y-auto;
+    box-shadow: 4px 6px 0px rgba(0, 0, 0, 0.1);
+    animation: modal-in 150ms ease;
+  }
+
+  @keyframes modal-in {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .modal-head {
+    @apply flex items-center justify-between px-5 pt-4 pb-3 border-b border-slate-100;
+  }
+
+  .modal-title {
+    @apply text-base text-slate-900;
+  }
+
+  .modal-close {
+    @apply text-slate-400 hover:text-slate-900 text-xl leading-none transition-colors duration-150
+           w-7 h-7 flex items-center justify-center;
+  }
+
+  .modal-body {
+    @apply px-5 py-4 text-sm text-slate-700 leading-relaxed;
+  }
+
+  .modal-body p {
+    @apply mb-3 last:mb-0;
+  }
+
+  /* ─── Tech grid inside modal ─── */
+  .tech-grid {
+    @apply flex flex-col gap-4;
+  }
+
+  .tech-group-label {
+    @apply font-mono text-xs text-slate-500 mb-1.5 uppercase tracking-wider;
+  }
+
+  .tech-tags {
+    @apply flex flex-wrap gap-1.5;
+  }
+
+  .tech-tag {
+    @apply font-mono text-xs px-2 py-1 border border-slate-200 text-slate-600 bg-slate-50
+           hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all duration-150 cursor-default;
+    /* subtle scale on hover */
+    transition: transform 150ms ease, background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+  }
+
+  .tech-tag:hover {
+    transform: scale(1.05);
+  }
+}
