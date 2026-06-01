@@ -199,95 +199,72 @@
         <fieldset class="site-fieldset">
           <legend><span class="font-sans font-semibold text-base">Projects</span></legend>
 
-          <p class="text-sm text-slate-500 mb-5">a few things i've built</p>
+          <p class="text-sm text-slate-500 mb-4">a few things i've built</p>
 
-          <div class="project-grid">
+          <!-- ── Category filter bar ── -->
+          <div class="proj-filter-bar" id="proj-filter-bar">
+            <button class="proj-filter-btn active" data-filter="all">All</button>
+            <button class="proj-filter-btn" data-filter="full-stack">Full Stack</button>
+            <button class="proj-filter-btn" data-filter="machine-learning">Machine Learning</button>
+            <button class="proj-filter-btn" data-filter="fintech">Fintech</button>
+            <button class="proj-filter-btn" data-filter="systems">Systems</button>
+          </div>
 
-            <!-- ── project card template ──
-                 Duplicate this block for each project.
-                 Replace image, title, description, tags, and links.
-            ── -->
+          <!-- ── Project list ──
+               Add data-categories as space-separated slugs matching the filter buttons.
+               data-modal must match a modal id below: modal-proj-<id>
+          ── -->
+          <div class="proj-list" id="proj-list">
 
-            <!-- PROJECT 1 -->
-            <div class="project-card">
-              <div class="project-thumb-wrap">
-                <img src="/assets/projects/project1.png" alt="Project 1"
-                  class="project-thumb" onerror="this.parentElement.classList.add('thumb-placeholder')" />
+            <div class="proj-item" data-categories="full-stack" data-modal="proj-1">
+              <div class="proj-icon-wrap">
+                <img src="/assets/projects/project1.png" alt="" class="proj-icon"
+                  onerror="this.parentElement.classList.add('proj-icon-placeholder')" />
               </div>
-              <div class="project-info">
-                <p class="project-title">Project Name</p>
-                <p class="project-desc">One-line description of what this does and why it's interesting.</p>
-                <div class="project-tags">
-                  <span class="tag">Python</span>
-                  <span class="tag">React</span>
-                  <span class="tag">API</span>
-                </div>
-                <div class="project-links">
-                  <a href="#" class="project-link" target="_blank" rel="noopener">GitHub</a>
-                  <a href="#" class="project-link" target="_blank" rel="noopener">Devpost</a>
-                </div>
+              <div class="proj-item-body">
+                <p class="proj-item-title">Project Name</p>
+                <p class="proj-item-desc">One-line description of what this does and why it's interesting.</p>
               </div>
+              <span class="proj-item-arrow">→</span>
             </div>
 
-            <!-- PROJECT 2 -->
-            <div class="project-card">
-              <div class="project-thumb-wrap">
-                <img src="/assets/projects/project2.png" alt="Project 2"
-                  class="project-thumb" onerror="this.parentElement.classList.add('thumb-placeholder')" />
+            <div class="proj-item" data-categories="machine-learning" data-modal="proj-2">
+              <div class="proj-icon-wrap">
+                <img src="/assets/projects/project2.png" alt="" class="proj-icon"
+                  onerror="this.parentElement.classList.add('proj-icon-placeholder')" />
               </div>
-              <div class="project-info">
-                <p class="project-title">Another Project</p>
-                <p class="project-desc">Another concise description of something you built.</p>
-                <div class="project-tags">
-                  <span class="tag">TypeScript</span>
-                  <span class="tag">Node</span>
-                </div>
-                <div class="project-links">
-                  <a href="#" class="project-link" target="_blank" rel="noopener">GitHub</a>
-                </div>
+              <div class="proj-item-body">
+                <p class="proj-item-title">Another Project</p>
+                <p class="proj-item-desc">Another concise description of something you built.</p>
               </div>
+              <span class="proj-item-arrow">→</span>
             </div>
 
-            <!-- PROJECT 3 -->
-            <div class="project-card">
-              <div class="project-thumb-wrap">
-                <img src="/assets/projects/project3.png" alt="Project 3"
-                  class="project-thumb" onerror="this.parentElement.classList.add('thumb-placeholder')" />
+            <div class="proj-item" data-categories="full-stack fintech" data-modal="proj-3">
+              <div class="proj-icon-wrap">
+                <img src="/assets/projects/project3.png" alt="" class="proj-icon"
+                  onerror="this.parentElement.classList.add('proj-icon-placeholder')" />
               </div>
-              <div class="project-info">
-                <p class="project-title">Third Project</p>
-                <p class="project-desc">Description goes here — what problem does it solve?</p>
-                <div class="project-tags">
-                  <span class="tag">Java</span>
-                  <span class="tag">SQL</span>
-                </div>
-                <div class="project-links">
-                  <a href="#" class="project-link" target="_blank" rel="noopener">GitHub</a>
-                  <a href="#" class="project-link" target="_blank" rel="noopener">Demo</a>
-                </div>
+              <div class="proj-item-body">
+                <p class="proj-item-title">Third Project</p>
+                <p class="proj-item-desc">Description goes here — what problem does it solve?</p>
               </div>
+              <span class="proj-item-arrow">→</span>
             </div>
 
-            <!-- PROJECT 4 -->
-            <div class="project-card">
-              <div class="project-thumb-wrap">
-                <img src="/assets/projects/project4.png" alt="Project 4"
-                  class="project-thumb" onerror="this.parentElement.classList.add('thumb-placeholder')" />
+            <div class="proj-item" data-categories="systems" data-modal="proj-4">
+              <div class="proj-icon-wrap">
+                <img src="/assets/projects/project4.png" alt="" class="proj-icon"
+                  onerror="this.parentElement.classList.add('proj-icon-placeholder')" />
               </div>
-              <div class="project-info">
-                <p class="project-title">Fourth Project</p>
-                <p class="project-desc">Short description of project four.</p>
-                <div class="project-tags">
-                  <span class="tag">C++</span>
-                  <span class="tag">CUDA</span>
-                </div>
-                <div class="project-links">
-                  <a href="#" class="project-link" target="_blank" rel="noopener">GitHub</a>
-                </div>
+              <div class="proj-item-body">
+                <p class="proj-item-title">Fourth Project</p>
+                <p class="proj-item-desc">Short description of project four.</p>
               </div>
+              <span class="proj-item-arrow">→</span>
             </div>
 
-          </div><!-- /project-grid -->
+          </div><!-- /proj-list -->
         </fieldset>
       </section>
 
@@ -303,6 +280,7 @@
           <div class="misc-btn-group">
             <button class="misc-btn" data-modal="background">Background</button>
             <button class="misc-btn" data-modal="technologies">Technologies</button>
+            <button class="misc-btn" data-modal="resume">Resume</button>
           </div>
         </fieldset>
       </section>
@@ -443,6 +421,162 @@
             </div>
 
           </div><!-- /tech-grid -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         PROJECT MODALS
+         Duplicate this block for each project.
+         The .proj-tags div at the bottom is always present.
+    ══════════════════════════════════════════ -->
+
+    <div id="modal-proj-1" class="modal" role="dialog" aria-modal="true" aria-label="Project Name" hidden>
+      <div class="modal-backdrop" data-close-modal></div>
+      <div class="modal-panel">
+        <div class="modal-head">
+          <h2 class="modal-title font-semibold">Project Name</h2>
+          <button class="modal-close" data-close-modal aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <!-- Project-specific content: images, video, pdf embed, description, links — anything goes here -->
+          <p>Replace this with a description of the project, what you built, why it matters, and what you learned.</p>
+          <p>You can add images, links, an embedded demo, or a PDF here — the modal handles any content.</p>
+
+          <!-- ── Tags (always at bottom) ── -->
+          <div class="proj-tags">
+            <div class="proj-tag-row">
+              <span class="proj-tag-label">Tools &amp; Tech</span>
+              <div class="tech-tags">
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">React</span>
+                <span class="tech-tag">REST API</span>
+              </div>
+            </div>
+            <div class="proj-tag-row">
+              <span class="proj-tag-label">Category</span>
+              <div class="tech-tags">
+                <span class="tech-tag">Full Stack</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="modal-proj-2" class="modal" role="dialog" aria-modal="true" aria-label="Another Project" hidden>
+      <div class="modal-backdrop" data-close-modal></div>
+      <div class="modal-panel">
+        <div class="modal-head">
+          <h2 class="modal-title font-semibold">Another Project</h2>
+          <button class="modal-close" data-close-modal aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>Replace this with a description of the project.</p>
+
+          <div class="proj-tags">
+            <div class="proj-tag-row">
+              <span class="proj-tag-label">Tools &amp; Tech</span>
+              <div class="tech-tags">
+                <span class="tech-tag">TypeScript</span>
+                <span class="tech-tag">Node.js</span>
+                <span class="tech-tag">PyTorch</span>
+              </div>
+            </div>
+            <div class="proj-tag-row">
+              <span class="proj-tag-label">Category</span>
+              <div class="tech-tags">
+                <span class="tech-tag">Machine Learning</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="modal-proj-3" class="modal" role="dialog" aria-modal="true" aria-label="Third Project" hidden>
+      <div class="modal-backdrop" data-close-modal></div>
+      <div class="modal-panel">
+        <div class="modal-head">
+          <h2 class="modal-title font-semibold">Third Project</h2>
+          <button class="modal-close" data-close-modal aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>Replace this with a description of the project.</p>
+
+          <div class="proj-tags">
+            <div class="proj-tag-row">
+              <span class="proj-tag-label">Tools &amp; Tech</span>
+              <div class="tech-tags">
+                <span class="tech-tag">Java</span>
+                <span class="tech-tag">SQL</span>
+                <span class="tech-tag">Stripe API</span>
+              </div>
+            </div>
+            <div class="proj-tag-row">
+              <span class="proj-tag-label">Category</span>
+              <div class="tech-tags">
+                <span class="tech-tag">Full Stack</span>
+                <span class="tech-tag">Fintech</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="modal-proj-4" class="modal" role="dialog" aria-modal="true" aria-label="Fourth Project" hidden>
+      <div class="modal-backdrop" data-close-modal></div>
+      <div class="modal-panel">
+        <div class="modal-head">
+          <h2 class="modal-title font-semibold">Fourth Project</h2>
+          <button class="modal-close" data-close-modal aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>Replace this with a description of the project.</p>
+
+          <div class="proj-tags">
+            <div class="proj-tag-row">
+              <span class="proj-tag-label">Tools &amp; Tech</span>
+              <div class="tech-tags">
+                <span class="tech-tag">C++</span>
+                <span class="tech-tag">CUDA</span>
+              </div>
+            </div>
+            <div class="proj-tag-row">
+              <span class="proj-tag-label">Category</span>
+              <div class="tech-tags">
+                <span class="tech-tag">Systems</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Resume modal -->
+    <div id="modal-resume" class="modal" role="dialog" aria-modal="true" aria-label="Resume" hidden>
+      <div class="modal-backdrop" data-close-modal></div>
+      <div class="modal-panel">
+        <div class="modal-head">
+          <h2 class="modal-title font-semibold">Resume</h2>
+          <button class="modal-close" data-close-modal aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <!-- Replace the src with your actual resume PDF path once uploaded -->
+          <div class="resume-preview">
+            <p class="text-slate-400 text-sm text-center py-16">
+              Resume PDF coming soon — drop it at <code class="text-slate-600">public/assets/resume.pdf</code>
+            </p>
+          </div>
+          <div class="resume-actions">
+            <a href="/assets/resume.pdf" target="_blank" rel="noopener" class="misc-btn inline-block text-center">
+              View Full PDF
+            </a>
+            <a href="/assets/resume.pdf" download class="misc-btn inline-block text-center">
+              Download
+            </a>
+          </div>
         </div>
       </div>
     </div>

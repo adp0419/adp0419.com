@@ -58,9 +58,9 @@ function closeModal(modal) {
   document.body.style.overflow = ''
 }
 
-// Open via misc buttons
-document.querySelectorAll('.misc-btn[data-modal]').forEach((btn) => {
-  btn.addEventListener('click', () => openModal(btn.dataset.modal))
+// Open via any element with data-modal (misc buttons, project items, etc.)
+document.querySelectorAll('[data-modal]').forEach((el) => {
+  el.addEventListener('click', () => openModal(el.dataset.modal))
 })
 
 // Close via backdrop or X button
@@ -70,6 +70,33 @@ document.querySelectorAll('[data-close-modal]').forEach((el) => {
     if (modal) closeModal(modal)
   })
 })
+
+// ─── Project category filter ─────────────────────────────────────────────────
+
+const filterBar = document.getElementById('proj-filter-bar')
+const projItems = document.querySelectorAll('.proj-item')
+
+if (filterBar) {
+  filterBar.addEventListener('click', (e) => {
+    const btn = e.target.closest('.proj-filter-btn')
+    if (!btn) return
+
+    const filter = btn.dataset.filter
+
+    filterBar.querySelectorAll('.proj-filter-btn').forEach((b) => {
+      b.classList.toggle('active', b.dataset.filter === filter)
+    })
+
+    projItems.forEach((item) => {
+      if (filter === 'all') {
+        item.classList.remove('hidden-proj')
+      } else {
+        const cats = item.dataset.categories?.split(' ') ?? []
+        item.classList.toggle('hidden-proj', !cats.includes(filter))
+      }
+    })
+  })
+}
 
 // ─── Polaroid card swipe ──────────────────────────────────────────────────────
 
