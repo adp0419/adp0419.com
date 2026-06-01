@@ -10,12 +10,12 @@ html {
 /* ─── Layout helpers ─── */
 @layer components {
   .section-gap {
-    @apply mt-16 sm:mt-20;
+    @apply mt-10 sm:mt-14;
   }
 
   /* ─── Fieldset cards (Andrew-inspired) ─── */
   .site-fieldset {
-    @apply border border-slate-200 px-4 pt-3 pb-5 sm:px-6 sm:pt-4 sm:pb-6;
+    @apply border border-slate-200 px-6 pt-5 pb-9 sm:px-10 sm:pt-6 sm:pb-10;
     box-shadow: 2px 3px 0px rgba(0, 0, 0, 0.05);
   }
 
@@ -32,14 +32,67 @@ html {
     @apply mb-4 last:mb-0;
   }
 
-  /* ─── Profile image ─── */
-  .profile-img-wrap {
-    @apply w-28 h-28 sm:w-32 sm:h-32 overflow-hidden border border-slate-200;
-    flex-shrink: 0;
+  /* ─── Polaroid photo stack ─── */
+  .polaroid-stack {
+    @apply relative inline-block cursor-pointer select-none;
+    /* padding gives the peeking deck card its visible zone;
+       overflow: hidden clips the swiping card exactly at this boundary */
+    padding-right: 14px;
+    padding-bottom: 12px;
+    overflow: hidden;
   }
 
-  .profile-img {
-    @apply w-full h-full object-cover;
+  /* invisible clone that gives the container its natural flow dimensions */
+  .polaroid-spacer {
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .polaroid {
+    @apply bg-white border border-slate-200 inline-block;
+    padding: 10px 10px 36px 10px;
+    box-shadow: 3px 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .polaroid-photo {
+    @apply w-36 sm:w-44 bg-slate-100 overflow-hidden;
+    aspect-ratio: 3 / 4;
+  }
+
+  /* placeholder tints so you can see the two cards during prototyping */
+  .polaroid-photo.slot-2 { @apply bg-slate-200; }
+
+  /* ── Card positioning ── */
+  .polaroid-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* default: sitting in the deck behind — offset + slight tilt */
+    transform: translate(10px, 8px) rotate(2.5deg) scale(0.97);
+    z-index: 1;
+    opacity: 0.82;
+    transition: transform 0.28s ease, opacity 0.28s ease;
+    will-change: transform;
+  }
+
+  .polaroid-card.active {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    z-index: 2;
+    opacity: 1;
+  }
+
+  /* ── Swipe-right animation ── */
+  .polaroid-card.swiping-out {
+    animation: card-swipe-right 0.38s cubic-bezier(0.4, 0, 0.8, 0.6) forwards;
+    z-index: 3;
+    pointer-events: none;
+    opacity: 1;
+  }
+
+  @keyframes card-swipe-right {
+    0%   { transform: translate(0, 0)       rotate(0deg);  }
+    20%  { transform: translate(16px, -5px)  rotate(4deg);  }
+    100% { transform: translate(108%, 10px) rotate(18deg); }
   }
 
   /* ─── Hero buttons ─── */
@@ -48,7 +101,7 @@ html {
   }
 
   .hero-btn {
-    @apply font-mono text-sm px-4 py-1.5 border border-slate-900 outline-none
+    @apply text-sm px-4 py-1.5 border border-slate-900 outline-none
            transition-all duration-150 ease-in-out
            hover:bg-slate-900 hover:text-white;
     box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.15);
@@ -71,7 +124,7 @@ html {
   }
 
   .sticky-nav-inner {
-    @apply max-w-4xl mx-auto px-4 py-2 flex items-center justify-between gap-4;
+    @apply max-w-4xl mx-auto px-4 py-4 flex items-center justify-between gap-4;
   }
 
   .nav-btn-group {
@@ -79,7 +132,7 @@ html {
   }
 
   .nav-btn {
-    @apply font-mono text-sm text-slate-500 hover:text-slate-900 transition-colors duration-150;
+    @apply text-sm text-slate-500 hover:text-slate-900 transition-colors duration-150;
     position: relative;
   }
 
@@ -106,7 +159,7 @@ html {
   }
 
   .exp-card {
-    @apply flex gap-4 p-3 border border-slate-100 transition-all duration-150 ease-in-out cursor-default;
+    @apply flex gap-4 p-4 border border-slate-100 transition-all duration-150 ease-in-out cursor-default;
     box-shadow: 1px 2px 0px rgba(0, 0, 0, 0.04);
   }
 
@@ -117,7 +170,7 @@ html {
   }
 
   .exp-logo-wrap {
-    @apply flex-shrink-0 w-10 h-10 border border-slate-100 bg-white flex items-center justify-center overflow-hidden;
+    @apply flex-shrink-0 w-12 h-12 border border-slate-100 bg-white flex items-center justify-center overflow-hidden;
   }
 
   .exp-logo {
@@ -145,7 +198,7 @@ html {
   }
 
   .exp-date {
-    @apply text-xs text-slate-500 font-mono;
+    @apply text-xs text-slate-500;
   }
 
   .exp-location {
@@ -185,7 +238,7 @@ html {
   }
 
   .project-info {
-    @apply p-3 sm:p-4;
+    @apply p-4 sm:p-5;
   }
 
   .project-title {
@@ -201,7 +254,7 @@ html {
   }
 
   .tag {
-    @apply font-mono text-xs px-1.5 py-0.5 bg-slate-100 text-slate-600 border border-slate-200;
+    @apply text-xs px-1.5 py-0.5 bg-slate-100 text-slate-600 border border-slate-200;
   }
 
   .project-links {
@@ -209,7 +262,7 @@ html {
   }
 
   .project-link {
-    @apply font-mono text-xs text-slate-500 border border-slate-300 px-2 py-0.5
+    @apply text-xs text-slate-500 border border-slate-300 px-2 py-0.5
            hover:bg-slate-900 hover:text-white hover:border-slate-900
            transition-all duration-150;
   }
@@ -220,7 +273,7 @@ html {
   }
 
   .misc-btn {
-    @apply font-mono text-sm px-4 py-1.5 border border-slate-900 outline-none cursor-pointer
+    @apply text-sm px-4 py-1.5 border border-slate-900 outline-none cursor-pointer
            transition-all duration-150 ease-in-out bg-white text-slate-900
            hover:bg-slate-900 hover:text-white;
     box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.15);
@@ -323,7 +376,7 @@ html {
   }
 
   .tech-group-label {
-    @apply font-mono text-xs text-slate-500 mb-1.5 uppercase tracking-wider;
+    @apply text-xs text-slate-500 mb-1.5 uppercase tracking-wider;
   }
 
   .tech-tags {
@@ -331,7 +384,7 @@ html {
   }
 
   .tech-tag {
-    @apply font-mono text-xs px-2 py-1 border border-slate-200 text-slate-600 bg-slate-50
+    @apply text-xs px-2 py-1 border border-slate-200 text-slate-600 bg-slate-50
            hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all duration-150 cursor-default;
     /* subtle scale on hover */
     transition: transform 150ms ease, background-color 150ms ease, color 150ms ease, border-color 150ms ease;

@@ -18,13 +18,13 @@
     <!-- ─── STICKY NAV (hidden until hero exits viewport) ─── -->
     <nav id="sticky-nav" class="sticky-nav" aria-hidden="true">
       <div class="sticky-nav-inner">
-        <span class="font-mono text-sm font-medium tracking-tight">ap</span>
+        <a href="#hero" class="text-sm font-semibold tracking-tight hover:opacity-60 transition-opacity duration-150">Aryan Patel</a>
         <div class="nav-btn-group">
-          <a href="#about"      class="nav-btn">about</a>
-          <a href="#experience" class="nav-btn">experience</a>
-          <a href="#projects"   class="nav-btn">projects</a>
-          <a href="#misc"       class="nav-btn">misc</a>
-          <a href="#links"      class="nav-btn">links</a>
+          <a href="#about"      class="nav-btn">Biography</a>
+          <a href="#experience" class="nav-btn">Experience</a>
+          <a href="#projects"   class="nav-btn">Projects</a>
+          <a href="#misc"       class="nav-btn">Miscellaneous</a>
+          <a href="#links"      class="nav-btn">Contact + Links</a>
         </div>
       </div>
     </nav>
@@ -35,20 +35,19 @@
       <!-- ══════════════════════════════════════════
            HERO
       ══════════════════════════════════════════ -->
-      <section id="hero" class="min-h-[92vh] flex flex-col justify-center">
-        <p class="font-mono text-sm text-slate-500 mb-3">~/aryan-patel</p>
+      <section id="hero" class="min-h-[65vh] flex flex-col justify-center">
         <h1 class="text-5xl sm:text-6xl font-semibold tracking-tight leading-none mb-3">
           Aryan Patel
         </h1>
         <p class="text-slate-500 text-base sm:text-lg mb-10">
-          Computer Science + Business Administration @ University of Florida
+          Computer Science + Business Administration @ The University of Florida
         </p>
         <div class="hero-btn-group">
-          <a href="#about"      class="hero-btn">about</a>
-          <a href="#experience" class="hero-btn">experience</a>
-          <a href="#projects"   class="hero-btn">projects</a>
-          <a href="#misc"       class="hero-btn">misc</a>
-          <a href="#links"      class="hero-btn">links</a>
+          <a href="#about"      class="hero-btn">Biography</a>
+          <a href="#experience" class="hero-btn">Experience</a>
+          <a href="#projects"   class="hero-btn">Projects</a>
+          <a href="#misc"       class="hero-btn">Miscellaneous</a>
+          <a href="#links"      class="hero-btn">Contact + Links</a>
         </div>
       </section>
 
@@ -57,37 +56,53 @@
       ══════════════════════════════════════════ -->
       <section id="about" class="section-gap">
         <fieldset class="site-fieldset">
-          <legend><span class="font-mono italic text-base">whoami</span></legend>
+          <legend><span class="font-sans font-semibold text-base">Biography</span></legend>
 
           <article class="prose-article sm:block flex flex-col-reverse">
-            <!-- headshot: swap to your actual image in public/assets/ -->
-            <div class="float-none sm:float-right sm:ml-6 mb-6 sm:mb-0 flex justify-center sm:block">
-              <div class="profile-img-wrap">
-                <img
-                  src="/assets/profile.jpg"
-                  alt="Aryan Patel"
-                  class="profile-img"
-                  onerror="this.parentElement.style.display='none'"
-                />
+            <!-- polaroid stack — click top card to cycle -->
+            <div class="float-none sm:float-right sm:ml-8 mb-8 sm:mb-2 flex justify-center sm:block">
+              <div class="polaroid-stack" id="polaroid-stack">
+
+                <!-- invisible spacer: gives the container its natural dimensions -->
+                <div aria-hidden="true" class="polaroid-spacer">
+                  <div class="polaroid"><div class="polaroid-photo"></div></div>
+                </div>
+
+                <!-- card 0 (starts on top) — slot-1 tint as placeholder -->
+                <div class="polaroid-card active" id="pc-0">
+                  <div class="polaroid">
+                    <div class="polaroid-photo slot-1">
+                      <img src="/assets/profile.jpg" alt="Aryan Patel"
+                        class="w-full h-full object-cover" onerror="this.style.display='none'" />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- card 1 (starts in deck) — slot-2 tint as placeholder -->
+                <div class="polaroid-card" id="pc-1">
+                  <div class="polaroid">
+                    <div class="polaroid-photo slot-2">
+                      <img src="/assets/profile-2.jpg" alt="Aryan Patel"
+                        class="w-full h-full object-cover" onerror="this.style.display='none'" />
+                    </div>
+                  </div>
+                </div>
+
               </div>
             </div>
 
             <!-- bio paragraphs — replace placeholder text with your own words -->
             <p>
-              Hey, I'm Aryan. I'm studying Computer Science and Business Administration at the
-              University of Florida. I like building things that sit at the intersection of
-              software and real-world problems — whether that's a weekend hackathon project or
-              something I'm pouring time into for a club.
+              Hey! I'm Aryan. I'm a CS + Business student at the University of Florida.
             </p>
             <p>
-              Outside of class I'm usually involved in whatever is going on around campus,
-              picking up new tools, or going down a rabbit hole I probably didn't need to go
-              down. I care a lot about making software that's actually useful to people, not
-              just technically interesting.
+              Besides my professional and academic pursuits, making memories with friends and
+              family is really important to me. I also like to play all kinds of sports,
+              especially golf and pickleball. I love to eat amazing food — and now I'm learning
+              to cook to satiate those cravings.
             </p>
             <p>
-              I'm actively looking for opportunities in software engineering and product —
-              feel free to reach out.
+              Always open to connect, chat, and explore opportunities — feel free to reach out :)
             </p>
           </article>
         </fieldset>
@@ -98,7 +113,7 @@
       ══════════════════════════════════════════ -->
       <section id="experience" class="section-gap">
         <fieldset class="site-fieldset">
-          <legend><span class="font-mono italic text-base">experience</span></legend>
+          <legend><span class="font-sans font-semibold text-base">Experience</span></legend>
 
           <p class="text-sm text-slate-500 mb-5">clubs, research, and whatever comes next</p>
 
@@ -182,7 +197,7 @@
       ══════════════════════════════════════════ -->
       <section id="projects" class="section-gap">
         <fieldset class="site-fieldset">
-          <legend><span class="font-mono italic text-base">projects</span></legend>
+          <legend><span class="font-sans font-semibold text-base">Projects</span></legend>
 
           <p class="text-sm text-slate-500 mb-5">a few things i've built</p>
 
@@ -281,13 +296,13 @@
       ══════════════════════════════════════════ -->
       <section id="misc" class="section-gap">
         <fieldset class="site-fieldset">
-          <legend><span class="font-mono italic text-base">misc</span></legend>
+          <legend><span class="font-sans font-semibold text-base">Miscellaneous</span></legend>
 
           <p class="text-sm text-slate-500 mb-5">other stuff</p>
 
           <div class="misc-btn-group">
-            <button class="misc-btn" data-modal="background">background</button>
-            <button class="misc-btn" data-modal="technologies">technologies</button>
+            <button class="misc-btn" data-modal="background">Background</button>
+            <button class="misc-btn" data-modal="technologies">Technologies</button>
           </div>
         </fieldset>
       </section>
@@ -297,11 +312,11 @@
       ══════════════════════════════════════════ -->
       <section id="links" class="section-gap mb-24">
         <fieldset class="site-fieldset">
-          <legend><span class="font-mono italic text-base">links</span></legend>
+          <legend><span class="font-sans font-semibold text-base">Contact + Links</span></legend>
 
           <ul class="links-list">
             <li>
-              <a href="mailto:adp0419@ufl.edu" class="link-item">
+              <a href="mailto:adp0419@gmail.com" class="link-item">
                 <svg class="link-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                   <path d="M2.003 5.884 10 9.882l7.997-3.998A2 2 0 0 0 16 4H4a2 2 0 0 0-1.997 1.884z"/>
                   <path d="m18 8.118-8 4-8-4V14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8.118z"/>
@@ -349,7 +364,7 @@
       <div class="modal-backdrop" data-close-modal></div>
       <div class="modal-panel">
         <div class="modal-head">
-          <h2 class="modal-title font-mono italic">background</h2>
+          <h2 class="modal-title font-semibold">Background</h2>
           <button class="modal-close" data-close-modal aria-label="Close">&times;</button>
         </div>
         <div class="modal-body">
@@ -377,7 +392,7 @@
       <div class="modal-backdrop" data-close-modal></div>
       <div class="modal-panel">
         <div class="modal-head">
-          <h2 class="modal-title font-mono italic">technologies</h2>
+          <h2 class="modal-title font-semibold">Technologies</h2>
           <button class="modal-close" data-close-modal aria-label="Close">&times;</button>
         </div>
         <div class="modal-body">

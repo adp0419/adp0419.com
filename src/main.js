@@ -71,6 +71,40 @@ document.querySelectorAll('[data-close-modal]').forEach((el) => {
   })
 })
 
+// ─── Polaroid card swipe ──────────────────────────────────────────────────────
+
+const polaroidStack = document.getElementById('polaroid-stack')
+
+if (polaroidStack) {
+  const cards = Array.from(polaroidStack.querySelectorAll('.polaroid-card'))
+  let activeIdx = cards.findIndex(c => c.classList.contains('active'))
+  let swiping = false
+
+  polaroidStack.addEventListener('click', () => {
+    if (swiping) return
+    swiping = true
+
+    const current = cards[activeIdx]
+    const nextIdx = (activeIdx + 1) % cards.length
+    const next    = cards[nextIdx]
+
+    // 1. Swipe the top card out to the right
+    current.classList.remove('active')
+    current.classList.add('swiping-out')
+
+    // 2. After a short delay, lift the next card forward
+    setTimeout(() => next.classList.add('active'), 160)
+
+    // 3. Once the swipe animation ends, park the card back in the deck
+    current.addEventListener('animationend', () => {
+      current.classList.remove('swiping-out')
+      // card is now back in its default deck-position styles
+      activeIdx = nextIdx
+      swiping = false
+    }, { once: true })
+  })
+}
+
 // Close on Escape key
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
