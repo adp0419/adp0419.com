@@ -1,3 +1,32 @@
+// ─── Centered section scroll ──────────────────────────────────────────────────
+
+document.querySelectorAll('.hero-btn, .nav-btn, a[href="#hero"]').forEach((link) => {
+  link.addEventListener('click', (e) => {
+    const href = link.getAttribute('href')
+    if (!href?.startsWith('#')) return
+    e.preventDefault()
+
+    // "Aryan Patel" logo → back to very top
+    if (href === '#hero') {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+      return
+    }
+
+    const section = document.querySelector(href)
+    if (!section) return
+
+    // Center the fieldset card (the visible "box") on screen
+    const card = section.querySelector('fieldset') ?? section
+    const cardTop    = card.getBoundingClientRect().top + window.scrollY
+    const cardHeight = card.offsetHeight
+    const vh         = window.innerHeight
+    const maxScroll  = document.documentElement.scrollHeight - vh
+
+    const target = Math.round(cardTop - vh / 2 + cardHeight / 2)
+    window.scrollTo({ top: Math.max(0, Math.min(target, maxScroll)), behavior: 'smooth' })
+  })
+})
+
 // ─── Sticky nav ───────────────────────────────────────────────────────────────
 
 const stickyNav = document.getElementById('sticky-nav')
