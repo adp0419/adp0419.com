@@ -116,78 +116,63 @@
         <fieldset class="site-fieldset">
           <legend><span class="font-sans font-semibold text-base">Experience</span></legend>
 
-          <p class="text-sm text-slate-500 mb-5">clubs, research, and whatever comes next</p>
+          <p class="text-sm text-slate-500 mb-5">research, clubs, and work</p>
 
           <div class="exp-list">
 
-            <!-- ── experience card template ──
-                 Duplicate this block for each entry.
-                 Replace logo src, org name, role, dates, location, description.
-            ── -->
-
-            <!-- PLACEHOLDER 1 -->
-            <div class="exp-card">
+            <a class="exp-card" href="https://ufdatastudio.com/" target="_blank" rel="noopener">
               <div class="exp-logo-wrap">
-                <img src="/assets/logos/placeholder.svg" alt="" class="exp-logo"
-                  onerror="this.style.display='none'" />
+                <img src="/assets/logos/uf-data-studio.png" alt="UF Data Studio" class="exp-logo" />
               </div>
               <div class="exp-body">
                 <div class="exp-header">
                   <div>
-                    <p class="exp-org">Organization Name</p>
-                    <p class="exp-role">Your Role Here</p>
+                    <p class="exp-org">UF Data Studio</p>
+                    <p class="exp-role">Undergraduate Research Assistant</p>
                   </div>
                   <div class="exp-meta">
-                    <p class="exp-date">Aug 2024 – Present</p>
+                    <p class="exp-date">Jan 2026 – Present</p>
                     <p class="exp-location">Gainesville, FL</p>
                   </div>
                 </div>
-                <p class="exp-desc">
-                  A short description of what you did or do here. Keep it punchy — one or two
-                  sentences is enough. Recruiters skim.
-                </p>
               </div>
-            </div>
+            </a>
 
-            <!-- PLACEHOLDER 2 -->
-            <div class="exp-card">
+            <a class="exp-card" href="https://gatormotorsports.org/" target="_blank" rel="noopener">
               <div class="exp-logo-wrap">
-                <img src="/assets/logos/placeholder.svg" alt="" class="exp-logo"
-                  onerror="this.style.display='none'" />
+                <img src="/assets/logos/gator-motorsports.jpeg" alt="Gator Motorsports" class="exp-logo" />
               </div>
               <div class="exp-body">
                 <div class="exp-header">
                   <div>
-                    <p class="exp-org">Another Org</p>
-                    <p class="exp-role">Member / Developer</p>
+                    <p class="exp-org">Gator Motorsports — Firmware Team</p>
+                    <p class="exp-role">Data Analyst</p>
                   </div>
                   <div class="exp-meta">
-                    <p class="exp-date">Jan 2025 – Present</p>
-                    <p class="exp-location">Remote</p>
+                    <p class="exp-date">Sep 2025 – Apr 2026</p>
+                    <p class="exp-location">Gainesville, FL</p>
                   </div>
                 </div>
               </div>
-            </div>
+            </a>
 
-            <!-- PLACEHOLDER 3 -->
-            <div class="exp-card">
+            <a class="exp-card" href="https://mathnasium.com/" target="_blank" rel="noopener">
               <div class="exp-logo-wrap">
-                <img src="/assets/logos/placeholder.svg" alt="" class="exp-logo"
-                  onerror="this.style.display='none'" />
+                <img src="/assets/logos/mathnasium.webp" alt="Mathnasium" class="exp-logo" />
               </div>
               <div class="exp-body">
                 <div class="exp-header">
                   <div>
-                    <p class="exp-org">Future Internship</p>
-                    <p class="exp-role">Software Engineer Intern</p>
+                    <p class="exp-org">Mathnasium Learning Center</p>
+                    <p class="exp-role">Mathematics Tutor</p>
                   </div>
                   <div class="exp-meta">
-                    <p class="exp-date">Summer 2025</p>
-                    <p class="exp-location">TBD</p>
+                    <p class="exp-date">Jun 2023 – May 2025</p>
+                    <p class="exp-location">Jacksonville, FL</p>
                   </div>
                 </div>
               </div>
-            </div>
+            </a>
 
           </div><!-- /exp-list -->
         </fieldset>
@@ -205,62 +190,45 @@
           <!-- ── Category filter bar ── -->
           <div class="proj-filter-bar" id="proj-filter-bar">
             <button class="proj-filter-btn active" data-filter="all">All</button>
-            <button class="proj-filter-btn" data-filter="full-stack">Full Stack</button>
-            <button class="proj-filter-btn" data-filter="machine-learning">Machine Learning</button>
             <button class="proj-filter-btn" data-filter="fintech">Fintech</button>
-            <button class="proj-filter-btn" data-filter="systems">Systems</button>
+            <button class="proj-filter-btn" data-filter="machine-learning">Machine Learning</button>
+            <button class="proj-filter-btn" data-filter="research">Research</button>
           </div>
 
-          <!-- ── Project list ──
-               Add data-categories as space-separated slugs matching the filter buttons.
-               data-modal must match a modal id below: modal-proj-<id>
-          ── -->
           <div class="proj-list" id="proj-list">
 
-            <div class="proj-item" data-categories="full-stack" data-modal="proj-1">
+            <div class="proj-item" data-categories="fintech machine-learning" data-modal="proj-1">
               <div class="proj-icon-wrap">
-                <img src="/assets/projects/project1.png" alt="" class="proj-icon"
+                <img src="/assets/projects/sharpe.png" alt="" class="proj-icon"
                   onerror="this.parentElement.classList.add('proj-icon-placeholder')" />
               </div>
               <div class="proj-item-body">
-                <p class="proj-item-title">Project Name</p>
-                <p class="proj-item-desc">One-line description of what this does and why it's interesting.</p>
+                <p class="proj-item-title">Sharpe Strategy</p>
+                <p class="proj-item-desc">Volatility-adjusted momentum trading strategy — 0.9 Sharpe ratio, 17% portfolio growth.</p>
               </div>
               <span class="proj-item-arrow">→</span>
             </div>
 
-            <div class="proj-item" data-categories="machine-learning" data-modal="proj-2">
+            <div class="proj-item" data-categories="fintech machine-learning" data-modal="proj-2">
               <div class="proj-icon-wrap">
-                <img src="/assets/projects/project2.png" alt="" class="proj-icon"
+                <img src="/assets/projects/senti.png" alt="" class="proj-icon"
                   onerror="this.parentElement.classList.add('proj-icon-placeholder')" />
               </div>
               <div class="proj-item-body">
-                <p class="proj-item-title">Another Project</p>
-                <p class="proj-item-desc">Another concise description of something you built.</p>
+                <p class="proj-item-title">Senti</p>
+                <p class="proj-item-desc">Financial sentiment analysis pipeline — 89% accuracy via fine-tuned FinBERT on real-time news.</p>
               </div>
               <span class="proj-item-arrow">→</span>
             </div>
 
-            <div class="proj-item" data-categories="full-stack fintech" data-modal="proj-3">
+            <div class="proj-item" data-categories="research machine-learning" data-modal="proj-3">
               <div class="proj-icon-wrap">
-                <img src="/assets/projects/project3.png" alt="" class="proj-icon"
+                <img src="/assets/projects/language-tree.png" alt="" class="proj-icon"
                   onerror="this.parentElement.classList.add('proj-icon-placeholder')" />
               </div>
               <div class="proj-item-body">
-                <p class="proj-item-title">Third Project</p>
-                <p class="proj-item-desc">Description goes here — what problem does it solve?</p>
-              </div>
-              <span class="proj-item-arrow">→</span>
-            </div>
-
-            <div class="proj-item" data-categories="systems" data-modal="proj-4">
-              <div class="proj-icon-wrap">
-                <img src="/assets/projects/project4.png" alt="" class="proj-icon"
-                  onerror="this.parentElement.classList.add('proj-icon-placeholder')" />
-              </div>
-              <div class="proj-item-body">
-                <p class="proj-item-title">Fourth Project</p>
-                <p class="proj-item-desc">Short description of project four.</p>
+                <p class="proj-item-title">Climbing the Language Tree</p>
+                <p class="proj-item-desc">Cross-linguistic statistical analysis of pause patterns across 5 languages — R²=0.72.</p>
               </div>
               <span class="proj-item-arrow">→</span>
             </div>
@@ -281,7 +249,6 @@
           <div class="misc-btn-group">
             <button class="misc-btn" data-modal="background">Background</button>
             <button class="misc-btn" data-modal="technologies">Technologies</button>
-            <button class="misc-btn" data-modal="resume">Resume</button>
           </div>
         </fieldset>
       </section>
@@ -381,43 +348,59 @@
               <p class="tech-group-label">Languages</p>
               <div class="tech-tags">
                 <span class="tech-tag">Python</span>
+                <span class="tech-tag">C++</span>
                 <span class="tech-tag">Java</span>
-                <span class="tech-tag">C</span>
-                <span class="tech-tag">JavaScript</span>
-                <span class="tech-tag">TypeScript</span>
                 <span class="tech-tag">SQL</span>
+                <span class="tech-tag">JavaScript</span>
+                <span class="tech-tag">HTML/CSS</span>
+                <span class="tech-tag">R</span>
+                <span class="tech-tag">Rust</span>
               </div>
             </div>
 
             <div class="tech-group">
               <p class="tech-group-label">Frameworks &amp; Libraries</p>
               <div class="tech-tags">
-                <span class="tech-tag">React</span>
-                <span class="tech-tag">Node.js</span>
+                <span class="tech-tag">PyTorch</span>
+                <span class="tech-tag">scikit-learn</span>
+                <span class="tech-tag">Pandas</span>
+                <span class="tech-tag">NumPy</span>
+                <span class="tech-tag">Hugging Face</span>
+                <span class="tech-tag">NLTK</span>
+                <span class="tech-tag">TensorFlow</span>
                 <span class="tech-tag">Flask</span>
-                <span class="tech-tag">Tailwind CSS</span>
+                <span class="tech-tag">FastAPI</span>
+                <span class="tech-tag">React</span>
+                <span class="tech-tag">D3.js</span>
+                <span class="tech-tag">Matplotlib</span>
+                <span class="tech-tag">Seaborn</span>
               </div>
             </div>
 
             <div class="tech-group">
-              <p class="tech-group-label">Tools &amp; Platforms</p>
+              <p class="tech-group-label">Tools &amp; Technologies</p>
               <div class="tech-tags">
                 <span class="tech-tag">Git</span>
-                <span class="tech-tag">GitHub</span>
-                <span class="tech-tag">VS Code</span>
+                <span class="tech-tag">Docker</span>
                 <span class="tech-tag">Linux</span>
-                <span class="tech-tag">AWS</span>
+                <span class="tech-tag">HiPerGator HPC</span>
+                <span class="tech-tag">SLURM</span>
+                <span class="tech-tag">NLP</span>
+                <span class="tech-tag">Deep Learning</span>
+                <span class="tech-tag">Backtesting</span>
+                <span class="tech-tag">A/B Testing</span>
+                <span class="tech-tag">API Integration</span>
+                <span class="tech-tag">Statistical Modeling</span>
               </div>
             </div>
 
             <div class="tech-group">
-              <p class="tech-group-label">Concepts</p>
+              <p class="tech-group-label">Coursework</p>
               <div class="tech-tags">
-                <span class="tech-tag">Data Structures</span>
-                <span class="tech-tag">Algorithms</span>
-                <span class="tech-tag">OOP</span>
-                <span class="tech-tag">REST APIs</span>
-                <span class="tech-tag">Machine Learning</span>
+                <span class="tech-tag">Data Structures &amp; Algorithms</span>
+                <span class="tech-tag">Linear Algebra</span>
+                <span class="tech-tag">Discrete Math</span>
+                <span class="tech-tag">Programming Fundamentals</span>
               </div>
             </div>
 
@@ -428,65 +411,40 @@
 
     <!-- ══════════════════════════════════════════
          PROJECT MODALS
-         Duplicate this block for each project.
-         The .proj-tags div at the bottom is always present.
     ══════════════════════════════════════════ -->
 
-    <div id="modal-proj-1" class="modal" role="dialog" aria-modal="true" aria-label="Project Name" hidden>
+    <div id="modal-proj-1" class="modal" role="dialog" aria-modal="true" aria-label="Sharpe Strategy" hidden>
       <div class="modal-backdrop" data-close-modal></div>
       <div class="modal-panel">
         <div class="modal-head">
-          <h2 class="modal-title font-semibold">Project Name</h2>
+          <h2 class="modal-title font-semibold">Sharpe Strategy</h2>
           <button class="modal-close" data-close-modal aria-label="Close">&times;</button>
         </div>
         <div class="modal-body">
-          <!-- Project-specific content: images, video, pdf embed, description, links — anything goes here -->
-          <p>Replace this with a description of the project, what you built, why it matters, and what you learned.</p>
-          <p>You can add images, links, an embedded demo, or a PDF here — the modal handles any content.</p>
-
-          <!-- ── Tags (always at bottom) ── -->
+          <p>
+            A volatility-adjusted momentum trading strategy achieving a <strong>0.9 annual Sharpe ratio</strong> and
+            <strong>17% portfolio growth</strong> across 25+ liquid assets using inverse volatility weighting and
+            63-day ranking windows.
+          </p>
+          <p>
+            Backtested over 10 years of varied market conditions with realistic execution constraints — 5% stop-losses,
+            monthly rebalancing, and 90/10 capital allocation — across equities, ETFs, commodities, and currencies.
+          </p>
           <div class="proj-tags">
             <div class="proj-tag-row">
               <span class="proj-tag-label">Tools &amp; Tech</span>
               <div class="tech-tags">
                 <span class="tech-tag">Python</span>
-                <span class="tech-tag">React</span>
-                <span class="tech-tag">REST API</span>
+                <span class="tech-tag">Pandas</span>
+                <span class="tech-tag">yfinance</span>
+                <span class="tech-tag">mplfinance</span>
+                <span class="tech-tag">Backtesting</span>
               </div>
             </div>
             <div class="proj-tag-row">
               <span class="proj-tag-label">Category</span>
               <div class="tech-tags">
-                <span class="tech-tag">Full Stack</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div id="modal-proj-2" class="modal" role="dialog" aria-modal="true" aria-label="Another Project" hidden>
-      <div class="modal-backdrop" data-close-modal></div>
-      <div class="modal-panel">
-        <div class="modal-head">
-          <h2 class="modal-title font-semibold">Another Project</h2>
-          <button class="modal-close" data-close-modal aria-label="Close">&times;</button>
-        </div>
-        <div class="modal-body">
-          <p>Replace this with a description of the project.</p>
-
-          <div class="proj-tags">
-            <div class="proj-tag-row">
-              <span class="proj-tag-label">Tools &amp; Tech</span>
-              <div class="tech-tags">
-                <span class="tech-tag">TypeScript</span>
-                <span class="tech-tag">Node.js</span>
-                <span class="tech-tag">PyTorch</span>
-              </div>
-            </div>
-            <div class="proj-tag-row">
-              <span class="proj-tag-label">Category</span>
-              <div class="tech-tags">
+                <span class="tech-tag">Fintech</span>
                 <span class="tech-tag">Machine Learning</span>
               </div>
             </div>
@@ -495,30 +453,38 @@
       </div>
     </div>
 
-    <div id="modal-proj-3" class="modal" role="dialog" aria-modal="true" aria-label="Third Project" hidden>
+    <div id="modal-proj-2" class="modal" role="dialog" aria-modal="true" aria-label="Senti" hidden>
       <div class="modal-backdrop" data-close-modal></div>
       <div class="modal-panel">
         <div class="modal-head">
-          <h2 class="modal-title font-semibold">Third Project</h2>
+          <h2 class="modal-title font-semibold">Senti</h2>
           <button class="modal-close" data-close-modal aria-label="Close">&times;</button>
         </div>
         <div class="modal-body">
-          <p>Replace this with a description of the project.</p>
-
+          <p>
+            A financial sentiment analysis and NLP pipeline achieving <strong>89% classification accuracy</strong> on
+            real-time financial news by fine-tuning a FinBERT transformer via the Finnhub API in PyTorch.
+          </p>
+          <p>
+            Engineered a sentiment aggregation pipeline normalizing signals across variable news volumes using Hugging Face
+            Transformers — enabling consistent cross-stock comparison and designed for live market deployment.
+          </p>
           <div class="proj-tags">
             <div class="proj-tag-row">
               <span class="proj-tag-label">Tools &amp; Tech</span>
               <div class="tech-tags">
-                <span class="tech-tag">Java</span>
-                <span class="tech-tag">SQL</span>
-                <span class="tech-tag">Stripe API</span>
+                <span class="tech-tag">PyTorch</span>
+                <span class="tech-tag">FinBERT</span>
+                <span class="tech-tag">Hugging Face</span>
+                <span class="tech-tag">Finnhub API</span>
+                <span class="tech-tag">Python</span>
               </div>
             </div>
             <div class="proj-tag-row">
               <span class="proj-tag-label">Category</span>
               <div class="tech-tags">
-                <span class="tech-tag">Full Stack</span>
                 <span class="tech-tag">Fintech</span>
+                <span class="tech-tag">Machine Learning</span>
               </div>
             </div>
           </div>
@@ -526,28 +492,39 @@
       </div>
     </div>
 
-    <div id="modal-proj-4" class="modal" role="dialog" aria-modal="true" aria-label="Fourth Project" hidden>
+    <div id="modal-proj-3" class="modal" role="dialog" aria-modal="true" aria-label="Climbing the Language Tree" hidden>
       <div class="modal-backdrop" data-close-modal></div>
       <div class="modal-panel">
         <div class="modal-head">
-          <h2 class="modal-title font-semibold">Fourth Project</h2>
+          <h2 class="modal-title font-semibold">Climbing the Language Tree</h2>
           <button class="modal-close" data-close-modal aria-label="Close">&times;</button>
         </div>
         <div class="modal-body">
-          <p>Replace this with a description of the project.</p>
-
+          <p>
+            A cross-linguistic statistical analysis of speech pause behavior conducted at Florida State University.
+            Discovered that linguistically related languages share similar pause duration patterns by analyzing
+            <strong>1,000+ audio recordings</strong> across 5 languages.
+          </p>
+          <p>
+            Validated findings with regression models achieving <strong>R²=0.72 and p&lt;0.01</strong>, contributing
+            foundational psycholinguistic research with multilingual pause duration datasets and Matplotlib visualizations.
+          </p>
           <div class="proj-tags">
             <div class="proj-tag-row">
               <span class="proj-tag-label">Tools &amp; Tech</span>
               <div class="tech-tags">
-                <span class="tech-tag">C++</span>
-                <span class="tech-tag">CUDA</span>
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">R</span>
+                <span class="tech-tag">NLTK</span>
+                <span class="tech-tag">Matplotlib</span>
+                <span class="tech-tag">SciPy</span>
               </div>
             </div>
             <div class="proj-tag-row">
               <span class="proj-tag-label">Category</span>
               <div class="tech-tags">
-                <span class="tech-tag">Systems</span>
+                <span class="tech-tag">Research</span>
+                <span class="tech-tag">Machine Learning</span>
               </div>
             </div>
           </div>
@@ -555,32 +532,6 @@
       </div>
     </div>
 
-    <!-- Resume modal -->
-    <div id="modal-resume" class="modal" role="dialog" aria-modal="true" aria-label="Resume" hidden>
-      <div class="modal-backdrop" data-close-modal></div>
-      <div class="modal-panel">
-        <div class="modal-head">
-          <h2 class="modal-title font-semibold">Resume</h2>
-          <button class="modal-close" data-close-modal aria-label="Close">&times;</button>
-        </div>
-        <div class="modal-body">
-          <!-- Replace the src with your actual resume PDF path once uploaded -->
-          <div class="resume-preview">
-            <p class="text-slate-400 text-sm text-center py-16">
-              Resume PDF coming soon — drop it at <code class="text-slate-600">public/assets/resume.pdf</code>
-            </p>
-          </div>
-          <div class="resume-actions">
-            <a href="/assets/resume.pdf" target="_blank" rel="noopener" class="misc-btn inline-block text-center">
-              View Full PDF
-            </a>
-            <a href="/assets/resume.pdf" download class="misc-btn inline-block text-center">
-              Download
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <script type="module" src="/src/main.js"></script>
   </body>

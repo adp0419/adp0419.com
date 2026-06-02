@@ -1,6 +1,9 @@
 # markdown files (kept private)
 *.md
 
+# resume / private documents
+*.pdf
+
 # dependencies
 node_modules/
 
