@@ -151,6 +151,7 @@ document.querySelectorAll('.photo-deck').forEach((deck) => {
   const gap      = 24
   let current    = 1
   let busy       = false
+  let pending    = 0
 
   function offset(idx) {
     const cw  = cards[0].offsetWidth
@@ -169,11 +170,21 @@ document.querySelectorAll('.photo-deck').forEach((deck) => {
   }
 
   function slideTo(idx) {
-    if (busy) return
     busy = true
     cards.forEach((c, i) => c.classList.toggle('active', i === idx))
     track.style.transform = `translateX(${offset(idx)}px)`
     current = idx
+  }
+
+  function tryAdvance() {
+    if (busy) return
+    if (pending > 0) {
+      pending--
+      slideTo(current + 1)
+    } else if (pending < 0) {
+      pending++
+      slideTo(current - 1)
+    }
   }
 
   // Only respond to the track's own transform transition — not bubbled card transitions
@@ -182,15 +193,25 @@ document.querySelectorAll('.photo-deck').forEach((deck) => {
     if (current === 4) jumpTo(1)
     else if (current === 0) jumpTo(3)
     else busy = false
+    tryAdvance()
   })
 
   // › = next (right card to center = increment)
-  deck.querySelector('.deck-arrow-next').addEventListener('click', () => slideTo(current + 1))
+  deck.querySelector('.deck-arrow-next').addEventListener('click', () => {
+    pending++
+    tryAdvance()
+  })
   // ‹ = prev (left card to center = decrement)
-  deck.querySelector('.deck-arrow-prev').addEventListener('click', () => slideTo(current - 1))
+  deck.querySelector('.deck-arrow-prev').addEventListener('click', () => {
+    pending--
+    tryAdvance()
+  })
 
   // Register a reinit so openModal can call it after the modal is visible
-  deckReinits.set(deck.id, () => jumpTo(1))
+  deckReinits.set(deck.id, () => {
+    pending = 0
+    jumpTo(1)
+  })
 })
 
 // ─── Polaroid card swipe ──────────────────────────────────────────────────────

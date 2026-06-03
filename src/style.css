@@ -300,7 +300,7 @@ html {
 
   .misc-btn {
     @apply text-sm px-4 py-1.5 border border-slate-900 outline-none cursor-pointer
-           transition-all duration-150 ease-in-out bg-white text-slate-900
+           transition-all duration-150 ease-in-out bg-white text-slate-900 no-underline
            hover:bg-slate-900 hover:text-white;
     box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.15);
   }
@@ -396,6 +396,10 @@ html {
     @apply mb-3 last:mb-0;
   }
 
+  .modal-body p a {
+    @apply text-slate-900 underline underline-offset-2 hover:text-slate-600;
+  }
+
   /* ─── Tech grid inside modal ─── */
   .tech-grid {
     @apply flex flex-col gap-4;
@@ -467,17 +471,26 @@ html {
   }
 
   .deck-polaroid {
-    padding: 10px 10px 20px 10px !important; /* thinner bottom */
+    display: flex;
+    flex-direction: column;
+    padding: 10px !important; /* bottom chin lives in .deck-caption, not padding */
     box-shadow: 3px 4px 12px rgba(0, 0, 0, 0.12) !important;
   }
 
   .deck-photo {
     width: 190px !important;
     aspect-ratio: 4 / 3;
+    flex-shrink: 0;
   }
 
+  /* Fixed-height band below photo — text centered in the full white margin */
   .deck-caption {
-    @apply text-center text-xs text-slate-500 mt-1;
+    @apply text-center text-xs text-slate-500;
+    min-height: 40px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     line-height: 1.2;
   }
 
