@@ -145,8 +145,8 @@
               <div class="exp-body">
                 <div class="exp-header">
                   <div>
-                    <p class="exp-org">Gator Motorsports — Firmware Team</p>
-                    <p class="exp-role">Data Analyst</p>
+                    <p class="exp-org">Gator Motorsports</p>
+                    <p class="exp-role">Firmware Team — Data Analyst</p>
                   </div>
                   <div class="exp-meta">
                     <p class="exp-date">Sep 2025 – Apr 2026</p>
@@ -190,14 +190,14 @@
           <!-- ── Category filter bar ── -->
           <div class="proj-filter-bar" id="proj-filter-bar">
             <button class="proj-filter-btn active" data-filter="all">All</button>
-            <button class="proj-filter-btn" data-filter="fintech">Fintech</button>
-            <button class="proj-filter-btn" data-filter="machine-learning">Machine Learning</button>
+            <button class="proj-filter-btn" data-filter="quantitative-finance">Quantitative Finance</button>
             <button class="proj-filter-btn" data-filter="research">Research</button>
+            <button class="proj-filter-btn" data-filter="data-analysis">Data Analysis</button>
           </div>
 
           <div class="proj-list" id="proj-list">
 
-            <div class="proj-item" data-categories="fintech machine-learning" data-modal="proj-1">
+            <div class="proj-item" data-categories="quantitative-finance" data-modal="proj-1">
               <div class="proj-icon-wrap">
                 <img src="/assets/projects/sharpe.png" alt="" class="proj-icon"
                   onerror="this.parentElement.classList.add('proj-icon-placeholder')" />
@@ -209,19 +209,8 @@
               <span class="proj-item-arrow">→</span>
             </div>
 
-            <div class="proj-item" data-categories="fintech machine-learning" data-modal="proj-2">
-              <div class="proj-icon-wrap">
-                <img src="/assets/projects/senti.png" alt="" class="proj-icon"
-                  onerror="this.parentElement.classList.add('proj-icon-placeholder')" />
-              </div>
-              <div class="proj-item-body">
-                <p class="proj-item-title">Senti</p>
-                <p class="proj-item-desc">Financial sentiment analysis pipeline — 89% accuracy via fine-tuned FinBERT on real-time news.</p>
-              </div>
-              <span class="proj-item-arrow">→</span>
-            </div>
 
-            <div class="proj-item" data-categories="research machine-learning" data-modal="proj-3">
+            <div class="proj-item" data-categories="research data-analysis" data-modal="proj-3">
               <div class="proj-icon-wrap">
                 <img src="/assets/projects/language-tree.png" alt="" class="proj-icon"
                   onerror="this.parentElement.classList.add('proj-icon-placeholder')" />
@@ -430,6 +419,15 @@
             Backtested over 10 years of varied market conditions with realistic execution constraints — 5% stop-losses,
             monthly rebalancing, and 90/10 capital allocation — across equities, ETFs, commodities, and currencies.
           </p>
+
+          <div class="proj-pdf-wrap">
+            <iframe src="/assets/projects/sharpe-strategy.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" title="Sharpe Strategy PDF"></iframe>
+          </div>
+          <div class="proj-pdf-actions">
+            <a href="/assets/projects/sharpe-strategy.pdf" target="_blank" rel="noopener" class="misc-btn">Full Screen</a>
+            <a href="/assets/projects/sharpe-strategy.pdf" download class="misc-btn">Download</a>
+          </div>
+
           <div class="proj-tags">
             <div class="proj-tag-row">
               <span class="proj-tag-label">Tools &amp; Tech</span>
@@ -444,8 +442,7 @@
             <div class="proj-tag-row">
               <span class="proj-tag-label">Category</span>
               <div class="tech-tags">
-                <span class="tech-tag">Fintech</span>
-                <span class="tech-tag">Machine Learning</span>
+                <span class="tech-tag">Quantitative Finance</span>
               </div>
             </div>
           </div>
@@ -453,44 +450,6 @@
       </div>
     </div>
 
-    <div id="modal-proj-2" class="modal" role="dialog" aria-modal="true" aria-label="Senti" hidden>
-      <div class="modal-backdrop" data-close-modal></div>
-      <div class="modal-panel">
-        <div class="modal-head">
-          <h2 class="modal-title font-semibold">Senti</h2>
-          <button class="modal-close" data-close-modal aria-label="Close">&times;</button>
-        </div>
-        <div class="modal-body">
-          <p>
-            A financial sentiment analysis and NLP pipeline achieving <strong>89% classification accuracy</strong> on
-            real-time financial news by fine-tuning a FinBERT transformer via the Finnhub API in PyTorch.
-          </p>
-          <p>
-            Engineered a sentiment aggregation pipeline normalizing signals across variable news volumes using Hugging Face
-            Transformers — enabling consistent cross-stock comparison and designed for live market deployment.
-          </p>
-          <div class="proj-tags">
-            <div class="proj-tag-row">
-              <span class="proj-tag-label">Tools &amp; Tech</span>
-              <div class="tech-tags">
-                <span class="tech-tag">PyTorch</span>
-                <span class="tech-tag">FinBERT</span>
-                <span class="tech-tag">Hugging Face</span>
-                <span class="tech-tag">Finnhub API</span>
-                <span class="tech-tag">Python</span>
-              </div>
-            </div>
-            <div class="proj-tag-row">
-              <span class="proj-tag-label">Category</span>
-              <div class="tech-tags">
-                <span class="tech-tag">Fintech</span>
-                <span class="tech-tag">Machine Learning</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <div id="modal-proj-3" class="modal" role="dialog" aria-modal="true" aria-label="Climbing the Language Tree" hidden>
       <div class="modal-backdrop" data-close-modal></div>
@@ -509,22 +468,101 @@
             Validated findings with regression models achieving <strong>R²=0.72 and p&lt;0.01</strong>, contributing
             foundational psycholinguistic research with multilingual pause duration datasets and Matplotlib visualizations.
           </p>
+
+          <div class="proj-pdf-wrap">
+            <iframe src="/assets/projects/climbing-the-language-tree.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" title="Climbing the Language Tree PDF"></iframe>
+          </div>
+          <div class="proj-pdf-actions">
+            <a href="/assets/projects/climbing-the-language-tree.pdf" target="_blank" rel="noopener" class="misc-btn">Full Screen</a>
+            <a href="/assets/projects/climbing-the-language-tree.pdf" download class="misc-btn">Download</a>
+          </div>
+
+          <!-- FSU research photo gallery
+               Track order: [p3-clone | p1 | p2 | p3 | p1-clone]
+               Initial center: index 1 (p1) → shows 3 | 1 | 2
+               › (right) = revolve right = left card comes to center = decrement index
+               ‹ (left)  = revolve left  = right card comes to center = increment index
+          -->
+          <div class="photo-deck" id="ctlt-deck">
+            <div class="deck-viewport">
+              <div class="deck-track-inner">
+
+                <!-- index 0: clone of p3 (for seamless right-revolve) -->
+                <div class="deck-card">
+                  <div class="polaroid deck-polaroid">
+                    <div class="polaroid-photo deck-photo">
+                      <img src="/assets/projects/ctlt/ctlt3.jpg" alt="lunch break" class="w-full h-full object-cover" />
+                    </div>
+                    <p class="deck-caption">lunch break 😋</p>
+                  </div>
+                </div>
+
+                <!-- index 1: p1 — initial center -->
+                <div class="deck-card active">
+                  <div class="polaroid deck-polaroid">
+                    <div class="polaroid-photo deck-photo">
+                      <img src="/assets/projects/ctlt/ctlt1.jpg" alt="the team!" class="w-full h-full object-cover" />
+                    </div>
+                    <p class="deck-caption">the team!</p>
+                  </div>
+                </div>
+
+                <!-- index 2: p2 -->
+                <div class="deck-card">
+                  <div class="polaroid deck-polaroid">
+                    <div class="polaroid-photo deck-photo">
+                      <img src="/assets/projects/ctlt/ctlt2.jpg" alt="collecting data" class="w-full h-full object-cover" />
+                    </div>
+                    <p class="deck-caption">collecting data</p>
+                  </div>
+                </div>
+
+                <!-- index 3: p3 -->
+                <div class="deck-card">
+                  <div class="polaroid deck-polaroid">
+                    <div class="polaroid-photo deck-photo">
+                      <img src="/assets/projects/ctlt/ctlt3.jpg" alt="lunch break" class="w-full h-full object-cover" />
+                    </div>
+                    <p class="deck-caption">lunch break 😋</p>
+                  </div>
+                </div>
+
+                <!-- index 4: clone of p1 (for seamless left-revolve) -->
+                <div class="deck-card">
+                  <div class="polaroid deck-polaroid">
+                    <div class="polaroid-photo deck-photo">
+                      <img src="/assets/projects/ctlt/ctlt1.jpg" alt="the team!" class="w-full h-full object-cover" />
+                    </div>
+                    <p class="deck-caption">the team!</p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <!-- ‹ = revolve left (right card to center) -->
+            <button class="deck-arrow deck-arrow-prev" aria-label="Previous">&#8249;</button>
+            <!-- › = revolve right (left card to center) -->
+            <button class="deck-arrow deck-arrow-next" aria-label="Next">&#8250;</button>
+          </div>
+
           <div class="proj-tags">
             <div class="proj-tag-row">
               <span class="proj-tag-label">Tools &amp; Tech</span>
               <div class="tech-tags">
                 <span class="tech-tag">Python</span>
-                <span class="tech-tag">R</span>
-                <span class="tech-tag">NLTK</span>
+                <span class="tech-tag">Pandas</span>
+                <span class="tech-tag">NumPy</span>
                 <span class="tech-tag">Matplotlib</span>
-                <span class="tech-tag">SciPy</span>
+                <span class="tech-tag">R</span>
+                <span class="tech-tag">EDA</span>
+                <span class="tech-tag">Qualitative Analysis</span>
               </div>
             </div>
             <div class="proj-tag-row">
               <span class="proj-tag-label">Category</span>
               <div class="tech-tags">
                 <span class="tech-tag">Research</span>
-                <span class="tech-tag">Machine Learning</span>
+                <span class="tech-tag">Data Analysis</span>
               </div>
             </div>
           </div>

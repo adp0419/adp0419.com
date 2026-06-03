@@ -80,6 +80,12 @@ function openModal(id) {
   modal.removeAttribute('hidden')
   document.body.style.overflow = 'hidden'
   modal.querySelector('.modal-close')?.focus()
+  // Reinit any photo decks now that the modal is visible and measurable
+  requestAnimationFrame(() => {
+    modal.querySelectorAll('.photo-deck').forEach(deck => {
+      deckReinits.get(deck.id)?.()
+    })
+  })
 }
 
 function closeModal(modal) {
@@ -126,6 +132,66 @@ if (filterBar) {
     })
   })
 }
+
+// ─── Polaroid photo deck (infinite sliding carousel) ─────────────────────────
+// Track: [p3-clone(0) | p1(1) | p2(2) | p3(3) | p1-clone(4)]. Initial center: 1.
+// ›  = next = increment. ‹ = prev = decrement.
+// Boundary 4 → jump to real 1.  Boundary 0 → jump to real 3.
+// jumpTo() uses force-reflow (void offsetWidth) instead of double-rAF
+// so there's no async gap between the invisible jump and re-enabling the transition.
+// transitionend is filtered to track's OWN transform only (e.target === track)
+// to avoid bubbled events from child card transitions triggering the jump early.
+
+const deckReinits = new Map()
+
+document.querySelectorAll('.photo-deck').forEach((deck) => {
+  const track    = deck.querySelector('.deck-track-inner')
+  const viewport = deck.querySelector('.deck-viewport')
+  const cards    = [...track.querySelectorAll('.deck-card')]
+  const gap      = 24
+  let current    = 1
+  let busy       = false
+
+  function offset(idx) {
+    const cw  = cards[0].offsetWidth
+    const vpW = viewport.offsetWidth
+    return -(idx * (cw + gap)) + (vpW - cw) / 2
+  }
+
+  function jumpTo(idx) {
+    track.style.transition = 'none'
+    cards.forEach((c, i) => c.classList.toggle('active', i === idx))
+    track.style.transform = `translateX(${offset(idx)}px)`
+    current = idx
+    void track.offsetWidth   // force reflow — makes the transition:none take effect immediately
+    track.style.transition = ''
+    busy = false
+  }
+
+  function slideTo(idx) {
+    if (busy) return
+    busy = true
+    cards.forEach((c, i) => c.classList.toggle('active', i === idx))
+    track.style.transform = `translateX(${offset(idx)}px)`
+    current = idx
+  }
+
+  // Only respond to the track's own transform transition — not bubbled card transitions
+  track.addEventListener('transitionend', (e) => {
+    if (e.target !== track || e.propertyName !== 'transform') return
+    if (current === 4) jumpTo(1)
+    else if (current === 0) jumpTo(3)
+    else busy = false
+  })
+
+  // › = next (right card to center = increment)
+  deck.querySelector('.deck-arrow-next').addEventListener('click', () => slideTo(current + 1))
+  // ‹ = prev (left card to center = decrement)
+  deck.querySelector('.deck-arrow-prev').addEventListener('click', () => slideTo(current - 1))
+
+  // Register a reinit so openModal can call it after the modal is visible
+  deckReinits.set(deck.id, () => jumpTo(1))
+})
 
 // ─── Polaroid card swipe ──────────────────────────────────────────────────────
 

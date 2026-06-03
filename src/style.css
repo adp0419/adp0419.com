@@ -359,7 +359,7 @@ html {
   }
 
   .modal-panel {
-    @apply relative bg-white border border-slate-200 w-full max-w-2xl max-h-[85vh] overflow-y-auto;
+    @apply relative bg-white border border-slate-200 w-full max-w-[806px] max-h-[90vh] overflow-y-auto;
     box-shadow: 4px 6px 0px rgba(0, 0, 0, 0.1);
     animation: modal-in 150ms ease;
   }
@@ -419,4 +419,78 @@ html {
   .tech-tag:hover {
     transform: scale(1.05);
   }
+
+  /* ─── Project PDF embed ─── */
+  .proj-pdf-wrap {
+    @apply w-full border border-slate-200 bg-slate-50 mt-4;
+  }
+
+  .proj-pdf-wrap iframe {
+    @apply w-full border-0 block;
+    height: 408px;
+    cursor: zoom-in;
+  }
+
+  .proj-pdf-actions {
+    @apply flex gap-2 mt-2 mb-2;
+  }
+
+  /* ─── Project photo deck (polaroid sliding carousel) ─── */
+  .photo-deck {
+    @apply relative mt-5;
+    padding: 0 28px; /* room for the arrow buttons */
+  }
+
+  .deck-viewport {
+    @apply overflow-hidden w-full;
+  }
+
+  .deck-track-inner {
+    @apply flex;
+    gap: 24px;
+    transition: transform 420ms cubic-bezier(0.25, 0, 0.25, 1);
+    will-change: transform;
+  }
+
+  .deck-card {
+    flex-shrink: 0;
+    transition: filter 420ms ease, opacity 420ms ease, transform 420ms ease;
+    filter: blur(2.5px);
+    opacity: 0.6;
+    transform: scale(0.88);
+  }
+
+  .deck-card.active {
+    filter: none;
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .deck-polaroid {
+    padding: 10px 10px 20px 10px !important; /* thinner bottom */
+    box-shadow: 3px 4px 12px rgba(0, 0, 0, 0.12) !important;
+  }
+
+  .deck-photo {
+    width: 190px !important;
+    aspect-ratio: 4 / 3;
+  }
+
+  .deck-caption {
+    @apply text-center text-xs text-slate-500 mt-1;
+    line-height: 1.2;
+  }
+
+  .deck-arrow {
+    @apply absolute z-10 text-5xl leading-none text-slate-300
+           hover:text-slate-700 transition-colors duration-150 cursor-pointer;
+    top: 44%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    padding: 0;
+  }
+
+  .deck-arrow-prev { left: 0; }
+  .deck-arrow-next { right: 0; }
 }

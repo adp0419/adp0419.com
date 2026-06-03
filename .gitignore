@@ -1,8 +1,8 @@
 # markdown files (kept private)
 *.md
 
-# resume / private documents
-*.pdf
+# private documents (project PDFs in public/ are intentionally committed)
+Patel_Aryan_Resume.pdf
 
 # dependencies
 node_modules/
