@@ -572,7 +572,7 @@ html {
   }
 
   .modal-panel {
-    @apply relative bg-white border border-slate-200 w-full max-w-[806px] max-h-[90vh] overflow-y-auto;
+    @apply relative bg-white border border-slate-200 w-full max-w-[806px] max-h-[90vh] flex flex-col overflow-hidden;
     box-shadow: 4px 6px 0px rgba(0, 0, 0, 0.1);
     animation: modal-in 150ms ease;
   }
@@ -589,11 +589,11 @@ html {
   }
 
   .modal-head {
-    @apply flex items-center justify-between px-5 pt-4 pb-3 border-b border-slate-100;
+    @apply flex items-center justify-between px-5 pt-4 pb-3 border-b border-slate-100 flex-shrink-0 bg-white z-10;
   }
 
   .modal-title {
-    @apply text-base text-slate-900;
+    @apply text-base text-slate-900 truncate min-w-0 pr-4;
   }
 
   .modal-close {
@@ -602,7 +602,7 @@ html {
   }
 
   .modal-body {
-    @apply px-5 py-4 text-sm text-slate-700 leading-relaxed;
+    @apply px-5 py-4 text-sm text-slate-700 leading-relaxed overflow-y-auto flex-1 min-h-0;
   }
 
   .modal-body p {
@@ -645,7 +645,31 @@ html {
   .proj-pdf-wrap iframe {
     @apply w-full border-0 block;
     height: 400px;
-    cursor: zoom-in;
+  }
+
+  .proj-pdf-touch {
+    @apply w-full overflow-auto;
+    height: 400px;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x pan-y pinch-zoom;
+  }
+
+  .proj-pdf-touch[hidden],
+  .proj-pdf-wrap iframe[hidden] {
+    display: none;
+  }
+
+  .proj-pdf-touch-inner {
+    width: 100%;
+  }
+
+  .proj-pdf-touch canvas {
+    @apply block w-full;
+    height: auto;
+  }
+
+  .proj-pdf-touch-loading {
+    @apply text-xs text-slate-400 py-8 text-center;
   }
 
   .proj-pdf-actions {
@@ -742,11 +766,8 @@ html {
     width: auto;
   }
 
-  .proj-pdf-wrap {
-    touch-action: manipulation;
-  }
-
-  .proj-pdf-wrap iframe {
+  .proj-pdf-wrap iframe,
+  .proj-pdf-touch {
     height: min(60vh, 520px);
   }
 

@@ -75,13 +75,112 @@ sections.forEach((id) => {
 // ─── Modals ────────────────────────────────────────────────────────────────────
 
 const mobilePdfMq = window.matchMedia('(max-width: 639px)')
+const pdfTouchCache = new WeakMap()
+let pdfjsLibPromise = null
+
+function loadPdfjs() {
+  if (!pdfjsLibPromise) {
+    pdfjsLibPromise = Promise.all([
+      import('pdfjs-dist'),
+      import('pdfjs-dist/build/pdf.worker.min.mjs?url'),
+    ]).then(([pdfjs, worker]) => {
+      pdfjs.GlobalWorkerOptions.workerSrc = worker.default
+      return pdfjs
+    })
+  }
+  return pdfjsLibPromise
+}
+
+function touchDistance(t1, t2) {
+  return Math.hypot(t1.clientX - t2.clientX, t1.clientY - t2.clientY)
+}
+
+function setupPinchZoom(inner, container) {
+  let scale = 1
+  let startDist = 0
+  let startScale = 1
+
+  container.addEventListener('touchstart', (e) => {
+    if (e.touches.length === 2) {
+      startDist = touchDistance(e.touches[0], e.touches[1])
+      startScale = scale
+    }
+  }, { passive: true })
+
+  container.addEventListener('touchmove', (e) => {
+    if (e.touches.length === 2 && startDist > 0) {
+      e.preventDefault()
+      const dist = touchDistance(e.touches[0], e.touches[1])
+      scale = Math.min(4, Math.max(0.75, startScale * (dist / startDist)))
+      inner.style.zoom = scale
+    }
+  }, { passive: false })
+
+  container.addEventListener('touchend', (e) => {
+    if (e.touches.length < 2) startDist = 0
+  })
+}
+
+async function renderTouchPdfViewer(wrap, url) {
+  const touch = document.createElement('div')
+  touch.className = 'proj-pdf-touch'
+  const inner = document.createElement('div')
+  inner.className = 'proj-pdf-touch-inner'
+  const loading = document.createElement('p')
+  loading.className = 'proj-pdf-touch-loading'
+  loading.textContent = 'Loading PDF…'
+  inner.appendChild(loading)
+  touch.appendChild(inner)
+  wrap.appendChild(touch)
+
+  const pdfjs = await loadPdfjs()
+  const pdf = await pdfjs.getDocument(url).promise
+  inner.innerHTML = ''
+
+  const containerWidth = touch.clientWidth || wrap.clientWidth
+  for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+    const page = await pdf.getPage(pageNum)
+    const unscaled = page.getViewport({ scale: 1 })
+    const scale = containerWidth / unscaled.width
+    const viewport = page.getViewport({ scale })
+    const canvas = document.createElement('canvas')
+    const ctx = canvas.getContext('2d')
+    canvas.width = viewport.width
+    canvas.height = viewport.height
+    await page.render({ canvasContext: ctx, viewport }).promise
+    inner.appendChild(canvas)
+  }
+
+  setupPinchZoom(inner, touch)
+  pdfTouchCache.set(wrap, touch)
+}
+
+async function syncPdfWrap(wrap) {
+  const iframe = wrap.querySelector('iframe')
+  if (!iframe) return
+
+  const base = iframe.dataset.pdfBase ?? iframe.src.split('#')[0]
+  iframe.dataset.pdfBase = base
+
+  if (mobilePdfMq.matches) {
+    iframe.hidden = true
+    if (!pdfTouchCache.has(wrap)) {
+      await renderTouchPdfViewer(wrap, base)
+    }
+    const touch = wrap.querySelector('.proj-pdf-touch')
+    if (touch) touch.hidden = false
+    return
+  }
+
+  const touch = wrap.querySelector('.proj-pdf-touch')
+  if (touch) touch.hidden = true
+  iframe.hidden = false
+  iframe.src = `${base}#toolbar=0&navpanes=0&scrollbar=1&view=FitH`
+}
 
 function applyPdfView(modal) {
-  modal.querySelectorAll('.proj-pdf-wrap iframe').forEach((iframe) => {
-    const base = iframe.dataset.pdfBase ?? iframe.src.split('#')[0]
-    iframe.dataset.pdfBase = base
-    const view = mobilePdfMq.matches ? 'Fit' : 'FitH'
-    iframe.src = `${base}#toolbar=0&navpanes=0&scrollbar=1&view=${view}`
+  modal.querySelectorAll('.proj-pdf-wrap').forEach((wrap) => {
+    syncPdfWrap(wrap)
   })
 }
 
