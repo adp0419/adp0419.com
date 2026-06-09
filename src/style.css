@@ -431,7 +431,7 @@ html {
 
   .proj-pdf-wrap iframe {
     @apply w-full border-0 block;
-    height: 408px;
+    height: 400px;
     cursor: zoom-in;
   }
 
