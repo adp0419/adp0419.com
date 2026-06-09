@@ -9,18 +9,27 @@ html {
 
 /* ─── Layout helpers ─── */
 @layer components {
+  #hero {
+    min-height: 100svh;
+    @apply flex flex-col justify-center mb-16 sm:mb-24;
+  }
+
   .section-gap {
     @apply mt-10 sm:mt-14;
   }
 
-  /* ─── Fieldset cards (Andrew-inspired) ─── */
+  #about.section-gap {
+    @apply mt-16 sm:mt-24;
+  }
+
+  /* ─── Section cards (Andrew-inspired) ─── */
   .site-fieldset {
     @apply border border-slate-200 px-6 pt-5 pb-9 sm:px-10 sm:pt-6 sm:pb-10;
     box-shadow: 2px 3px 0px rgba(0, 0, 0, 0.05);
   }
 
-  .site-fieldset legend {
-    @apply px-2 -ml-2 text-slate-500;
+  .site-fieldset-title {
+    @apply mb-4 sm:mb-5 text-slate-500;
   }
 
   /* ─── Prose article inside bio ─── */
@@ -32,17 +41,42 @@ html {
     @apply mb-4 last:mb-0;
   }
 
+  /* Grid keeps photo in flow so the card grows to fit both columns */
+  .bio-article {
+    @apply grid gap-8 items-start;
+    grid-template-columns: 1fr;
+  }
+
+  .bio-photo {
+    @apply flex justify-center;
+  }
+
+  @media (min-width: 640px) {
+    .bio-article {
+      grid-template-columns: 1fr auto;
+      column-gap: 2rem;
+    }
+
+    .bio-content {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .bio-photo {
+      grid-column: 2;
+      grid-row: 1;
+      justify-content: flex-end;
+    }
+  }
+
   /* ─── Polaroid photo stack ─── */
   .polaroid-stack {
     @apply relative inline-block cursor-pointer select-none;
-    /* padding gives the peeking deck card its visible zone;
-       overflow: hidden clips the swiping card exactly at this boundary */
     padding-right: 14px;
     padding-bottom: 12px;
     overflow: hidden;
   }
 
-  /* invisible clone that gives the container its natural flow dimensions */
   .polaroid-spacer {
     visibility: hidden;
     pointer-events: none;
@@ -59,15 +93,12 @@ html {
     aspect-ratio: 3 / 4;
   }
 
-  /* placeholder tints so you can see the two cards during prototyping */
   .polaroid-photo.slot-2 { @apply bg-slate-200; }
 
-  /* ── Card positioning ── */
   .polaroid-card {
     position: absolute;
     top: 0;
     left: 0;
-    /* default: sitting in the deck behind — offset + slight tilt */
     transform: translate(10px, 8px) rotate(2.5deg) scale(0.97);
     z-index: 1;
     opacity: 0.82;
@@ -81,7 +112,6 @@ html {
     opacity: 1;
   }
 
-  /* ── Swipe-right animation ── */
   .polaroid-card.swiping-out {
     animation: card-swipe-right 0.38s cubic-bezier(0.4, 0, 0.8, 0.6) forwards;
     z-index: 3;
@@ -209,54 +239,233 @@ html {
     @apply text-base text-slate-600 mt-1.5 leading-relaxed;
   }
 
-  /* ─── Project filter bar ─── */
-  .proj-filter-bar {
-    @apply flex flex-wrap gap-2 mb-4;
+  /* ─── Project filters (inline slide-out) ─── */
+  .proj-filters {
+    @apply flex flex-col gap-2 mb-4 w-full;
   }
 
-  .proj-filter-btn {
-    @apply text-sm px-3 py-1 border border-slate-300 text-slate-500 whitespace-nowrap
-           transition-all duration-150 cursor-pointer bg-white;
+  .proj-filter-row {
+    @apply flex items-center min-h-[1.625rem] w-full;
   }
 
-  .proj-filter-btn:hover {
-    @apply border-slate-900 text-slate-900;
+  .proj-filter-trigger {
+    @apply relative z-10 flex-shrink-0 inline-flex items-center gap-1
+           text-xs px-2 py-0.5 border border-slate-200 outline-none
+           cursor-pointer bg-white text-slate-500 whitespace-nowrap;
+    transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
   }
 
-  .proj-filter-btn.active {
-    @apply bg-slate-900 text-white border-slate-900;
+  .proj-filter-trigger::after {
+    content: '›';
+    @apply text-slate-400 leading-none;
+    font-size: 0.7rem;
+    transition: transform 180ms ease, color 180ms ease;
+  }
+
+  .proj-filter-row:hover .proj-filter-trigger,
+  .proj-filter-row.is-open .proj-filter-trigger,
+  .proj-filter-row:focus-within .proj-filter-trigger {
+    @apply border-slate-300 bg-slate-50 text-slate-600;
+  }
+
+  .proj-filter-row:hover .proj-filter-trigger::after,
+  .proj-filter-row.is-open .proj-filter-trigger::after,
+  .proj-filter-row:focus-within .proj-filter-trigger::after {
+    @apply text-slate-500;
+    transform: translateX(2px);
+  }
+
+  .proj-filter-row.has-active:not(.is-open):not(:hover) .proj-filter-trigger {
+    @apply border-slate-300 text-slate-600 bg-slate-50;
+  }
+
+  /* Expands horizontally from the trigger — clipped to card width */
+  .proj-filter-expand {
+    @apply overflow-hidden flex-1 min-w-0;
+    max-width: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      max-width 0.4s cubic-bezier(0.25, 0, 0.25, 1),
+      opacity 0.25s ease,
+      margin-left 0.35s ease;
+    margin-left: 0;
+  }
+
+  .proj-filter-row:hover:not(.suppress-hover) .proj-filter-expand,
+  .proj-filter-row.is-open .proj-filter-expand {
+    max-width: 100%;
+    opacity: 1;
+    margin-left: 0.5rem;
+    pointer-events: auto;
+  }
+
+  .proj-filter-viewport {
+    @apply relative w-full overflow-hidden;
+  }
+
+  .proj-filter-scroll {
+    @apply overflow-x-auto overflow-y-hidden;
+    cursor: grab;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .proj-filter-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .proj-filter-scroll.is-dragging {
+    cursor: grabbing;
+  }
+
+  .proj-filter-scroll.is-dragging .proj-filter-opt {
+    pointer-events: none;
+  }
+
+  .proj-filter-opts {
+    @apply flex flex-nowrap gap-1 w-max pr-1;
+  }
+
+  .proj-filter-fade {
+    @apply absolute top-0 bottom-0 w-8 pointer-events-none opacity-0 z-[1];
+    transition: opacity 0.2s ease;
+  }
+
+  .proj-filter-fade-left {
+    left: 0;
+    background: linear-gradient(to right, rgb(255 255 255 / 0.98), transparent);
+    box-shadow: 6px 0 10px -6px rgb(0 0 0 / 0.08);
+  }
+
+  .proj-filter-fade-right {
+    right: 0;
+    background: linear-gradient(to left, rgb(255 255 255 / 0.98), transparent);
+    box-shadow: -6px 0 10px -6px rgb(0 0 0 / 0.12);
+  }
+
+  .proj-filter-viewport.can-scroll-left .proj-filter-fade-left,
+  .proj-filter-viewport.can-scroll-right .proj-filter-fade-right {
+    opacity: 1;
+  }
+
+  .proj-filter-opt {
+    @apply flex-shrink-0 text-xs px-2 py-0.5 border border-slate-200 text-slate-500
+           whitespace-nowrap cursor-pointer bg-white;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition:
+      opacity 0.28s ease,
+      transform 0.32s cubic-bezier(0.25, 0, 0.25, 1),
+      background-color 150ms ease,
+      color 150ms ease,
+      border-color 150ms ease;
+  }
+
+  .proj-filter-row:hover:not(.suppress-hover) .proj-filter-opt,
+  .proj-filter-row.is-open .proj-filter-opt {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .proj-filter-row:hover:not(.suppress-hover) .proj-filter-opt:nth-child(1),
+  .proj-filter-row.is-open .proj-filter-opt:nth-child(1) { transition-delay: 0.03s; }
+  .proj-filter-row:hover:not(.suppress-hover) .proj-filter-opt:nth-child(2),
+  .proj-filter-row.is-open .proj-filter-opt:nth-child(2) { transition-delay: 0.06s; }
+  .proj-filter-row:hover:not(.suppress-hover) .proj-filter-opt:nth-child(3),
+  .proj-filter-row.is-open .proj-filter-opt:nth-child(3) { transition-delay: 0.09s; }
+  .proj-filter-row:hover:not(.suppress-hover) .proj-filter-opt:nth-child(4),
+  .proj-filter-row.is-open .proj-filter-opt:nth-child(4) { transition-delay: 0.12s; }
+  .proj-filter-row:hover:not(.suppress-hover) .proj-filter-opt:nth-child(5),
+  .proj-filter-row.is-open .proj-filter-opt:nth-child(5) { transition-delay: 0.15s; }
+  .proj-filter-row:hover:not(.suppress-hover) .proj-filter-opt:nth-child(6),
+  .proj-filter-row.is-open .proj-filter-opt:nth-child(6) { transition-delay: 0.18s; }
+  .proj-filter-row:hover:not(.suppress-hover) .proj-filter-opt:nth-child(7),
+  .proj-filter-row.is-open .proj-filter-opt:nth-child(7) { transition-delay: 0.21s; }
+  .proj-filter-row:hover:not(.suppress-hover) .proj-filter-opt:nth-child(8),
+  .proj-filter-row.is-open .proj-filter-opt:nth-child(8) { transition-delay: 0.24s; }
+  .proj-filter-row:hover:not(.suppress-hover) .proj-filter-opt:nth-child(n+9),
+  .proj-filter-row.is-open .proj-filter-opt:nth-child(n+9) { transition-delay: 0.27s; }
+
+  .proj-filter-opt:hover {
+    @apply border-slate-300 text-slate-600 bg-slate-50;
+  }
+
+  .proj-filter-opt.active {
+    @apply bg-slate-100 text-slate-600 border-slate-300;
+  }
+
+  .proj-filter-opt.active:hover {
+    @apply bg-slate-200 text-slate-700 border-slate-400;
+  }
+
+  .proj-filter-clear {
+    @apply flex-shrink-0 text-xs text-slate-400 underline underline-offset-2
+           whitespace-nowrap cursor-pointer bg-transparent border-0 outline-none px-1 py-0.5;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition:
+      opacity 0.28s ease,
+      transform 0.32s cubic-bezier(0.25, 0, 0.25, 1),
+      color 150ms ease;
+  }
+
+  .proj-filter-row:hover:not(.suppress-hover) .proj-filter-clear,
+  .proj-filter-row.is-open .proj-filter-clear {
+    opacity: 1;
+    transform: translateX(0);
+    transition-delay: 0.15s;
+  }
+
+  .proj-filter-row:not(.has-active) .proj-filter-clear {
+    display: none;
+  }
+
+  .proj-filter-clear:hover {
+    @apply text-slate-600;
   }
 
   /* ─── Project list (compact rows) ─── */
   .proj-list {
-    @apply flex flex-col gap-2;
+    @apply flex flex-col;
   }
 
   .proj-item {
-    @apply flex items-center gap-4 p-3 border border-slate-100 cursor-pointer
-           transition-all duration-150 ease-in-out;
+    @apply flex items-center gap-4 p-3 border border-slate-100 cursor-pointer overflow-hidden;
     box-shadow: 1px 2px 0px rgba(0, 0, 0, 0.03);
+    max-height: 5.5rem;
+    margin-bottom: 0.5rem;
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+      opacity 240ms cubic-bezier(0.4, 0, 0.2, 1),
+      max-height 320ms cubic-bezier(0.4, 0, 0.2, 1),
+      margin-bottom 320ms cubic-bezier(0.4, 0, 0.2, 1),
+      padding 320ms cubic-bezier(0.4, 0, 0.2, 1),
+      border-color 240ms ease,
+      background-color 150ms ease,
+      transform 320ms cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .proj-item:hover {
+  .proj-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .proj-item:not(.hidden-proj):hover {
     @apply border-slate-300 bg-slate-50;
     transform: translateX(3px);
   }
 
   .proj-item.hidden-proj {
-    display: none;
-  }
-
-  .proj-icon-wrap {
-    @apply flex-shrink-0 w-11 h-11 bg-slate-100 border border-slate-200 overflow-hidden flex items-center justify-center;
-  }
-
-  .proj-icon-wrap.proj-icon-placeholder {
-    @apply bg-slate-100;
-  }
-
-  .proj-icon {
-    @apply w-full h-full object-cover;
+    max-height: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    opacity: 0;
+    transform: translateY(-6px);
+    border-color: transparent;
+    pointer-events: none;
   }
 
   .proj-item-body {

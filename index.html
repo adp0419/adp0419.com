@@ -31,12 +31,12 @@
     </nav>
 
     <!-- ─── MAIN CONTENT ─── -->
-    <main class="max-w-4xl mx-auto px-4 py-8 sm:py-12">
+    <main class="max-w-4xl mx-auto px-4 pb-8 sm:pb-12">
 
       <!-- ══════════════════════════════════════════
            HERO
       ══════════════════════════════════════════ -->
-      <section id="hero" class="min-h-[65vh] flex flex-col justify-center">
+      <section id="hero">
         <h1 class="text-5xl sm:text-6xl font-semibold tracking-tight leading-none mb-3">
           Aryan Patel
         </h1>
@@ -56,12 +56,27 @@
            BIO / ABOUT
       ══════════════════════════════════════════ -->
       <section id="about" class="section-gap">
-        <fieldset class="site-fieldset">
-          <legend><span class="font-sans font-semibold text-base">Biography</span></legend>
+        <div class="site-fieldset">
+          <h2 class="site-fieldset-title"><span class="font-sans font-semibold text-base">Biography</span></h2>
 
-          <article class="prose-article sm:block flex flex-col-reverse">
+          <article class="prose-article bio-article">
+            <div class="bio-content">
+              <p>
+                Hey! I'm Aryan. I'm a CS + Business student at the University of Florida.
+              </p>
+              <p>
+                Besides my professional and academic pursuits, making memories with friends and
+                family is really important to me. I also like to play all kinds of sports,
+                especially golf and pickleball. I love to eat amazing food — and now I'm learning
+                to cook to satiate those cravings.
+              </p>
+              <p>
+                Always open to connect, chat, and explore opportunities — feel free to reach out :)
+              </p>
+            </div>
+
             <!-- polaroid stack — click top card to cycle -->
-            <div class="float-none sm:float-right sm:ml-8 mb-8 sm:mb-2 flex justify-center sm:block">
+            <div class="bio-photo">
               <div class="polaroid-stack" id="polaroid-stack">
 
                 <!-- invisible spacer: gives the container its natural dimensions -->
@@ -69,7 +84,7 @@
                   <div class="polaroid"><div class="polaroid-photo"></div></div>
                 </div>
 
-                <!-- card 0 (starts on top) — slot-1 tint as placeholder -->
+                <!-- card 0 (starts on top) -->
                 <div class="polaroid-card active" id="pc-0">
                   <div class="polaroid">
                     <div class="polaroid-photo slot-1">
@@ -79,7 +94,7 @@
                   </div>
                 </div>
 
-                <!-- card 1 (starts in deck) — slot-2 tint as placeholder -->
+                <!-- card 1 (starts in deck) -->
                 <div class="polaroid-card" id="pc-1">
                   <div class="polaroid">
                     <div class="polaroid-photo slot-2">
@@ -91,32 +106,18 @@
 
               </div>
             </div>
-
-            <!-- bio paragraphs — replace placeholder text with your own words -->
-            <p>
-              Hey! I'm Aryan. I'm a CS + Business student at the University of Florida.
-            </p>
-            <p>
-              Besides my professional and academic pursuits, making memories with friends and
-              family is really important to me. I also like to play all kinds of sports,
-              especially golf and pickleball. I love to eat amazing food — and now I'm learning
-              to cook to satiate those cravings.
-            </p>
-            <p>
-              Always open to connect, chat, and explore opportunities — feel free to reach out :)
-            </p>
           </article>
-        </fieldset>
+        </div>
       </section>
 
       <!-- ══════════════════════════════════════════
            EXPERIENCE
       ══════════════════════════════════════════ -->
       <section id="experience" class="section-gap">
-        <fieldset class="site-fieldset">
-          <legend><span class="font-sans font-semibold text-base">Experience</span></legend>
+        <div class="site-fieldset">
+          <h2 class="site-fieldset-title"><span class="font-sans font-semibold text-base">Experience</span></h2>
 
-          <p class="text-sm text-slate-500 mb-5">clubs, research, and whatever comes next</p>
+          <p class="text-sm text-slate-500 mb-5">clubs, research, and everything next</p>
 
           <div class="exp-list">
 
@@ -175,33 +176,42 @@
             </a>
 
           </div><!-- /exp-list -->
-        </fieldset>
+        </div>
       </section>
 
       <!-- ══════════════════════════════════════════
            PROJECTS
       ══════════════════════════════════════════ -->
       <section id="projects" class="section-gap">
-        <fieldset class="site-fieldset">
-          <legend><span class="font-sans font-semibold text-base">Projects</span></legend>
+        <div class="site-fieldset">
+          <h2 class="site-fieldset-title"><span class="font-sans font-semibold text-base">Projects</span></h2>
 
           <p class="text-sm text-slate-500 mb-4">a few things i've built</p>
 
-          <!-- ── Category filter bar ── -->
-          <div class="proj-filter-bar" id="proj-filter-bar">
-            <button class="proj-filter-btn active" data-filter="all">All</button>
-            <button class="proj-filter-btn" data-filter="quantitative-finance">Quantitative Finance</button>
-            <button class="proj-filter-btn" data-filter="research">Research</button>
-            <button class="proj-filter-btn" data-filter="data-analysis">Data Analysis</button>
+          <!-- ── Project filters: category only ── -->
+          <div class="proj-filters" id="proj-filters">
+            <div class="proj-filter-row" data-filter-type="category">
+              <button type="button" class="proj-filter-trigger" aria-expanded="false">Filter</button>
+              <div class="proj-filter-expand">
+                <div class="proj-filter-viewport">
+                  <div class="proj-filter-scroll">
+                    <div class="proj-filter-opts" role="group" aria-label="Filter by category">
+                      <button type="button" class="proj-filter-opt" data-type="category" data-value="quantitative-finance">Quantitative Finance</button>
+                      <button type="button" class="proj-filter-opt" data-type="category" data-value="research">Research</button>
+                      <button type="button" class="proj-filter-opt" data-type="category" data-value="data-analysis">Data Analysis</button>
+                      <button type="button" class="proj-filter-clear" data-action="clear">clear</button>
+                    </div>
+                  </div>
+                  <div class="proj-filter-fade proj-filter-fade-left" aria-hidden="true"></div>
+                  <div class="proj-filter-fade proj-filter-fade-right" aria-hidden="true"></div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div class="proj-list" id="proj-list">
 
             <div class="proj-item" data-categories="quantitative-finance" data-modal="proj-1">
-              <div class="proj-icon-wrap">
-                <img src="/assets/logos/sharpe.jpg" alt="" class="proj-icon"
-                  onerror="this.parentElement.classList.add('proj-icon-placeholder')" />
-              </div>
               <div class="proj-item-body">
                 <p class="proj-item-title">Sharpe Strategy</p>
                 <p class="proj-item-desc">Volatility-adjusted momentum trading strategy — 0.9 Sharpe ratio, 17% portfolio growth.</p>
@@ -211,10 +221,6 @@
 
 
             <div class="proj-item" data-categories="research data-analysis" data-modal="proj-3">
-              <div class="proj-icon-wrap">
-                <img src="/assets/logos/ctlt.jpg" alt="" class="proj-icon"
-                  onerror="this.parentElement.classList.add('proj-icon-placeholder')" />
-              </div>
               <div class="proj-item-body">
                 <p class="proj-item-title">Climbing the Language Tree</p>
                 <p class="proj-item-desc">Cross-linguistic statistical analysis of pause patterns across 5 languages — R²=0.72.</p>
@@ -223,31 +229,31 @@
             </div>
 
           </div><!-- /proj-list -->
-        </fieldset>
+        </div>
       </section>
 
       <!-- ══════════════════════════════════════════
            MISC
       ══════════════════════════════════════════ -->
       <section id="misc" class="section-gap">
-        <fieldset class="site-fieldset">
-          <legend><span class="font-sans font-semibold text-base">Miscellaneous</span></legend>
+        <div class="site-fieldset">
+          <h2 class="site-fieldset-title"><span class="font-sans font-semibold text-base">Miscellaneous</span></h2>
 
           <p class="text-sm text-slate-500 mb-5">other stuff</p>
 
           <div class="misc-btn-group">
-            <button class="misc-btn" data-modal="background">Background</button>
+            <button class="misc-btn hidden" data-modal="background">Background</button>
             <button class="misc-btn" data-modal="technologies">Technologies</button>
           </div>
-        </fieldset>
+        </div>
       </section>
 
       <!-- ══════════════════════════════════════════
            LINKS
       ══════════════════════════════════════════ -->
       <section id="links" class="section-gap mb-24">
-        <fieldset class="site-fieldset">
-          <legend><span class="font-sans font-semibold text-base">Contact + Links</span></legend>
+        <div class="site-fieldset">
+          <h2 class="site-fieldset-title"><span class="font-sans font-semibold text-base">Contact + Links</span></h2>
 
           <ul class="links-list">
             <li>
@@ -284,7 +290,7 @@
               </a>
             </li>
           </ul>
-        </fieldset>
+        </div>
       </section>
 
     </main><!-- /main -->
@@ -430,19 +436,24 @@
 
           <div class="proj-tags">
             <div class="proj-tag-row">
+              <span class="proj-tag-label">Category</span>
+              <div class="tech-tags">
+                <span class="tech-tag">Quantitative Finance</span>
+              </div>
+            </div>
+            <div class="proj-tag-row">
               <span class="proj-tag-label">Tools &amp; Tech</span>
               <div class="tech-tags">
                 <span class="tech-tag">Python</span>
                 <span class="tech-tag">Pandas</span>
                 <span class="tech-tag">yfinance</span>
                 <span class="tech-tag">mplfinance</span>
-                <span class="tech-tag">Backtesting</span>
               </div>
             </div>
             <div class="proj-tag-row">
-              <span class="proj-tag-label">Category</span>
+              <span class="proj-tag-label">Skills</span>
               <div class="tech-tags">
-                <span class="tech-tag">Quantitative Finance</span>
+                <span class="tech-tag">Backtesting</span>
               </div>
             </div>
           </div>
@@ -548,6 +559,13 @@
 
           <div class="proj-tags">
             <div class="proj-tag-row">
+              <span class="proj-tag-label">Category</span>
+              <div class="tech-tags">
+                <span class="tech-tag">Research</span>
+                <span class="tech-tag">Data Analysis</span>
+              </div>
+            </div>
+            <div class="proj-tag-row">
               <span class="proj-tag-label">Tools &amp; Tech</span>
               <div class="tech-tags">
                 <span class="tech-tag">Python</span>
@@ -555,15 +573,13 @@
                 <span class="tech-tag">NumPy</span>
                 <span class="tech-tag">Matplotlib</span>
                 <span class="tech-tag">R</span>
-                <span class="tech-tag">EDA</span>
-                <span class="tech-tag">Qualitative Analysis</span>
               </div>
             </div>
             <div class="proj-tag-row">
-              <span class="proj-tag-label">Category</span>
+              <span class="proj-tag-label">Skills</span>
               <div class="tech-tags">
-                <span class="tech-tag">Research</span>
-                <span class="tech-tag">Data Analysis</span>
+                <span class="tech-tag">EDA</span>
+                <span class="tech-tag">Qualitative Analysis</span>
               </div>
             </div>
           </div>

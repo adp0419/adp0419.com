@@ -15,8 +15,8 @@ document.querySelectorAll('.hero-btn, .nav-btn, a[href="#hero"]').forEach((link)
     const section = document.querySelector(href)
     if (!section) return
 
-    // Center the fieldset card (the visible "box") on screen
-    const card = section.querySelector('fieldset') ?? section
+    // Center the section card (the visible "box") on screen
+    const card = section.querySelector('.site-fieldset') ?? section
     const cardTop    = card.getBoundingClientRect().top + window.scrollY
     const cardHeight = card.offsetHeight
     const vh         = window.innerHeight
@@ -106,30 +106,141 @@ document.querySelectorAll('[data-close-modal]').forEach((el) => {
   })
 })
 
-// ─── Project category filter ─────────────────────────────────────────────────
+// ─── Project filters (category only, multi-select AND) ───────────────────────
 
-const filterBar = document.getElementById('proj-filter-bar')
-const projItems = document.querySelectorAll('.proj-item')
+const projFilters = document.getElementById('proj-filters')
+const projItems   = document.querySelectorAll('.proj-item')
 
-if (filterBar) {
-  filterBar.addEventListener('click', (e) => {
-    const btn = e.target.closest('.proj-filter-btn')
-    if (!btn) return
+if (projFilters) {
+  const selected = new Set()
+  const row = projFilters.querySelector('.proj-filter-row')
 
-    const filter = btn.dataset.filter
+  function updateScrollFades() {
+    const viewport = row.querySelector('.proj-filter-viewport')
+    const scroll = row.querySelector('.proj-filter-scroll')
+    if (!viewport || !scroll) return
 
-    filterBar.querySelectorAll('.proj-filter-btn').forEach((b) => {
-      b.classList.toggle('active', b.dataset.filter === filter)
+    const maxScroll = scroll.scrollWidth - scroll.clientWidth
+    viewport.classList.toggle('can-scroll-left', scroll.scrollLeft > 4)
+    viewport.classList.toggle('can-scroll-right', maxScroll > 4 && scroll.scrollLeft < maxScroll - 4)
+  }
+
+  function initDragScroll() {
+    const scroll = row.querySelector('.proj-filter-scroll')
+    if (!scroll || scroll.dataset.dragInit) return
+    scroll.dataset.dragInit = '1'
+
+    let isDown = false
+    let startX = 0
+    let scrollStart = 0
+    let dragged = false
+
+    scroll.addEventListener('mousedown', (e) => {
+      if (e.button !== 0) return
+      if (e.target.closest('.proj-filter-opt')) return
+      isDown = true
+      dragged = false
+      startX = e.pageX
+      scrollStart = scroll.scrollLeft
+      scroll.classList.add('is-dragging')
     })
 
+    window.addEventListener('mousemove', (e) => {
+      if (!isDown) return
+      const dx = e.pageX - startX
+      if (Math.abs(dx) > 6) dragged = true
+      scroll.scrollLeft = scrollStart - dx
+      updateScrollFades()
+    })
+
+    window.addEventListener('mouseup', (e) => {
+      if (!isDown) return
+      if (Math.abs(e.pageX - startX) <= 6) dragged = false
+      isDown = false
+      scroll.classList.remove('is-dragging')
+    })
+
+    scroll.addEventListener('scroll', () => updateScrollFades(), { passive: true })
+
+    scroll.addEventListener('click', (e) => {
+      if (!dragged) return
+      e.preventDefault()
+      e.stopPropagation()
+      dragged = false
+    }, true)
+  }
+
+  function refreshRow() {
+    updateScrollFades()
+    requestAnimationFrame(updateScrollFades)
+  }
+
+  initDragScroll()
+  row.querySelector('.proj-filter-expand')?.addEventListener('transitionend', (e) => {
+    if (e.propertyName === 'max-width') refreshRow()
+  })
+  new ResizeObserver(refreshRow).observe(row)
+
+  row.addEventListener('mouseleave', () => {
+    row.classList.remove('suppress-hover')
+  })
+
+  function clearSelections() {
+    selected.clear()
+    row.querySelectorAll('.proj-filter-opt.active').forEach((o) => o.classList.remove('active'))
+    updateRowState()
+    applyProjFilters()
+  }
+
+  function updateRowState() {
+    const count = selected.size
+    row.classList.toggle('has-active', count > 0)
+    const trigger = row.querySelector('.proj-filter-trigger')
+    trigger.textContent = count ? `Filter (${count})` : 'Filter'
+  }
+
+  function applyProjFilters() {
     projItems.forEach((item) => {
-      if (filter === 'all') {
-        item.classList.remove('hidden-proj')
-      } else {
-        const cats = item.dataset.categories?.split(' ') ?? []
-        item.classList.toggle('hidden-proj', !cats.includes(filter))
-      }
+      const cats = item.dataset.categories?.split(' ') ?? []
+      const match = selected.size === 0 ||
+        [...selected].every((c) => cats.includes(c))
+      item.classList.toggle('hidden-proj', !match)
     })
+  }
+
+  projFilters.addEventListener('click', (e) => {
+    const trigger = e.target.closest('.proj-filter-trigger')
+    if (trigger) {
+      e.stopPropagation()
+      const open = row.classList.toggle('is-open')
+      trigger.setAttribute('aria-expanded', open)
+      if (!open) {
+        row.classList.add('suppress-hover')
+        trigger.blur()
+      }
+      refreshRow()
+      return
+    }
+
+    const clearBtn = e.target.closest('.proj-filter-clear')
+    if (clearBtn) {
+      e.stopPropagation()
+      clearSelections()
+      return
+    }
+
+    const opt = e.target.closest('.proj-filter-opt')
+    if (!opt) return
+
+    e.stopPropagation()
+    const { value } = opt.dataset
+
+    if (selected.has(value)) selected.delete(value)
+    else selected.add(value)
+
+    opt.classList.toggle('active', selected.has(value))
+    updateRowState()
+    applyProjFilters()
   })
 }
 
@@ -231,17 +342,13 @@ if (polaroidStack) {
     const nextIdx = (activeIdx + 1) % cards.length
     const next    = cards[nextIdx]
 
-    // 1. Swipe the top card out to the right
     current.classList.remove('active')
     current.classList.add('swiping-out')
 
-    // 2. After a short delay, lift the next card forward
     setTimeout(() => next.classList.add('active'), 160)
 
-    // 3. Once the swipe animation ends, park the card back in the deck
     current.addEventListener('animationend', () => {
       current.classList.remove('swiping-out')
-      // card is now back in its default deck-position styles
       activeIdx = nextIdx
       swiping = false
     }, { once: true })
