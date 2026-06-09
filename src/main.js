@@ -74,11 +74,23 @@ sections.forEach((id) => {
 
 // ─── Modals ────────────────────────────────────────────────────────────────────
 
+const mobilePdfMq = window.matchMedia('(max-width: 639px)')
+
+function applyPdfView(modal) {
+  modal.querySelectorAll('.proj-pdf-wrap iframe').forEach((iframe) => {
+    const base = iframe.dataset.pdfBase ?? iframe.src.split('#')[0]
+    iframe.dataset.pdfBase = base
+    const view = mobilePdfMq.matches ? 'Fit' : 'FitH'
+    iframe.src = `${base}#toolbar=0&navpanes=0&scrollbar=1&view=${view}`
+  })
+}
+
 function openModal(id) {
   const modal = document.getElementById(`modal-${id}`)
   if (!modal) return
   modal.removeAttribute('hidden')
   document.body.style.overflow = 'hidden'
+  applyPdfView(modal)
   modal.querySelector('.modal-close')?.focus()
   // Reinit any photo decks now that the modal is visible and measurable
   requestAnimationFrame(() => {
@@ -87,6 +99,10 @@ function openModal(id) {
     })
   })
 }
+
+mobilePdfMq.addEventListener('change', () => {
+  document.querySelectorAll('.modal:not([hidden])').forEach(applyPdfView)
+})
 
 function closeModal(modal) {
   modal.setAttribute('hidden', '')

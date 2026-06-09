@@ -47,6 +47,10 @@ html {
     grid-template-columns: 1fr;
   }
 
+  .bio-content {
+    min-width: 0;
+  }
+
   .bio-photo {
     @apply flex justify-center;
   }
@@ -715,4 +719,58 @@ html {
 
   .deck-arrow-prev { left: 0; }
   .deck-arrow-next { right: 0; }
+}
+
+/* ─── Mobile-only (< 640px) — desktop layout unchanged above this breakpoint ─── */
+@media (max-width: 639px) {
+  .exp-meta {
+    text-align: left;
+    align-self: flex-start;
+  }
+
+  .exp-header {
+    gap: 0.125rem;
+  }
+
+  .proj-tag-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.375rem;
+  }
+
+  .proj-tag-label {
+    width: auto;
+  }
+
+  .proj-pdf-wrap {
+    touch-action: manipulation;
+  }
+
+  .proj-pdf-wrap iframe {
+    height: min(60vh, 520px);
+  }
+
+  .sticky-nav-inner {
+    @apply py-2 gap-2;
+  }
+
+  .sticky-nav-inner > a {
+    @apply text-xs flex-shrink-0;
+  }
+
+  .nav-btn-group {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 0.5rem 0.75rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .nav-btn-group::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-btn {
+    @apply text-xs whitespace-nowrap flex-shrink-0;
+  }
 }
