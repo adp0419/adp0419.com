@@ -197,8 +197,10 @@
                   <div class="proj-filter-scroll">
                     <div class="proj-filter-opts" role="group" aria-label="Filter by category">
                       <button type="button" class="proj-filter-opt" data-type="category" data-value="quantitative-finance">Quantitative Finance</button>
-                      <button type="button" class="proj-filter-opt" data-type="category" data-value="research">Research</button>
+                      <button type="button" class="proj-filter-opt" data-type="category" data-value="full-stack">Full Stack</button>
+                      <button type="button" class="proj-filter-opt" data-type="category" data-value="machine-learning">Machine Learning</button>
                       <button type="button" class="proj-filter-opt" data-type="category" data-value="data-analysis">Data Analysis</button>
+                      <button type="button" class="proj-filter-opt" data-type="category" data-value="research">Research</button>
                       <button type="button" class="proj-filter-clear" data-action="clear">clear</button>
                     </div>
                   </div>
@@ -211,16 +213,55 @@
 
           <div class="proj-list" id="proj-list">
 
-            <div class="proj-item" data-categories="quantitative-finance" data-modal="proj-1">
+            <div class="proj-item" data-categories="full-stack machine-learning" data-modal="proj-echo">
               <div class="proj-item-body">
-                <p class="proj-item-title">Sharpe Strategy</p>
-                <p class="proj-item-desc">Volatility-adjusted momentum trading strategy — 0.9 Sharpe ratio, 17% portfolio growth.</p>
+                <p class="proj-item-title">Echo</p>
+                <p class="proj-item-desc">Full-stack GenAI dashboard analyzing Google Reviews with a dual-model NLP pipeline.</p>
               </div>
               <span class="proj-item-arrow">→</span>
             </div>
 
+            <div class="proj-item" data-categories="machine-learning data-analysis" data-modal="proj-house">
+              <div class="proj-item-body">
+                <p class="proj-item-title">House Pricing Multi Linear Regression</p>
+                <p class="proj-item-desc">ML regression pipeline predicting house prices with SHAP explainability — R²=0.58.</p>
+              </div>
+              <span class="proj-item-arrow">→</span>
+            </div>
 
-            <div class="proj-item" data-categories="research data-analysis" data-modal="proj-3">
+            <div class="proj-item" data-categories="quantitative-finance" data-modal="proj-sharpe">
+              <div class="proj-item-body">
+                <p class="proj-item-title">Sharpe Strategy</p>
+                <p class="proj-item-desc">Cross-asset momentum trading strategy — 0.9 Sharpe ratio, 17% portfolio growth.</p>
+              </div>
+              <span class="proj-item-arrow">→</span>
+            </div>
+
+            <div class="proj-item" data-categories="full-stack" data-modal="proj-scheduler">
+              <div class="proj-item-body">
+                <p class="proj-item-title">Algorithmic Study Planner — GatorHack IV</p>
+                <p class="proj-item-desc">Hackathon web app that generates personalized 7-14 day study plans from quiz dates.</p>
+              </div>
+              <span class="proj-item-arrow">→</span>
+            </div>
+
+            <div class="proj-item" data-categories="quantitative-finance machine-learning" data-modal="proj-senti">
+              <div class="proj-item-body">
+                <p class="proj-item-title">Senti</p>
+                <p class="proj-item-desc">CLI tool explaining stock movements using FinBERT sentiment analysis on real-time news.</p>
+              </div>
+              <span class="proj-item-arrow">→</span>
+            </div>
+
+            <div class="proj-item" data-categories="quantitative-finance data-analysis" data-modal="proj-trend">
+              <div class="proj-item-body">
+                <p class="proj-item-title">Stock Trend Analysis</p>
+                <p class="proj-item-desc">Python CLI analyzing stock trends across 5 time horizons with confidence scoring.</p>
+              </div>
+              <span class="proj-item-arrow">→</span>
+            </div>
+
+            <div class="proj-item" data-categories="research data-analysis" data-modal="proj-ctlt">
               <div class="proj-item-body">
                 <p class="proj-item-title">Climbing the Language Tree</p>
                 <p class="proj-item-desc">Cross-linguistic statistical analysis of pause patterns across 5 languages — R²=0.72.</p>
@@ -343,49 +384,63 @@
               <p class="tech-group-label">Languages</p>
               <div class="tech-tags">
                 <span class="tech-tag">Python</span>
+                <span class="tech-tag">TypeScript</span>
+                <span class="tech-tag">JavaScript</span>
                 <span class="tech-tag">C++</span>
                 <span class="tech-tag">Java</span>
                 <span class="tech-tag">SQL</span>
-                <span class="tech-tag">JavaScript</span>
-                <span class="tech-tag">HTML/CSS</span>
                 <span class="tech-tag">R</span>
                 <span class="tech-tag">Rust</span>
+                <span class="tech-tag">HTML/CSS</span>
               </div>
             </div>
 
             <div class="tech-group">
               <p class="tech-group-label">Frameworks &amp; Libraries</p>
               <div class="tech-tags">
+                <span class="tech-tag">React</span>
+                <span class="tech-tag">Next.js</span>
                 <span class="tech-tag">PyTorch</span>
                 <span class="tech-tag">scikit-learn</span>
+                <span class="tech-tag">Hugging Face</span>
                 <span class="tech-tag">Pandas</span>
                 <span class="tech-tag">NumPy</span>
-                <span class="tech-tag">Hugging Face</span>
-                <span class="tech-tag">NLTK</span>
-                <span class="tech-tag">TensorFlow</span>
+                <span class="tech-tag">SHAP</span>
                 <span class="tech-tag">Flask</span>
                 <span class="tech-tag">FastAPI</span>
-                <span class="tech-tag">React</span>
-                <span class="tech-tag">D3.js</span>
+                <span class="tech-tag">Tailwind CSS</span>
                 <span class="tech-tag">Matplotlib</span>
                 <span class="tech-tag">Seaborn</span>
+                <span class="tech-tag">Recharts</span>
+                <span class="tech-tag">D3.js</span>
               </div>
             </div>
 
             <div class="tech-group">
-              <p class="tech-group-label">Tools &amp; Technologies</p>
+              <p class="tech-group-label">Tools &amp; Platforms</p>
               <div class="tech-tags">
                 <span class="tech-tag">Git</span>
                 <span class="tech-tag">Docker</span>
                 <span class="tech-tag">Linux</span>
+                <span class="tech-tag">Supabase</span>
+                <span class="tech-tag">PostgreSQL</span>
+                <span class="tech-tag">Prisma</span>
+                <span class="tech-tag">Upstash Redis</span>
+                <span class="tech-tag">Vercel</span>
                 <span class="tech-tag">HiPerGator HPC</span>
                 <span class="tech-tag">SLURM</span>
+              </div>
+            </div>
+
+            <div class="tech-group">
+              <p class="tech-group-label">Domains</p>
+              <div class="tech-tags">
                 <span class="tech-tag">NLP</span>
                 <span class="tech-tag">Deep Learning</span>
                 <span class="tech-tag">Backtesting</span>
-                <span class="tech-tag">A/B Testing</span>
-                <span class="tech-tag">API Integration</span>
                 <span class="tech-tag">Statistical Modeling</span>
+                <span class="tech-tag">API Integration</span>
+                <span class="tech-tag">GenAI</span>
               </div>
             </div>
 
@@ -408,7 +463,7 @@
          PROJECT MODALS
     ══════════════════════════════════════════ -->
 
-    <div id="modal-proj-1" class="modal" role="dialog" aria-modal="true" aria-label="Sharpe Strategy" hidden>
+    <div id="modal-proj-sharpe" class="modal" role="dialog" aria-modal="true" aria-label="Sharpe Strategy" hidden>
       <div class="modal-backdrop" data-close-modal></div>
       <div class="modal-panel">
         <div class="modal-head">
@@ -462,7 +517,360 @@
     </div>
 
 
-    <div id="modal-proj-3" class="modal" role="dialog" aria-modal="true" aria-label="Climbing the Language Tree" hidden>
+    <!-- Echo -->
+    <div id="modal-proj-echo" class="modal" role="dialog" aria-modal="true" aria-label="Echo" hidden>
+      <div class="modal-backdrop" data-close-modal></div>
+      <div class="modal-panel">
+        <div class="modal-head">
+          <h2 class="modal-title font-semibold">Echo</h2>
+          <button class="modal-close" data-close-modal aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>
+            A web app that lets you look up any business, pull its Google Reviews, and automatically
+            analyze them with AI. Each review is scored for sentiment with a machine learning model,
+            then a separate AI extracts complaints, praises, employee mentions, and suggestions.
+            Everything shows up on a live dashboard with charts and cards.
+          </p>
+          <p>
+            Multiple users can share the same business data so reviews only get fetched and analyzed once —
+            built with a <strong>multi-tenant shared data architecture</strong> using a PostgreSQL join table.
+          </p>
+          <div class="proj-link-actions">
+            <a href="https://github.com/adp0419/Echo" class="proj-link-btn" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://echo-reviews.vercel.app" class="proj-link-btn" target="_blank" rel="noopener">Website</a>
+          </div>
+          <div class="proj-tags">
+            <div class="proj-tag-row">
+              <span class="proj-tag-label">Category</span>
+              <div class="tech-tags">
+                <span class="tech-tag">Full Stack</span>
+                <span class="tech-tag">Machine Learning</span>
+                <span class="tech-tag">GenAI</span>
+              </div>
+            </div>
+            <div class="proj-tag-row">
+              <span class="proj-tag-label">Tools &amp; Tech</span>
+              <div class="tech-tags">
+                <span class="tech-tag">Next.js 14</span>
+                <span class="tech-tag">TypeScript</span>
+                <span class="tech-tag">React 18</span>
+                <span class="tech-tag">Supabase</span>
+                <span class="tech-tag">PostgreSQL</span>
+                <span class="tech-tag">Prisma</span>
+                <span class="tech-tag">Claude Haiku</span>
+                <span class="tech-tag">HuggingFace BERT</span>
+                <span class="tech-tag">Upstash Redis</span>
+              </div>
+            </div>
+            <div class="proj-tag-row">
+              <span class="proj-tag-label">Skills</span>
+              <div class="tech-tags">
+                <span class="tech-tag">Multi-model AI Pipeline</span>
+                <span class="tech-tag">Database Schema Design</span>
+                <span class="tech-tag">Auth &amp; Rate Limiting</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- House Pricing Multi Linear Regression -->
+    <div id="modal-proj-house" class="modal" role="dialog" aria-modal="true" aria-label="House Pricing Multi Linear Regression" hidden>
+      <div class="modal-backdrop" data-close-modal></div>
+      <div class="modal-panel">
+        <div class="modal-head">
+          <h2 class="modal-title font-semibold">House Pricing Multi Linear Regression</h2>
+          <button class="modal-close" data-close-modal aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>
+            A machine learning model that predicts how much a house will sell for based on features
+            like size, location, number of bedrooms/bathrooms, and condition. Cleaned and prepared a
+            real dataset of <strong>~4,000 U.S. home sales</strong>, engineered new features, trained
+            a linear regression model, then used SHAP to explain which features matter most.
+          </p>
+          <p>
+            Found that <strong>Seattle location and above-ground living ratio</strong> are the top 2
+            price drivers, outranking raw square footage across all 132 features. Achieved
+            <strong>R²=0.58 and MAE of ~$117K</strong>.
+          </p>
+          <div class="proj-link-actions">
+            <a href="https://github.com/adp0419/house-price-analysis" class="proj-link-btn" target="_blank" rel="noopener">GitHub</a>
+          </div>
+
+          <!-- Chart gallery -->
+          <div class="photo-deck" id="house-deck">
+            <div class="deck-viewport">
+              <div class="deck-track-inner">
+
+                <!-- index 0: clone of residuals (for seamless loop) -->
+                <div class="deck-card">
+                  <div class="polaroid deck-polaroid">
+                    <div class="polaroid-photo deck-photo">
+                      <img src="/assets/projects/house/residuals.png" alt="Residuals" class="w-full h-full object-cover" />
+                    </div>
+                    <p class="deck-caption">Residuals vs Predicted</p>
+                  </div>
+                </div>
+
+                <!-- index 1: scatter (initial center) -->
+                <div class="deck-card active">
+                  <div class="polaroid deck-polaroid">
+                    <div class="polaroid-photo deck-photo">
+                      <img src="/assets/projects/house/scatter.png" alt="Actual vs Predicted" class="w-full h-full object-cover" />
+                    </div>
+                    <p class="deck-caption">Actual vs Predicted</p>
+                  </div>
+                </div>
+
+                <!-- index 2: shap -->
+                <div class="deck-card">
+                  <div class="polaroid deck-polaroid">
+                    <div class="polaroid-photo deck-photo">
+                      <img src="/assets/projects/house/shap.png" alt="SHAP Features" class="w-full h-full object-cover" />
+                    </div>
+                    <p class="deck-caption">SHAP Features</p>
+                  </div>
+                </div>
+
+                <!-- index 3: heatmap -->
+                <div class="deck-card">
+                  <div class="polaroid deck-polaroid">
+                    <div class="polaroid-photo deck-photo">
+                      <img src="/assets/projects/house/heatmap.png" alt="Correlation Heatmap" class="w-full h-full object-cover" />
+                    </div>
+                    <p class="deck-caption">Correlation Heatmap</p>
+                  </div>
+                </div>
+
+                <!-- index 4: residuals -->
+                <div class="deck-card">
+                  <div class="polaroid deck-polaroid">
+                    <div class="polaroid-photo deck-photo">
+                      <img src="/assets/projects/house/residuals.png" alt="Residuals" class="w-full h-full object-cover" />
+                    </div>
+                    <p class="deck-caption">Residuals vs Predicted</p>
+                  </div>
+                </div>
+
+                <!-- index 5: clone of scatter (for seamless loop) -->
+                <div class="deck-card">
+                  <div class="polaroid deck-polaroid">
+                    <div class="polaroid-photo deck-photo">
+                      <img src="/assets/projects/house/scatter.png" alt="Actual vs Predicted" class="w-full h-full object-cover" />
+                    </div>
+                    <p class="deck-caption">Actual vs Predicted</p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <button class="deck-arrow deck-arrow-prev" aria-label="Previous">&#8249;</button>
+            <button class="deck-arrow deck-arrow-next" aria-label="Next">&#8250;</button>
+
+            <div class="deck-desc-wrap">
+              <p class="deck-description" id="house-deck-desc">
+                The model tracks actual sale prices well for homes under ~$750K, with dots clustering tightly
+                around the ideal diagonal. Above $1M, predictions consistently fall short — the model
+                underpredicts luxury homes.
+              </p>
+            </div>
+          </div>
+
+          <div class="proj-tags">
+            <div class="proj-tag-row">
+              <span class="proj-tag-label">Category</span>
+              <div class="tech-tags">
+                <span class="tech-tag">Machine Learning</span>
+                <span class="tech-tag">Data Analysis</span>
+              </div>
+            </div>
+            <div class="proj-tag-row">
+              <span class="proj-tag-label">Tools &amp; Tech</span>
+              <div class="tech-tags">
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">scikit-learn</span>
+                <span class="tech-tag">SHAP</span>
+                <span class="tech-tag">Pandas</span>
+                <span class="tech-tag">NumPy</span>
+                <span class="tech-tag">Matplotlib</span>
+                <span class="tech-tag">Seaborn</span>
+              </div>
+            </div>
+            <div class="proj-tag-row">
+              <span class="proj-tag-label">Skills</span>
+              <div class="tech-tags">
+                <span class="tech-tag">Feature Engineering</span>
+                <span class="tech-tag">SHAP Explainability</span>
+                <span class="tech-tag">EDA</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Algorithmic Study Planner — GatorHack IV -->
+    <div id="modal-proj-scheduler" class="modal" role="dialog" aria-modal="true" aria-label="Algorithmic Study Planner — GatorHack IV" hidden>
+      <div class="modal-backdrop" data-close-modal></div>
+      <div class="modal-panel">
+        <div class="modal-head">
+          <h2 class="modal-title font-semibold">Algorithmic Study Planner — GatorHack IV</h2>
+          <button class="modal-close" data-close-modal aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>
+            A web app built at the <strong>GatorHack IV</strong> hackathon that automatically generates a
+            personalized study schedule. You enter your upcoming quizzes with their topics and dates,
+            and the app calculates a 7-14 day study plan, groups related topics together, schedules
+            review sessions, and shows everything on an interactive calendar.
+          </p>
+          <p>
+            The scheduling logic is fully algorithmic — no external AI API is used. Related topics
+            are grouped using keyword similarity to minimize context-switching, and automatic review
+            sessions are inserted before each quiz for spaced repetition.
+          </p>
+          <div class="proj-link-actions">
+            <a href="https://github.com/adp0419/Gator-Hack-IV-Study-Planner" class="proj-link-btn" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://www.hackathonparty.com/hackathons/26/projects/321" class="proj-link-btn" target="_blank" rel="noopener">Hackathon</a>
+          </div>
+          <div class="proj-tags">
+            <div class="proj-tag-row">
+              <span class="proj-tag-label">Category</span>
+              <div class="tech-tags">
+                <span class="tech-tag">Full Stack</span>
+              </div>
+            </div>
+            <div class="proj-tag-row">
+              <span class="proj-tag-label">Tools &amp; Tech</span>
+              <div class="tech-tags">
+                <span class="tech-tag">TypeScript</span>
+                <span class="tech-tag">React 18</span>
+                <span class="tech-tag">Vite</span>
+                <span class="tech-tag">Tailwind CSS</span>
+                <span class="tech-tag">Lucide React</span>
+              </div>
+            </div>
+            <div class="proj-tag-row">
+              <span class="proj-tag-label">Skills</span>
+              <div class="tech-tags">
+                <span class="tech-tag">Algorithmic Scheduling</span>
+                <span class="tech-tag">Component Architecture</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Senti (Senti) -->
+    <div id="modal-proj-senti" class="modal" role="dialog" aria-modal="true" aria-label="Senti" hidden>
+      <div class="modal-backdrop" data-close-modal></div>
+      <div class="modal-panel">
+        <div class="modal-head">
+          <h2 class="modal-title font-semibold">Senti</h2>
+          <button class="modal-close" data-close-modal aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>
+            A command-line tool that explains why stocks are going up or down. You type in stock
+            tickers, and it pulls recent news articles, runs them through <strong>FinBERT</strong>
+            (a transformer trained on financial text) to score sentiment, then compares that sentiment
+            to the stock's actual price movement over the past week.
+          </p>
+          <p>
+            Uses exponential decay weighting (<strong>e^(-0.2t)</strong>) so today's news carries full
+            weight and a 7-day-old article counts for about 25%. Outputs a plain-English interpretation
+            — like "news-driven rally" or "technical rebound" — for each ticker.
+          </p>
+          <div class="proj-tags">
+            <div class="proj-tag-row">
+              <span class="proj-tag-label">Category</span>
+              <div class="tech-tags">
+                <span class="tech-tag">Quantitative Finance</span>
+                <span class="tech-tag">Machine Learning</span>
+              </div>
+            </div>
+            <div class="proj-tag-row">
+              <span class="proj-tag-label">Tools &amp; Tech</span>
+              <div class="tech-tags">
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">PyTorch</span>
+                <span class="tech-tag">HuggingFace Transformers</span>
+                <span class="tech-tag">FinBERT</span>
+                <span class="tech-tag">Finnhub API</span>
+                <span class="tech-tag">yfinance</span>
+              </div>
+            </div>
+            <div class="proj-tag-row">
+              <span class="proj-tag-label">Skills</span>
+              <div class="tech-tags">
+                <span class="tech-tag">NLP Inference</span>
+                <span class="tech-tag">Financial Data Integration</span>
+                <span class="tech-tag">Signal Correlation</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stock Trend Analysis -->
+    <div id="modal-proj-trend" class="modal" role="dialog" aria-modal="true" aria-label="Stock Trend Analysis" hidden>
+      <div class="modal-backdrop" data-close-modal></div>
+      <div class="modal-panel">
+        <div class="modal-head">
+          <h2 class="modal-title font-semibold">Stock Trend Analysis</h2>
+          <button class="modal-close" data-close-modal aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>
+            A Python CLI tool that analyzes any stock ticker and tells you whether it's trending up,
+            down, or sideways — across <strong>5 time horizons</strong> (1 day, 1 week, 1 month,
+            1 quarter, 1 year). Pulls historical price data, runs it through statistical calculations,
+            and prints a plain-English report with trend direction, confidence level, signal strength,
+            volatility, and drawdown.
+          </p>
+          <p>
+            Built as a modular <strong>5-module architecture</strong> (fetcher, preprocessor, analyzer,
+            report, visualizer) enabling independent development and testing of each layer.
+          </p>
+          <div class="proj-link-actions">
+            <a href="https://github.com/adp0419/Stock-Trend-Analysis" class="proj-link-btn" target="_blank" rel="noopener">GitHub</a>
+          </div>
+          <div class="proj-tags">
+            <div class="proj-tag-row">
+              <span class="proj-tag-label">Category</span>
+              <div class="tech-tags">
+                <span class="tech-tag">Quantitative Finance</span>
+                <span class="tech-tag">Data Analysis</span>
+              </div>
+            </div>
+            <div class="proj-tag-row">
+              <span class="proj-tag-label">Tools &amp; Tech</span>
+              <div class="tech-tags">
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">yfinance</span>
+                <span class="tech-tag">Pandas</span>
+                <span class="tech-tag">NumPy</span>
+                <span class="tech-tag">Matplotlib</span>
+              </div>
+            </div>
+            <div class="proj-tag-row">
+              <span class="proj-tag-label">Skills</span>
+              <div class="tech-tags">
+                <span class="tech-tag">Statistical Signal Computation</span>
+                <span class="tech-tag">Modular Software Design</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="modal-proj-ctlt" class="modal" role="dialog" aria-modal="true" aria-label="Climbing the Language Tree" hidden>
       <div class="modal-backdrop" data-close-modal></div>
       <div class="modal-panel">
         <div class="modal-head">

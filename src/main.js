@@ -360,84 +360,96 @@ if (projFilters) {
 }
 
 // ─── Polaroid photo deck (infinite sliding carousel) ─────────────────────────
-// Track: [p3-clone(0) | p1(1) | p2(2) | p3(3) | p1-clone(4)]. Initial center: 1.
-// ›  = next = increment. ‹ = prev = decrement.
-// Boundary 4 → jump to real 1.  Boundary 0 → jump to real 3.
-// jumpTo() uses force-reflow (void offsetWidth) instead of double-rAF
-// so there's no async gap between the invisible jump and re-enabling the transition.
-// transitionend is filtered to track's OWN transform only (e.target === track)
-// to avoid bubbled events from child card transitions triggering the jump early.
+// Generic: works with any number of cards. Layout: [clone-of-last | real-1 ... real-N | clone-of-first].
+// Boundary at 0 → jump to lastReal. Boundary at cards.length-1 → jump to 1.
+// Optional .deck-description element swaps text per slide via data-descriptions JSON.
 
 const deckReinits = new Map()
 
-document.querySelectorAll('.photo-deck').forEach((deck) => {
-  const track    = deck.querySelector('.deck-track-inner')
-  const viewport = deck.querySelector('.deck-viewport')
-  const cards    = [...track.querySelectorAll('.deck-card')]
-  const gap      = 24
-  let current    = 1
-  let busy       = false
-  let pending    = 0
+const deckDescriptions = {
+  'house-deck': {
+    1: 'The model tracks actual sale prices well for homes under ~$750K, with dots clustering tightly around the ideal diagonal. Above $1M, predictions consistently fall short — the model underpredicts luxury homes.',
+    2: 'Location (Seattle) is the single strongest price driver, followed by above-ground living ratio and total square footage. Wealthy zip codes like WA 98112 and WA 98004 appear individually in the top 20.',
+    3: 'Square footage features are heavily intercorrelated (sqft_living and sqft_above at 0.87), revealing multicollinearity. Lot size has almost zero correlation with price (0.05), and above_ground_ratio shows a strong inverse relationship with basement size (-0.91).',
+    4: 'Residuals fan out in a funnel shape as predicted price increases — reasonably accurate for typical homes but errors exceeding $1M+ for high-value properties. This heteroscedasticity suggests a log-transformation or non-linear model could help.',
+  },
+}
 
-  function offset(idx) {
+document.querySelectorAll('.photo-deck').forEach((deck) => {
+  const track     = deck.querySelector('.deck-track-inner')
+  const viewport  = deck.querySelector('.deck-viewport')
+  const cards     = [...track.querySelectorAll('.deck-card')]
+  const descEl    = deck.querySelector('.deck-description')
+  const descs     = deckDescriptions[deck.id] || {}
+  const gap       = 24
+  const lastReal  = cards.length - 2   // last real card index
+  let current     = 1
+  let busy        = false
+  let pending     = 0
+
+  function calcOffset(idx) {
     const cw  = cards[0].offsetWidth
     const vpW = viewport.offsetWidth
     return -(idx * (cw + gap)) + (vpW - cw) / 2
   }
 
+  let lastDir = 1 // 1 = next, -1 = prev
+
+  function updateDesc(idx, dir) {
+    if (!descEl || !descs[idx]) return
+    if (dir) lastDir = dir
+
+    const outClass = lastDir > 0 ? 'slide-out-left' : 'slide-out-right'
+    const inClass  = lastDir > 0 ? 'slide-in-left'  : 'slide-in-right'
+
+    descEl.classList.add(outClass)
+
+    setTimeout(() => {
+      descEl.textContent = descs[idx]
+      descEl.classList.remove(outClass)
+      descEl.classList.add(inClass)
+      void descEl.offsetWidth
+      descEl.classList.remove(inClass)
+    }, 420)
+  }
+
   function jumpTo(idx) {
     track.style.transition = 'none'
     cards.forEach((c, i) => c.classList.toggle('active', i === idx))
-    track.style.transform = `translateX(${offset(idx)}px)`
+    track.style.transform = `translateX(${calcOffset(idx)}px)`
     current = idx
-    void track.offsetWidth   // force reflow — makes the transition:none take effect immediately
+    updateDesc(idx)
+    void track.offsetWidth
     track.style.transition = ''
     busy = false
   }
 
-  function slideTo(idx) {
+  function slideTo(idx, dir) {
     busy = true
     cards.forEach((c, i) => c.classList.toggle('active', i === idx))
-    track.style.transform = `translateX(${offset(idx)}px)`
+    track.style.transform = `translateX(${calcOffset(idx)}px)`
     current = idx
+    updateDesc(idx, dir)
   }
 
   function tryAdvance() {
     if (busy) return
-    if (pending > 0) {
-      pending--
-      slideTo(current + 1)
-    } else if (pending < 0) {
-      pending++
-      slideTo(current - 1)
-    }
+    if (pending > 0) { pending--; slideTo(current + 1, 1) }
+    else if (pending < 0) { pending++; slideTo(current - 1, -1) }
   }
 
-  // Only respond to the track's own transform transition — not bubbled card transitions
   track.addEventListener('transitionend', (e) => {
     if (e.target !== track || e.propertyName !== 'transform') return
-    if (current === 4) jumpTo(1)
-    else if (current === 0) jumpTo(3)
+    if (current >= cards.length - 1) jumpTo(1)
+    else if (current <= 0) jumpTo(lastReal)
     else busy = false
     tryAdvance()
   })
 
-  // › = next (right card to center = increment)
-  deck.querySelector('.deck-arrow-next').addEventListener('click', () => {
-    pending++
-    tryAdvance()
-  })
-  // ‹ = prev (left card to center = decrement)
-  deck.querySelector('.deck-arrow-prev').addEventListener('click', () => {
-    pending--
-    tryAdvance()
-  })
+  deck.querySelector('.deck-arrow-next').addEventListener('click', () => { pending++; tryAdvance() })
+  deck.querySelector('.deck-arrow-prev').addEventListener('click', () => { pending--; tryAdvance() })
 
-  // Register a reinit so openModal can call it after the modal is visible
-  deckReinits.set(deck.id, () => {
-    pending = 0
-    jumpTo(1)
-  })
+  deckReinits.set(deck.id, () => { pending = 0; jumpTo(1) })
 })
 
 // ─── Polaroid card swipe ──────────────────────────────────────────────────────

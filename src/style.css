@@ -494,12 +494,28 @@ html {
   }
 
   /* ─── Project modal tag footer ─── */
+  /* ─── Project modal link buttons ─── */
+  .proj-link-actions {
+    @apply flex flex-wrap gap-2 mt-4;
+  }
+
+  .proj-link-btn {
+    @apply text-sm px-4 py-1.5 border border-slate-900 no-underline text-slate-900 inline-flex items-center gap-1.5
+           transition-all duration-150 ease-in-out hover:bg-slate-900 hover:text-white;
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.15);
+  }
+
+  .proj-link-btn:hover {
+    box-shadow: none;
+    transform: translate(1px, 1px);
+  }
+
   .proj-tags {
     @apply mt-6 pt-4 border-t border-slate-100 flex flex-col gap-3;
   }
 
   .proj-tag-row {
-    @apply flex flex-wrap items-center gap-2;
+    @apply flex items-center gap-3;
   }
 
   .proj-tag-label {
@@ -743,6 +759,38 @@ html {
 
   .deck-arrow-prev { left: 0; }
   .deck-arrow-next { right: 0; }
+
+  .deck-desc-wrap {
+    @apply relative overflow-hidden mt-3 px-4;
+    min-height: 3.5rem;
+  }
+
+  .deck-description {
+    @apply text-xs text-slate-500 leading-relaxed text-center;
+    transition: transform 420ms cubic-bezier(0.25, 0, 0.25, 1), opacity 380ms ease;
+  }
+
+  .deck-description.slide-out-left {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+
+  .deck-description.slide-out-right {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  .deck-description.slide-in-left {
+    transform: translateX(100%);
+    opacity: 0;
+    transition: none;
+  }
+
+  .deck-description.slide-in-right {
+    transform: translateX(-100%);
+    opacity: 0;
+    transition: none;
+  }
 }
 
 /* ─── Mobile-only (< 640px) — desktop layout unchanged above this breakpoint ─── */
