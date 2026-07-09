@@ -87,7 +87,7 @@ html {
   }
 
   .polaroid {
-    @apply bg-white border border-slate-200 inline-block;
+    @apply bg-white border border-slate-200 inline-block relative;
     padding: 10px 10px 36px 10px;
     box-shadow: 3px 4px 12px rgba(0, 0, 0, 0.1);
   }
@@ -98,6 +98,18 @@ html {
   }
 
   .polaroid-photo.slot-2 { @apply bg-slate-200; }
+
+  .polaroid-caption {
+    @apply text-xs text-slate-400;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
   .polaroid-card {
     position: absolute;
