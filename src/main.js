@@ -410,7 +410,7 @@ document.querySelectorAll('.photo-deck').forEach((deck) => {
       descEl.classList.add(inClass)
       void descEl.offsetWidth
       descEl.classList.remove(inClass)
-    }, 420)
+    }, 210)
   }
 
   function jumpTo(idx) {
