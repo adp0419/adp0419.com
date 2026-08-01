@@ -138,10 +138,28 @@
 
           <div class="exp-list">
 
-            <a class="exp-card" href="https://ufdatastudio.com/" target="_blank" rel="noopener">
-              <div class="exp-logo-wrap">
-                <img src="/assets/logos/uf-data-studio.png" alt="UF Data Studio" class="exp-logo" />
+            <div class="exp-card cursor-pointer" data-modal="exp-amazon">
+              <a class="exp-logo-wrap" href="https://www.extern.com/" target="_blank" rel="noopener" aria-label="Extern website">
+                <img src="/assets/logos/extern_logo.jpeg" alt="Amazon" class="exp-logo" />
+              </a>
+              <div class="exp-body">
+                <div class="exp-header">
+                  <div>
+                    <p class="exp-org">Extern + Amazon</p>
+                    <p class="exp-role">People/Data Analytics Extern</p>
+                  </div>
+                  <div class="exp-meta">
+                    <p class="exp-date">Jun 2026 – Aug 2026</p>
+                    <p class="exp-location">Remote</p>
+                  </div>
+                </div>
               </div>
+            </div>
+
+            <div class="exp-card cursor-pointer" data-modal="exp-uf-data-studio">
+              <a class="exp-logo-wrap" href="https://ufdatastudio.com/" target="_blank" rel="noopener" aria-label="UF Data Studio website">
+                <img src="/assets/logos/uf-data-studio.png" alt="UF Data Studio" class="exp-logo" />
+              </a>
               <div class="exp-body">
                 <div class="exp-header">
                   <div>
@@ -154,12 +172,12 @@
                   </div>
                 </div>
               </div>
-            </a>
+            </div>
 
-            <a class="exp-card" href="https://gatormotorsports.org/" target="_blank" rel="noopener">
-              <div class="exp-logo-wrap">
+            <div class="exp-card cursor-pointer" data-modal="exp-gator-motorsports">
+              <a class="exp-logo-wrap" href="https://gatormotorsports.org/" target="_blank" rel="noopener" aria-label="Gator Motorsports website">
                 <img src="/assets/logos/gator-motorsports.jpeg" alt="Gator Motorsports" class="exp-logo" />
-              </div>
+              </a>
               <div class="exp-body">
                 <div class="exp-header">
                   <div>
@@ -167,17 +185,17 @@
                     <p class="exp-role">Firmware Team — Data Analyst</p>
                   </div>
                   <div class="exp-meta">
-                    <p class="exp-date">Sep 2025 – Apr 2026</p>
+                    <p class="exp-date">Aug 2025 – Apr 2026</p>
                     <p class="exp-location">Gainesville, FL</p>
                   </div>
                 </div>
               </div>
-            </a>
+            </div>
 
-            <a class="exp-card" href="https://mathnasium.com/" target="_blank" rel="noopener">
-              <div class="exp-logo-wrap">
+            <div class="exp-card cursor-pointer" data-modal="exp-mathnasium">
+              <a class="exp-logo-wrap" href="https://mathnasium.com/" target="_blank" rel="noopener" aria-label="Mathnasium website">
                 <img src="/assets/logos/mathnasium.webp" alt="Mathnasium" class="exp-logo" />
-              </div>
+              </a>
               <div class="exp-body">
                 <div class="exp-header">
                   <div>
@@ -190,7 +208,7 @@
                   </div>
                 </div>
               </div>
-            </a>
+            </div>
 
           </div><!-- /exp-list -->
         </div>
@@ -465,6 +483,114 @@
             </div>
 
           </div><!-- /tech-grid -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         EXPERIENCE MODALS
+    ══════════════════════════════════════════ -->
+
+    <div id="modal-exp-amazon" class="modal" role="dialog" aria-modal="true" aria-label="People/Data Analytics Extern — Extern + Amazon" hidden>
+      <div class="modal-backdrop" data-close-modal></div>
+      <div class="modal-panel">
+        <div class="modal-head">
+          <h2 class="modal-title font-semibold">People/Data Analytics Extern — Extern + Amazon</h2>
+          <button class="modal-close" data-close-modal aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>
+            Identified <strong>Full-Time Warehouse Associates</strong> as the top attrition risk cohort out of
+            5 segments by building a Python (pandas, TextBlob) pipeline to clean and sentiment-score
+            <strong>200+ Glassdoor and YouTube reviews</strong>.
+          </p>
+          <p>
+            Built an <strong>Impact × Severity × Size</strong> scoring model to rank employee segments by
+            attrition risk, surfacing burnout and favoritism in advancement as the core drivers.
+          </p>
+          <p>
+            Traced burnout to structural causes in work design using <strong>5 Whys root cause analysis</strong>,
+            then delivered findings in a pitch deck adopted for the intervention roadmap.
+          </p>
+
+          <div class="proj-pdf-wrap">
+            <iframe src="/assets/certificates/amazon-extern-certificate.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" title="Amazon Extern Certificate of Completion"></iframe>
+          </div>
+          <div class="proj-pdf-actions">
+            <a href="/assets/certificates/amazon-extern-certificate.pdf" target="_blank" rel="noopener" class="misc-btn">Full Screen</a>
+            <a href="/assets/certificates/amazon-extern-certificate.pdf" download class="misc-btn">Download</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="modal-exp-uf-data-studio" class="modal" role="dialog" aria-modal="true" aria-label="Undergraduate Research Assistant — UF Data Studio" hidden>
+      <div class="modal-backdrop" data-close-modal></div>
+      <div class="modal-panel">
+        <div class="modal-head">
+          <h2 class="modal-title font-semibold">Undergraduate Research Assistant — UF Data Studio</h2>
+          <button class="modal-close" data-close-modal aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>
+            Scaled LLM inference across <strong>10,000+ adversarial multi-agent simulations</strong> by
+            integrating 20+ transformer models (7B–80B parameters) with 4-bit quantization and SLURM
+            multi-GPU scheduling on HiPerGator HPC.
+          </p>
+          <p>
+            Achieved <strong>85–90% F1 deceptive-agent detection</strong> across Logistic Regression, SVM,
+            and MLP classifiers by building a scikit-learn NLP pipeline with TF-IDF vectorization and NLTK
+            preprocessing over <strong>289,000+ labeled utterances</strong>.
+          </p>
+          <p>
+            Built an interactive research dashboard with <strong>Flask and JavaScript</strong> for real-time
+            ML suspicion scoring and agent visualization, enabling live behavioral monitoring across 20+ LLM
+            configurations with sub-500ms state refresh.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div id="modal-exp-gator-motorsports" class="modal" role="dialog" aria-modal="true" aria-label="Data Analyst — Gator Motorsports" hidden>
+      <div class="modal-backdrop" data-close-modal></div>
+      <div class="modal-panel">
+        <div class="modal-head">
+          <h2 class="modal-title font-semibold">Data Analyst — Gator Motorsports</h2>
+          <button class="modal-close" data-close-modal aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>
+            Built a telemetry preprocessing pipeline in <strong>Python and pandas</strong> ingesting 1kHz CAN
+            and encoder data, computing drivetrain metrics (slip ratio, wheel speed, torque variance, angular
+            velocity) across <strong>30+ track sessions</strong>.
+          </p>
+          <p>
+            Reduced sensor noise variance by <strong>17.8%</strong> by applying moving-average and low-pass
+            filters to raw telemetry streams, improving signal accuracy across aerodynamics, controls,
+            powertrain, and suspension tuning decisions.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div id="modal-exp-mathnasium" class="modal" role="dialog" aria-modal="true" aria-label="Mathematics Tutor — Mathnasium Learning Center" hidden>
+      <div class="modal-backdrop" data-close-modal></div>
+      <div class="modal-panel">
+        <div class="modal-head">
+          <h2 class="modal-title font-semibold">Mathematics Tutor — Mathnasium Learning Center</h2>
+          <button class="modal-close" data-close-modal aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>
+            Improved average student test scores by <strong>18%</strong> over 4-month periods by adapting
+            instruction style to individual learning needs across <strong>250+ students</strong> from
+            elementary through college levels.
+          </p>
+          <p>
+            Collaborated with instructors and center leadership in a team-teaching environment to relay
+            student progress, identify knowledge gaps, and coordinate lesson adjustments, maintaining
+            <strong>90%+ family satisfaction</strong> across a 2-year tenure.
+          </p>
         </div>
       </div>
     </div>

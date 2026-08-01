@@ -216,7 +216,11 @@ html {
   }
 
   .exp-logo-wrap {
-    @apply flex-shrink-0 w-14 h-14 border border-slate-100 bg-white flex items-center justify-center overflow-hidden;
+    @apply flex-shrink-0 w-14 h-14 border border-slate-100 bg-white flex items-center justify-center overflow-hidden transition-colors duration-150;
+  }
+
+  a.exp-logo-wrap:hover {
+    @apply border-slate-400;
   }
 
   .exp-logo {

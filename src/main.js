@@ -213,6 +213,11 @@ document.querySelectorAll('[data-modal]').forEach((el) => {
   el.addEventListener('click', () => openModal(el.dataset.modal))
 })
 
+// Exp-card logos link out to the org's site — don't also trigger the card's modal
+document.querySelectorAll('a.exp-logo-wrap').forEach((link) => {
+  link.addEventListener('click', (e) => e.stopPropagation())
+})
+
 // Close via backdrop or X button
 document.querySelectorAll('[data-close-modal]').forEach((el) => {
   el.addEventListener('click', (e) => {
