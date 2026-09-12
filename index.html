@@ -249,6 +249,14 @@
 
           <div class="proj-list" id="proj-list">
 
+            <div class="proj-item" data-categories="quantitative-finance data-analysis" data-modal="proj-gap">
+              <div class="proj-item-body">
+                <p class="proj-item-title">The Gap</p>
+                <p class="proj-item-desc">Earnings trading strategy using Polymarket vs. historical beat-rate gaps — 2.08 Sharpe ratio, 94 trades.</p>
+              </div>
+              <span class="proj-item-arrow">→</span>
+            </div>
+
             <div class="proj-item" data-categories="full-stack machine-learning" data-modal="proj-echo">
               <div class="proj-item-body">
                 <p class="proj-item-title">Echo</p>
@@ -273,19 +281,10 @@
               <span class="proj-item-arrow">→</span>
             </div>
 
-
             <div class="proj-item" data-categories="quantitative-finance machine-learning" data-modal="proj-senti">
               <div class="proj-item-body">
                 <p class="proj-item-title">Senti</p>
                 <p class="proj-item-desc">CLI tool explaining stock movements using FinBERT sentiment analysis on real-time news.</p>
-              </div>
-              <span class="proj-item-arrow">→</span>
-            </div>
-
-            <div class="proj-item" data-categories="quantitative-finance data-analysis" data-modal="proj-trend">
-              <div class="proj-item-body">
-                <p class="proj-item-title">Stock Trend Analysis</p>
-                <p class="proj-item-desc">Python CLI analyzing stock trends across 5 time horizons with confidence scoring.</p>
               </div>
               <span class="proj-item-arrow">→</span>
             </div>
@@ -638,6 +637,8 @@
               <div class="tech-tags">
                 <span class="tech-tag">Python</span>
                 <span class="tech-tag">Pandas</span>
+                <span class="tech-tag">NumPy</span>
+                <span class="tech-tag">Matplotlib</span>
                 <span class="tech-tag">yfinance</span>
                 <span class="tech-tag">mplfinance</span>
               </div>
@@ -646,6 +647,69 @@
               <span class="proj-tag-label">Skills</span>
               <div class="tech-tags">
                 <span class="tech-tag">Backtesting</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- The Gap -->
+    <div id="modal-proj-gap" class="modal" role="dialog" aria-modal="true" aria-label="The Gap" hidden>
+      <div class="modal-backdrop" data-close-modal></div>
+      <div class="modal-panel">
+        <div class="modal-head">
+          <h2 class="modal-title font-semibold">The Gap</h2>
+          <button class="modal-close" data-close-modal aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>
+            An earnings-reaction strategy built on the gap between Polymarket's implied
+            probability of a company beating earnings and that company's own trailing
+            8-quarter beat rate. A large disagreement between the two predicts how the
+            stock moves the day after the report — evidence held up across 14,477 historical
+            earnings events and 671 real Polymarket-matched contracts.
+          </p>
+          <p>
+            Backtested Oct 2025–Aug 2026 across 66 S&amp;P 500 companies (94 trades, 49 long /
+            45 short) with asymmetric long/short thresholds, achieving a <strong>2.08 Sharpe
+            ratio</strong> and <strong>8.67% return</strong> with a −2.00% max drawdown, validated
+            against a 5,000-path Monte Carlo simulation.
+          </p>
+
+          <div class="proj-pdf-wrap">
+            <iframe src="/assets/projects/the-gap.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" title="The Gap PDF"></iframe>
+          </div>
+          <div class="proj-pdf-actions">
+            <a href="/assets/projects/the-gap.pdf" target="_blank" rel="noopener" class="misc-btn">Full Screen</a>
+            <a href="/assets/projects/the-gap.pdf" download class="misc-btn">Download</a>
+          </div>
+
+          <div class="proj-tags">
+            <div class="proj-tag-row">
+              <span class="proj-tag-label">Category</span>
+              <div class="tech-tags">
+                <span class="tech-tag">Quantitative Finance</span>
+                <span class="tech-tag">Data Analysis</span>
+              </div>
+            </div>
+            <div class="proj-tag-row">
+              <span class="proj-tag-label">Tools &amp; Tech</span>
+              <div class="tech-tags">
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">Pandas</span>
+                <span class="tech-tag">NumPy</span>
+                <span class="tech-tag">Matplotlib</span>
+                <span class="tech-tag">SciPy</span>
+                <span class="tech-tag">yfinance</span>
+                <span class="tech-tag">Polymarket APIs</span>
+              </div>
+            </div>
+            <div class="proj-tag-row">
+              <span class="proj-tag-label">Skills</span>
+              <div class="tech-tags">
+                <span class="tech-tag">Backtesting</span>
+                <span class="tech-tag">Monte Carlo Simulation</span>
               </div>
             </div>
           </div>
@@ -896,59 +960,6 @@
                 <span class="tech-tag">NLP Inference</span>
                 <span class="tech-tag">Financial Data Integration</span>
                 <span class="tech-tag">Signal Correlation</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Stock Trend Analysis -->
-    <div id="modal-proj-trend" class="modal" role="dialog" aria-modal="true" aria-label="Stock Trend Analysis" hidden>
-      <div class="modal-backdrop" data-close-modal></div>
-      <div class="modal-panel">
-        <div class="modal-head">
-          <h2 class="modal-title font-semibold">Stock Trend Analysis</h2>
-          <button class="modal-close" data-close-modal aria-label="Close">&times;</button>
-        </div>
-        <div class="modal-body">
-          <p>
-            A Python CLI tool that analyzes any stock ticker and tells you whether it's trending up,
-            down, or sideways — across <strong>5 time horizons</strong> (1 day, 1 week, 1 month,
-            1 quarter, 1 year). Pulls historical price data, runs it through statistical calculations,
-            and prints a plain-English report with trend direction, confidence level, signal strength,
-            volatility, and drawdown.
-          </p>
-          <p>
-            Built as a modular <strong>5-module architecture</strong> (fetcher, preprocessor, analyzer,
-            report, visualizer) enabling independent development and testing of each layer.
-          </p>
-          <div class="proj-link-actions">
-            <a href="https://github.com/adp0419/Stock-Trend-Analysis" class="proj-link-btn" target="_blank" rel="noopener">GitHub</a>
-          </div>
-          <div class="proj-tags">
-            <div class="proj-tag-row">
-              <span class="proj-tag-label">Category</span>
-              <div class="tech-tags">
-                <span class="tech-tag">Quantitative Finance</span>
-                <span class="tech-tag">Data Analysis</span>
-              </div>
-            </div>
-            <div class="proj-tag-row">
-              <span class="proj-tag-label">Tools &amp; Tech</span>
-              <div class="tech-tags">
-                <span class="tech-tag">Python</span>
-                <span class="tech-tag">yfinance</span>
-                <span class="tech-tag">Pandas</span>
-                <span class="tech-tag">NumPy</span>
-                <span class="tech-tag">Matplotlib</span>
-              </div>
-            </div>
-            <div class="proj-tag-row">
-              <span class="proj-tag-label">Skills</span>
-              <div class="tech-tags">
-                <span class="tech-tag">Statistical Signal Computation</span>
-                <span class="tech-tag">Modular Software Design</span>
               </div>
             </div>
           </div>
