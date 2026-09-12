@@ -420,12 +420,14 @@ document.querySelectorAll('.photo-deck').forEach((deck) => {
 
   function jumpTo(idx) {
     track.style.transition = 'none'
+    cards.forEach((c) => { c.style.transition = 'none' })
     cards.forEach((c, i) => c.classList.toggle('active', i === idx))
     track.style.transform = `translateX(${calcOffset(idx)}px)`
     current = idx
     updateDesc(idx)
     void track.offsetWidth
     track.style.transition = ''
+    cards.forEach((c) => { c.style.transition = '' })
     busy = false
   }
 
