@@ -1126,8 +1126,10 @@ html {
     transform: scaleX(1);
   }
 
-  .site-fieldset:hover .section-head::after {
-    animation: line-sweep 2.2s cubic-bezier(0.65, 0, 0.35, 1);
+  /* Once drawn out, a pulse runs along the line continuously (like the scroll cue) */
+  .is-in .section-head::after,
+  html:not(.js) .section-head::after {
+    animation: line-sweep 2.6s cubic-bezier(0.65, 0, 0.35, 1) 1.4s infinite;
   }
 
   @keyframes line-sweep {
@@ -1645,28 +1647,6 @@ html.cursor-visible .cursor-frame {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     transition-delay: 0s !important;
-  }
-
-  .hero-now {
-    @apply flex items-center gap-2.5 font-mono text-sm text-slate-600 mb-10 min-w-0;
-    min-height: 1.5rem;
-  }
-
-  .hero-now-label {
-    @apply flex items-center gap-2.5 text-slate-400 flex-shrink-0;
-  }
-
-  /* short rule between the label and the role */
-  .hero-now-label::after {
-    content: '';
-    @apply block w-8 h-px;
-    background: linear-gradient(90deg, transparent, #0f172a, transparent) no-repeat #cbd5e1;
-    background-size: 50% 100%;
-    animation: line-sweep 2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
-  }
-
-  .hero-now-text {
-    @apply text-slate-900;
   }
 
   .hero-caret { display: none; }
