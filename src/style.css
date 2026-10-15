@@ -1110,26 +1110,13 @@ html {
     @apply flex items-baseline justify-between gap-4 mb-4 sm:mb-5;
   }
 
+  /* Same line + pulse as the "currently ——" dash in the hero, just card-width */
   .section-head::after {
     content: '';
     @apply flex-1 h-px self-center;
-    background: linear-gradient(90deg, transparent, #0f172a, transparent) no-repeat #e2e8f0;
-    background-size: 25% 100%;
-    background-position: -100% 0;
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
-  }
-
-  .is-in .section-head::after,
-  html:not(.js) .section-head::after {
-    transform: scaleX(1);
-  }
-
-  /* Once drawn out, a pulse runs along the line continuously (like the scroll cue) */
-  .is-in .section-head::after,
-  html:not(.js) .section-head::after {
-    animation: line-sweep 2.6s cubic-bezier(0.65, 0, 0.35, 1) 1.4s infinite;
+    background: linear-gradient(90deg, transparent, #0f172a, transparent) no-repeat #cbd5e1;
+    background-size: 50% 100%;
+    animation: line-sweep 2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
   }
 
   @keyframes line-sweep {
