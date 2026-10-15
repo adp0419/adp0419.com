@@ -1,29 +1,24 @@
+import { scrollToSection, reducedMotion } from './util.js'
+import { initHero } from './hero.js'
+import { initFx } from './fx.js'
+import { initProjectRows } from './preview.js'
+import { initPalette } from './palette.js'
+import { initCursor } from './cursor.js'
+
+initHero()
+initProjectRows()
+initFx()
+initPalette()
+initCursor()
+
 // ─── Centered section scroll ──────────────────────────────────────────────────
 
-document.querySelectorAll('.hero-btn, .nav-btn, a[href="#hero"]').forEach((link) => {
+document.querySelectorAll('.hero-btn, .nav-btn, a[href="#hero"], .scroll-cue, .bio-link').forEach((link) => {
   link.addEventListener('click', (e) => {
     const href = link.getAttribute('href')
     if (!href?.startsWith('#')) return
     e.preventDefault()
-
-    // "Aryan Patel" logo → back to very top
-    if (href === '#hero') {
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-      return
-    }
-
-    const section = document.querySelector(href)
-    if (!section) return
-
-    // Center the section card (the visible "box") on screen
-    const card = section.querySelector('.site-fieldset') ?? section
-    const cardTop    = card.getBoundingClientRect().top + window.scrollY
-    const cardHeight = card.offsetHeight
-    const vh         = window.innerHeight
-    const maxScroll  = document.documentElement.scrollHeight - vh
-
-    const target = Math.round(cardTop - vh / 2 + cardHeight / 2)
-    window.scrollTo({ top: Math.max(0, Math.min(target, maxScroll)), behavior: 'smooth' })
+    scrollToSection(href)
   })
 })
 
@@ -184,13 +179,30 @@ function applyPdfView(modal) {
   })
 }
 
+let lastFocus = null
+
+const isOpen = (modal) => !modal.hidden && !modal.classList.contains('is-closing')
+
+function hideNow(modal) {
+  modal.hidden = true
+  modal.classList.remove('is-closing')
+}
+
 function openModal(id) {
   const modal = document.getElementById(`modal-${id}`)
-  if (!modal) return
-  modal.removeAttribute('hidden')
+  if (!modal || isOpen(modal)) return
+
+  const others = document.querySelectorAll('.modal:not([hidden])')
+  if (others.length) others.forEach(hideNow)
+  else lastFocus = document.activeElement
+
+  modal.hidden = false
   document.body.style.overflow = 'hidden'
   applyPdfView(modal)
-  modal.querySelector('.modal-close')?.focus()
+  modal.querySelector('.modal-body')?.scrollTo(0, 0)
+  modal.querySelector('.modal-close')?.focus({ preventScroll: true })
+  // Shareable URL: adp0419.com/#proj-gap opens straight into this modal
+  history.replaceState(null, '', `#${id}`)
   // Reinit any photo decks now that the modal is visible and measurable
   requestAnimationFrame(() => {
     modal.querySelectorAll('.photo-deck').forEach(deck => {
@@ -204,13 +216,35 @@ mobilePdfMq.addEventListener('change', () => {
 })
 
 function closeModal(modal) {
-  modal.setAttribute('hidden', '')
+  if (!isOpen(modal)) return
+  history.replaceState(null, '', location.pathname + location.search)
   document.body.style.overflow = ''
+
+  const done = () => {
+    if (!modal.classList.contains('is-closing')) return
+    hideNow(modal)
+    lastFocus?.focus?.({ preventScroll: true })
+    lastFocus = null
+  }
+  modal.classList.add('is-closing')
+  if (reducedMotion.matches) return done()
+  modal.querySelector('.modal-panel')?.addEventListener('animationend', done, { once: true })
+  setTimeout(done, 320) // fallback if animationend never fires
 }
+
+document.addEventListener('modal:open', (e) => openModal(e.detail))
 
 // Open via any element with data-modal (misc buttons, project items, etc.)
 document.querySelectorAll('[data-modal]').forEach((el) => {
   el.addEventListener('click', () => openModal(el.dataset.modal))
+  // Cards that act as buttons get keyboard support too
+  if (el.getAttribute('role') === 'button') {
+    el.addEventListener('keydown', (e) => {
+      if (e.target !== el || (e.key !== 'Enter' && e.key !== ' ')) return
+      e.preventDefault()
+      openModal(el.dataset.modal)
+    })
+  }
 })
 
 // Exp-card logos link out to the org's site — don't also trigger the card's modal
@@ -224,6 +258,20 @@ document.querySelectorAll('[data-close-modal]').forEach((el) => {
     const modal = e.currentTarget.closest('.modal')
     if (modal) closeModal(modal)
   })
+})
+
+// Keep Tab focus inside the open modal
+document.addEventListener('keydown', (e) => {
+  if (e.key !== 'Tab') return
+  const modal = document.querySelector('.modal:not([hidden])')
+  if (!modal) return
+  const focusables = [...modal.querySelectorAll('a[href], button:not([disabled]), iframe, [tabindex]:not([tabindex="-1"])')]
+    .filter((el) => !el.hidden && el.offsetParent !== null)
+  if (!focusables.length) return
+  const first = focusables[0]
+  const last = focusables[focusables.length - 1]
+  if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus() }
+  else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus() }
 })
 
 // ─── Project filters (category only, multi-select AND) ───────────────────────
@@ -326,6 +374,11 @@ if (projFilters) {
         [...selected].every((c) => cats.includes(c))
       item.classList.toggle('hidden-proj', !match)
     })
+    const count = document.getElementById('proj-count')
+    if (count) {
+      const shown = [...projItems].filter((i) => !i.classList.contains('hidden-proj')).length
+      count.textContent = selected.size ? `showing ${shown} of ${projItems.length}` : `${projItems.length} projects`
+    }
   }
 
   projFilters.addEventListener('click', (e) => {
@@ -456,6 +509,20 @@ document.querySelectorAll('.photo-deck').forEach((deck) => {
   deck.querySelector('.deck-arrow-next').addEventListener('click', () => { pending++; tryAdvance() })
   deck.querySelector('.deck-arrow-prev').addEventListener('click', () => { pending--; tryAdvance() })
 
+  // Swipe / drag to advance
+  let swipeX = null
+  viewport.addEventListener('pointerdown', (e) => { swipeX = e.clientX })
+  viewport.addEventListener('pointerup', (e) => {
+    if (swipeX == null) return
+    const dx = e.clientX - swipeX
+    swipeX = null
+    if (Math.abs(dx) < 40) return
+    pending += dx < 0 ? 1 : -1
+    tryAdvance()
+  })
+  viewport.addEventListener('pointercancel', () => { swipeX = null })
+  viewport.style.touchAction = 'pan-y'
+
   deckReinits.set(deck.id, () => { pending = 0; jumpTo(1) })
 })
 
@@ -495,3 +562,7 @@ document.addEventListener('keydown', (e) => {
     document.querySelectorAll('.modal:not([hidden])').forEach(closeModal)
   }
 })
+
+// Deep link: open the modal named in the URL hash (e.g. /#proj-echo)
+const initialModal = decodeURIComponent(location.hash.slice(1))
+if (initialModal && document.getElementById(`modal-${initialModal}`)) openModal(initialModal)

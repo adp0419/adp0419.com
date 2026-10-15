@@ -6,6 +6,7 @@
     <title>Aryan Patel</title>
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="description" content="CS + Business Administration @ University of Florida" />
+    <meta name="theme-color" content="#ffffff" />
 
     <!-- Open Graph / social preview -->
     <meta property="og:type" content="website" />
@@ -21,6 +22,9 @@
     <meta name="twitter:description" content="CS + Business Administration @ University of Florida" />
     <meta name="twitter:image" content="https://adp0419.com/favicon.png" />
 
+    <!-- Flag JS early so reveal animations never flash un-styled content -->
+    <script>document.documentElement.classList.add('js')</script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -31,10 +35,15 @@
   </head>
   <body class="bg-white text-slate-900 font-sans antialiased">
 
+    <a href="#about" class="skip-link">Skip to content</a>
+
+    <!-- Site-wide ambient light (src/ambient.js) — sits behind everything -->
+    <div class="ambient" aria-hidden="true"><div id="ambient-light" class="ambient-light"></div></div>
+
     <!-- ─── STICKY NAV (hidden until hero exits viewport) ─── -->
     <nav id="sticky-nav" class="sticky-nav" aria-hidden="true">
       <div class="sticky-nav-inner">
-        <a href="#hero" class="text-sm font-semibold tracking-tight hover:opacity-60 transition-opacity duration-150">Aryan Patel</a>
+        <a href="#hero" class="nav-home">Aryan Patel</a>
         <div class="nav-btn-group">
           <a href="#about"      class="nav-btn">Biography</a>
           <a href="#experience" class="nav-btn">Experience</a>
@@ -42,51 +51,86 @@
           <a href="#misc"       class="nav-btn"><span class="sm:hidden">Misc</span><span class="hidden sm:inline">Miscellaneous</span></a>
           <a href="#links"      class="nav-btn"><span class="sm:hidden">Links</span><span class="hidden sm:inline">Contact + Links</span></a>
         </div>
+        <button type="button" class="nav-palette-btn" data-open-palette aria-label="Open search (/)">
+          <kbd class="kbd">/</kbd>
+        </button>
       </div>
+      <div class="nav-progress" aria-hidden="true"><span id="nav-progress-bar"></span></div>
     </nav>
 
     <!-- ─── MAIN CONTENT ─── -->
-    <main class="max-w-4xl mx-auto px-4 pb-8 sm:pb-12">
+    <main class="relative z-[1] max-w-4xl mx-auto px-4 pb-8 sm:pb-12">
 
       <!-- ══════════════════════════════════════════
            HERO
       ══════════════════════════════════════════ -->
       <section id="hero">
-        <h1 class="text-5xl sm:text-6xl font-semibold tracking-tight leading-none mb-3">
-          Aryan Patel
-        </h1>
-        <p class="text-slate-500 text-base sm:text-lg mb-10">
-          Computer Science + Business Administration @ The University of Florida
-        </p>
-        <div class="hero-btn-group">
-          <a href="#about"      class="hero-btn">Biography</a>
-          <a href="#experience" class="hero-btn">Experience</a>
-          <a href="#projects"   class="hero-btn">Projects</a>
-          <a href="#misc"       class="hero-btn">Miscellaneous</a>
-          <a href="#links"      class="hero-btn">Contact + Links</a>
+        <div class="hero-inner">
+          <p class="hero-eyebrow hero-intro" style="--d: 0">
+            <span class="live-dot" aria-hidden="true"></span>
+            <span>Gainesville, FL</span>
+            <span class="text-slate-300" aria-hidden="true">/</span>
+            <span id="local-time" class="tabular-nums">—</span>
+          </p>
+
+          <h1 class="hero-name" aria-label="Aryan Patel">
+            <span class="hero-word" aria-hidden="true">Aryan</span>
+            <span class="hero-word" aria-hidden="true">Patel</span>
+          </h1>
+
+          <p class="hero-sub hero-intro" style="--d: 5">
+            Computer Science + Business Administration @ The University of Florida
+          </p>
+
+          <!-- Cycles through every experience card whose date ends in "Present" -->
+          <p class="hero-now hero-intro" style="--d: 6">
+            <span class="hero-now-label">currently</span>
+            <span id="hero-now" class="hero-now-text" aria-live="off"></span><span class="hero-caret" aria-hidden="true"></span>
+          </p>
+
+          <div class="hero-btn-group hero-intro" style="--d: 7">
+            <a href="#about"      class="hero-btn magnetic">Biography</a>
+            <a href="#experience" class="hero-btn magnetic">Experience</a>
+            <a href="#projects"   class="hero-btn magnetic">Projects</a>
+            <a href="#misc"       class="hero-btn magnetic">Miscellaneous</a>
+            <a href="#links"      class="hero-btn magnetic">Contact + Links</a>
+          </div>
+
+          <div class="hero-foot hero-intro" style="--d: 8">
+            <button type="button" class="hero-palette-hint" data-open-palette>
+              press <kbd class="kbd">/</kbd> to jump anywhere
+            </button>
+          </div>
         </div>
+
+        <a href="#about" class="scroll-cue" aria-label="Scroll to biography">
+          <span>scroll</span>
+          <span class="scroll-cue-line" aria-hidden="true"></span>
+        </a>
       </section>
 
       <!-- ══════════════════════════════════════════
            BIO / ABOUT
       ══════════════════════════════════════════ -->
       <section id="about" class="section-gap">
-        <div class="site-fieldset">
-          <h2 class="site-fieldset-title"><span class="font-sans font-semibold text-base">Biography</span></h2>
+        <div class="site-fieldset" data-reveal>
+          <header class="section-head">
+            <h2 class="site-fieldset-title"><span class="section-idx">01</span><span class="font-sans font-semibold text-base">Biography</span></h2>
+          </header>
 
           <article class="prose-article bio-article">
             <div class="bio-content">
-              <p>
+              <p data-reveal-child>
                 Hey! I'm Aryan. I'm a CS + Business student at the University of Florida.
               </p>
-              <p>
+              <p data-reveal-child>
                 Besides my professional and academic pursuits, making memories with friends and
                 family is really important to me. I also like to play all kinds of sports,
                 especially golf and pickleball. I love to eat amazing food (and now I'm learning
                 to cook to satiate those cravings).
               </p>
-              <p>
-                Always open to connect, chat, and explore opportunities. Feel free to reach out :)
+              <p data-reveal-child>
+                Always open to connect, chat, and explore opportunities. Feel free to <a href="#links" class="bio-link">reach out</a> :)
               </p>
             </div>
 
@@ -130,16 +174,20 @@
 
       <!-- ══════════════════════════════════════════
            EXPERIENCE
+           data-kind → small label on the card. Cards with data-modal open details.
       ══════════════════════════════════════════ -->
       <section id="experience" class="section-gap">
-        <div class="site-fieldset">
-          <h2 class="site-fieldset-title"><span class="font-sans font-semibold text-base">Experience</span></h2>
+        <div class="site-fieldset" data-reveal>
+          <header class="section-head">
+            <h2 class="site-fieldset-title"><span class="section-idx">02</span><span class="font-sans font-semibold text-base">Experience</span></h2>
+          </header>
 
           <p class="text-sm text-slate-500 mb-5">clubs, research, and everything next</p>
 
-          <div class="exp-list">
+          <div class="exp-list" id="exp-list">
+            <div class="exp-rail" aria-hidden="true"><span class="exp-rail-fill"></span><span class="exp-rail-drip"></span></div>
 
-            <div class="exp-card">
+            <div class="exp-card" data-kind="Research" data-reveal-child>
               <a class="exp-logo-wrap" href="https://algogators.com/" target="_blank" rel="noopener" aria-label="AlgoGators website">
                 <img src="/assets/logos/algogators.jpeg" alt="AlgoGators" class="exp-logo" />
               </a>
@@ -157,7 +205,7 @@
               </div>
             </div>
 
-            <div class="exp-card">
+            <div class="exp-card" data-kind="Club" data-reveal-child>
               <a class="exp-logo-wrap" href="https://linktr.ee/fltechpathways" target="_blank" rel="noopener" aria-label="Florida Tech Pathways link page">
                 <img src="/assets/logos/ftp.jpeg" alt="Florida Tech Pathways" class="exp-logo" />
               </a>
@@ -175,7 +223,7 @@
               </div>
             </div>
 
-            <div class="exp-card">
+            <div class="exp-card" data-kind="Leadership" data-reveal-child>
               <a class="exp-logo-wrap" href="https://www.ufdsi.com/" target="_blank" rel="noopener" aria-label="UF Data Science and Informatics website">
                 <img src="/assets/logos/dsi.jpeg" alt="UF Data Science and Informatics" class="exp-logo" />
               </a>
@@ -183,7 +231,7 @@
                 <div class="exp-header">
                   <div>
                     <p class="exp-org">UF Data Science and Informatics</p>
-                    <p class="exp-role">Sponsorship Coordinator (J-Board)</p>
+                    <p class="exp-role">Sponsorship Coordinator</p>
                   </div>
                   <div class="exp-meta">
                     <p class="exp-date">Sep 2026 – Present</p>
@@ -193,7 +241,7 @@
               </div>
             </div>
 
-            <div class="exp-card cursor-pointer" data-modal="exp-uf-data-studio">
+            <div class="exp-card cursor-pointer" data-modal="exp-uf-data-studio" data-kind="Research" data-reveal-child tabindex="0" role="button">
               <a class="exp-logo-wrap" href="https://ufdatastudio.com/" target="_blank" rel="noopener" aria-label="UF Data Studio website">
                 <img src="/assets/logos/uf-data-studio.png" alt="UF Data Studio" class="exp-logo" />
               </a>
@@ -211,7 +259,7 @@
               </div>
             </div>
 
-            <div class="exp-card cursor-pointer" data-modal="exp-amazon">
+            <div class="exp-card cursor-pointer" data-modal="exp-amazon" data-kind="Externship" data-reveal-child tabindex="0" role="button">
               <a class="exp-logo-wrap" href="https://www.extern.com/" target="_blank" rel="noopener" aria-label="Extern website">
                 <img src="/assets/logos/extern_logo.jpeg" alt="Amazon" class="exp-logo" />
               </a>
@@ -229,7 +277,7 @@
               </div>
             </div>
 
-            <div class="exp-card cursor-pointer" data-modal="exp-mathnasium">
+            <div class="exp-card cursor-pointer" data-modal="exp-mathnasium" data-kind="Work" data-reveal-child tabindex="0" role="button">
               <a class="exp-logo-wrap" href="https://mathnasium.com/" target="_blank" rel="noopener" aria-label="Mathnasium website">
                 <img src="/assets/logos/mathnasium.webp" alt="Mathnasium" class="exp-logo" />
               </a>
@@ -247,7 +295,7 @@
               </div>
             </div>
 
-            <div class="exp-card cursor-pointer" data-modal="proj-ctlt">
+            <div class="exp-card cursor-pointer" data-modal="proj-ctlt" data-kind="Research" data-reveal-child tabindex="0" role="button">
               <a class="exp-logo-wrap" href="https://ysp.osta.fsu.edu/" target="_blank" rel="noopener" aria-label="FSU Young Scholars Program website">
                 <img src="/assets/logos/ysp.jpeg" alt="FSU Young Scholars Program" class="exp-logo" />
               </a>
@@ -271,10 +319,14 @@
 
       <!-- ══════════════════════════════════════════
            PROJECTS
+           data-metric → headline number shown in the hover preview + search
+           data-viz    → mini chart in the hover preview (equity | scatter | sentiment | reviews | waveform)
       ══════════════════════════════════════════ -->
       <section id="projects" class="section-gap">
-        <div class="site-fieldset">
-          <h2 class="site-fieldset-title"><span class="font-sans font-semibold text-base">Projects</span></h2>
+        <div class="site-fieldset" data-reveal>
+          <header class="section-head">
+            <h2 class="site-fieldset-title"><span class="section-idx">03</span><span class="font-sans font-semibold text-base">Projects</span></h2>
+          </header>
 
           <p class="text-sm text-slate-500 mb-4">a few things i've built</p>
 
@@ -303,52 +355,58 @@
 
           <div class="proj-list" id="proj-list">
 
-            <div class="proj-item" data-categories="quantitative-finance" data-modal="proj-gap">
+            <div class="proj-item" data-categories="quantitative-finance" data-modal="proj-gap" data-metric="2.08 Sharpe" data-viz="equity" data-reveal-child tabindex="0" role="button">
+              <span class="proj-item-idx"></span>
               <div class="proj-item-body">
                 <p class="proj-item-title">The Gap</p>
-                <p class="proj-item-desc">Earnings trading strategy using Polymarket vs. historical beat-rate gaps — 2.08/1.46 Sharpe, +8.67%/+8.29% across two exits.</p>
+                <p class="proj-item-desc">Polymarket earnings trading strategy — 2.08/1.46 Sharpe, +8.67%/+8.29% across 2 exits.</p>
               </div>
-              <span class="proj-item-arrow">→</span>
+              <span class="proj-item-more">read more<span class="proj-item-arrow" aria-hidden="true">→</span></span>
             </div>
 
-            <div class="proj-item" data-categories="full-stack machine-learning" data-modal="proj-echo">
+            <div class="proj-item" data-categories="full-stack machine-learning" data-modal="proj-echo" data-metric="Live app" data-viz="reviews" data-reveal-child tabindex="0" role="button">
+              <span class="proj-item-idx"></span>
               <div class="proj-item-body">
                 <p class="proj-item-title">Echo</p>
                 <p class="proj-item-desc">Full-stack GenAI dashboard analyzing Google Reviews with a dual-model NLP pipeline.</p>
               </div>
-              <span class="proj-item-arrow">→</span>
+              <span class="proj-item-more">read more<span class="proj-item-arrow" aria-hidden="true">→</span></span>
             </div>
 
-            <div class="proj-item" data-categories="machine-learning data-analysis" data-modal="proj-house">
+            <div class="proj-item" data-categories="machine-learning data-analysis" data-modal="proj-house" data-metric="R² 0.58" data-viz="scatter" data-reveal-child tabindex="0" role="button">
+              <span class="proj-item-idx"></span>
               <div class="proj-item-body">
                 <p class="proj-item-title">House Pricing Multi Linear Regression</p>
                 <p class="proj-item-desc">ML regression pipeline predicting house prices with SHAP explainability — R²=0.58.</p>
               </div>
-              <span class="proj-item-arrow">→</span>
+              <span class="proj-item-more">read more<span class="proj-item-arrow" aria-hidden="true">→</span></span>
             </div>
 
-            <div class="proj-item" data-categories="quantitative-finance" data-modal="proj-sharpe">
+            <div class="proj-item" data-categories="quantitative-finance" data-modal="proj-sharpe" data-metric="0.9 Sharpe" data-viz="equity" data-reveal-child tabindex="0" role="button">
+              <span class="proj-item-idx"></span>
               <div class="proj-item-body">
                 <p class="proj-item-title">Sharpe Strategy</p>
                 <p class="proj-item-desc">Cross-asset momentum trading strategy — 0.9 Sharpe ratio, 17% portfolio growth.</p>
               </div>
-              <span class="proj-item-arrow">→</span>
+              <span class="proj-item-more">read more<span class="proj-item-arrow" aria-hidden="true">→</span></span>
             </div>
 
-            <div class="proj-item" data-categories="quantitative-finance machine-learning" data-modal="proj-senti">
+            <div class="proj-item" data-categories="quantitative-finance machine-learning" data-modal="proj-senti" data-metric="FinBERT" data-viz="sentiment" data-reveal-child tabindex="0" role="button">
+              <span class="proj-item-idx"></span>
               <div class="proj-item-body">
                 <p class="proj-item-title">Senti</p>
                 <p class="proj-item-desc">CLI tool explaining stock movements using FinBERT sentiment analysis on real-time news.</p>
               </div>
-              <span class="proj-item-arrow">→</span>
+              <span class="proj-item-more">read more<span class="proj-item-arrow" aria-hidden="true">→</span></span>
             </div>
 
-            <div class="proj-item" data-categories="research data-analysis" data-modal="proj-ctlt">
+            <div class="proj-item" data-categories="research data-analysis" data-modal="proj-ctlt" data-metric="R² 0.72" data-viz="waveform" data-reveal-child tabindex="0" role="button">
+              <span class="proj-item-idx"></span>
               <div class="proj-item-body">
                 <p class="proj-item-title">Climbing the Language Tree</p>
                 <p class="proj-item-desc">Cross-linguistic statistical analysis of pause patterns across 5 languages — R²=0.72.</p>
               </div>
-              <span class="proj-item-arrow">→</span>
+              <span class="proj-item-more">read more<span class="proj-item-arrow" aria-hidden="true">→</span></span>
             </div>
 
           </div><!-- /proj-list -->
@@ -359,14 +417,16 @@
            MISC
       ══════════════════════════════════════════ -->
       <section id="misc" class="section-gap">
-        <div class="site-fieldset">
-          <h2 class="site-fieldset-title"><span class="font-sans font-semibold text-base">Miscellaneous</span></h2>
+        <div class="site-fieldset" data-reveal>
+          <header class="section-head">
+            <h2 class="site-fieldset-title"><span class="section-idx">04</span><span class="font-sans font-semibold text-base">Miscellaneous</span></h2>
+          </header>
 
           <p class="text-sm text-slate-500 mb-5">other stuff</p>
 
           <div class="misc-btn-group">
-            <button class="misc-btn hidden" data-modal="background">Background</button>
-            <button class="misc-btn" data-modal="technologies">Technologies</button>
+            <button class="misc-btn magnetic hidden" data-modal="background">Background</button>
+            <button class="misc-btn magnetic" data-modal="technologies">Technologies</button>
           </div>
         </div>
       </section>
@@ -374,42 +434,52 @@
       <!-- ══════════════════════════════════════════
            LINKS
       ══════════════════════════════════════════ -->
-      <section id="links" class="section-gap mb-24">
-        <div class="site-fieldset">
-          <h2 class="site-fieldset-title"><span class="font-sans font-semibold text-base">Contact + Links</span></h2>
+      <section id="links" class="section-gap mb-16">
+        <div class="site-fieldset" data-reveal>
+          <header class="section-head">
+            <h2 class="site-fieldset-title"><span class="section-idx">05</span><span class="font-sans font-semibold text-base">Contact + Links</span></h2>
+          </header>
 
           <ul class="links-list">
-            <li>
+            <li data-reveal-child>
               <a href="mailto:adp0419@gmail.com" class="link-item">
                 <svg class="link-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                   <path d="M2.003 5.884 10 9.882l7.997-3.998A2 2 0 0 0 16 4H4a2 2 0 0 0-1.997 1.884z"/>
                   <path d="m18 8.118-8 4-8-4V14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8.118z"/>
                 </svg>
-                Email
+                <span class="link-label">Email</span>
+                <span class="link-handle">adp0419@gmail.com</span>
+                <span class="link-arrow" aria-hidden="true">↗</span>
               </a>
             </li>
-            <li>
+            <li data-reveal-child>
               <a href="https://linkedin.com/in/adp0419" class="link-item" target="_blank" rel="noopener">
                 <svg class="link-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                   <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                 </svg>
-                LinkedIn
+                <span class="link-label">LinkedIn</span>
+                <span class="link-handle">in/adp0419</span>
+                <span class="link-arrow" aria-hidden="true">↗</span>
               </a>
             </li>
-            <li>
+            <li data-reveal-child>
               <a href="https://github.com/adp0419" class="link-item" target="_blank" rel="noopener">
                 <svg class="link-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                   <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/>
                 </svg>
-                GitHub
+                <span class="link-label">GitHub</span>
+                <span class="link-handle">@adp0419</span>
+                <span class="link-arrow" aria-hidden="true">↗</span>
               </a>
             </li>
-            <li>
+            <li data-reveal-child>
               <a href="https://devpost.com/adp0419" class="link-item" target="_blank" rel="noopener">
                 <svg class="link-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                   <path d="M6.002 1.61 0 12.004 6.002 22.39h11.996L24 12.004 17.998 1.61zm1.593 4.084h4.638c3.604 0 6.168 2.486 6.168 6.31s-2.564 6.31-6.168 6.31H7.595zm2.338 2.532v7.556h2.3c2.21 0 3.73-1.442 3.73-3.778s-1.52-3.778-3.73-3.778z"/>
                 </svg>
-                Devpost
+                <span class="link-label">Devpost</span>
+                <span class="link-handle">@adp0419</span>
+                <span class="link-arrow" aria-hidden="true">↗</span>
               </a>
             </li>
           </ul>
@@ -417,6 +487,15 @@
       </section>
 
     </main><!-- /main -->
+
+    <!-- ─── FOOTER ─── -->
+    <footer class="site-footer">
+      <div class="site-footer-inner">
+        <p>© <span id="footer-year">2026</span> Aryan Patel</p>
+        <p class="hidden sm:block">press <kbd class="kbd">/</kbd> to search</p>
+        <a href="#hero" class="footer-top">back to top ↑</a>
+      </div>
+    </footer>
 
 
     <!-- ══════════════════════════════════════════
@@ -841,7 +920,7 @@
                 <div class="deck-card">
                   <div class="polaroid deck-polaroid">
                     <div class="polaroid-photo deck-photo">
-                      <img src="/assets/projects/house/residuals.png" alt="Residuals" class="w-full h-full object-cover" />
+                      <img src="/assets/projects/house/residuals.png" alt="Residuals" class="w-full h-full object-cover" loading="lazy" />
                     </div>
                     <p class="deck-caption">Residuals vs Predicted</p>
                   </div>
@@ -851,7 +930,7 @@
                 <div class="deck-card active">
                   <div class="polaroid deck-polaroid">
                     <div class="polaroid-photo deck-photo">
-                      <img src="/assets/projects/house/scatter.png" alt="Actual vs Predicted" class="w-full h-full object-cover" />
+                      <img src="/assets/projects/house/scatter.png" alt="Actual vs Predicted" class="w-full h-full object-cover" loading="lazy" />
                     </div>
                     <p class="deck-caption">Actual vs Predicted</p>
                   </div>
@@ -861,7 +940,7 @@
                 <div class="deck-card">
                   <div class="polaroid deck-polaroid">
                     <div class="polaroid-photo deck-photo">
-                      <img src="/assets/projects/house/shap.png" alt="SHAP Features" class="w-full h-full object-cover" />
+                      <img src="/assets/projects/house/shap.png" alt="SHAP Features" class="w-full h-full object-cover" loading="lazy" />
                     </div>
                     <p class="deck-caption">SHAP Features</p>
                   </div>
@@ -871,7 +950,7 @@
                 <div class="deck-card">
                   <div class="polaroid deck-polaroid">
                     <div class="polaroid-photo deck-photo">
-                      <img src="/assets/projects/house/heatmap.png" alt="Correlation Heatmap" class="w-full h-full object-cover" />
+                      <img src="/assets/projects/house/heatmap.png" alt="Correlation Heatmap" class="w-full h-full object-cover" loading="lazy" />
                     </div>
                     <p class="deck-caption">Correlation Heatmap</p>
                   </div>
@@ -881,7 +960,7 @@
                 <div class="deck-card">
                   <div class="polaroid deck-polaroid">
                     <div class="polaroid-photo deck-photo">
-                      <img src="/assets/projects/house/residuals.png" alt="Residuals" class="w-full h-full object-cover" />
+                      <img src="/assets/projects/house/residuals.png" alt="Residuals" class="w-full h-full object-cover" loading="lazy" />
                     </div>
                     <p class="deck-caption">Residuals vs Predicted</p>
                   </div>
@@ -891,7 +970,7 @@
                 <div class="deck-card">
                   <div class="polaroid deck-polaroid">
                     <div class="polaroid-photo deck-photo">
-                      <img src="/assets/projects/house/scatter.png" alt="Actual vs Predicted" class="w-full h-full object-cover" />
+                      <img src="/assets/projects/house/scatter.png" alt="Actual vs Predicted" class="w-full h-full object-cover" loading="lazy" />
                     </div>
                     <p class="deck-caption">Actual vs Predicted</p>
                   </div>
@@ -1039,7 +1118,7 @@
                 <div class="deck-card">
                   <div class="polaroid deck-polaroid">
                     <div class="polaroid-photo deck-photo">
-                      <img src="/assets/projects/ctlt/ctlt3.jpg" alt="lunch break" class="w-full h-full object-cover" />
+                      <img src="/assets/projects/ctlt/ctlt3.jpg" alt="lunch break" class="w-full h-full object-cover" loading="lazy" />
                     </div>
                     <p class="deck-caption">lunch break!</p>
                   </div>
@@ -1049,7 +1128,7 @@
                 <div class="deck-card active">
                   <div class="polaroid deck-polaroid">
                     <div class="polaroid-photo deck-photo">
-                      <img src="/assets/projects/ctlt/ctlt1.jpg" alt="the team!" class="w-full h-full object-cover" />
+                      <img src="/assets/projects/ctlt/ctlt1.jpg" alt="the team!" class="w-full h-full object-cover" loading="lazy" />
                     </div>
                     <p class="deck-caption">the team!</p>
                   </div>
@@ -1059,7 +1138,7 @@
                 <div class="deck-card">
                   <div class="polaroid deck-polaroid">
                     <div class="polaroid-photo deck-photo">
-                      <img src="/assets/projects/ctlt/ctlt2.jpg" alt="collecting data" class="w-full h-full object-cover" />
+                      <img src="/assets/projects/ctlt/ctlt2.jpg" alt="collecting data" class="w-full h-full object-cover" loading="lazy" />
                     </div>
                     <p class="deck-caption">collecting data!</p>
                   </div>
@@ -1069,7 +1148,7 @@
                 <div class="deck-card">
                   <div class="polaroid deck-polaroid">
                     <div class="polaroid-photo deck-photo">
-                      <img src="/assets/projects/ctlt/ctlt3.jpg" alt="lunch break" class="w-full h-full object-cover" />
+                      <img src="/assets/projects/ctlt/ctlt3.jpg" alt="lunch break" class="w-full h-full object-cover" loading="lazy" />
                     </div>
                     <p class="deck-caption">lunch break!</p>
                   </div>
@@ -1079,7 +1158,7 @@
                 <div class="deck-card">
                   <div class="polaroid deck-polaroid">
                     <div class="polaroid-photo deck-photo">
-                      <img src="/assets/projects/ctlt/ctlt1.jpg" alt="the team!" class="w-full h-full object-cover" />
+                      <img src="/assets/projects/ctlt/ctlt1.jpg" alt="the team!" class="w-full h-full object-cover" loading="lazy" />
                     </div>
                     <p class="deck-caption">the team!</p>
                   </div>
