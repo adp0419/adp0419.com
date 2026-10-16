@@ -916,18 +916,8 @@
             <div class="deck-viewport">
               <div class="deck-track-inner">
 
-                <!-- index 0: clone of residuals (for seamless loop) -->
+                <!-- scatter -->
                 <div class="deck-card">
-                  <div class="polaroid deck-polaroid">
-                    <div class="polaroid-photo deck-photo">
-                      <img src="/assets/projects/house/residuals.png" alt="Residuals" class="w-full h-full object-cover" loading="lazy" />
-                    </div>
-                    <p class="deck-caption">Residuals vs Predicted</p>
-                  </div>
-                </div>
-
-                <!-- index 1: scatter (initial center) -->
-                <div class="deck-card active">
                   <div class="polaroid deck-polaroid">
                     <div class="polaroid-photo deck-photo">
                       <img src="/assets/projects/house/scatter.png" alt="Actual vs Predicted" class="w-full h-full object-cover" loading="lazy" />
@@ -936,7 +926,7 @@
                   </div>
                 </div>
 
-                <!-- index 2: shap -->
+                <!-- shap -->
                 <div class="deck-card">
                   <div class="polaroid deck-polaroid">
                     <div class="polaroid-photo deck-photo">
@@ -946,7 +936,7 @@
                   </div>
                 </div>
 
-                <!-- index 3: heatmap -->
+                <!-- heatmap -->
                 <div class="deck-card">
                   <div class="polaroid deck-polaroid">
                     <div class="polaroid-photo deck-photo">
@@ -956,23 +946,13 @@
                   </div>
                 </div>
 
-                <!-- index 4: residuals -->
+                <!-- residuals -->
                 <div class="deck-card">
                   <div class="polaroid deck-polaroid">
                     <div class="polaroid-photo deck-photo">
                       <img src="/assets/projects/house/residuals.png" alt="Residuals" class="w-full h-full object-cover" loading="lazy" />
                     </div>
                     <p class="deck-caption">Residuals vs Predicted</p>
-                  </div>
-                </div>
-
-                <!-- index 5: clone of scatter (for seamless loop) -->
-                <div class="deck-card">
-                  <div class="polaroid deck-polaroid">
-                    <div class="polaroid-photo deck-photo">
-                      <img src="/assets/projects/house/scatter.png" alt="Actual vs Predicted" class="w-full h-full object-cover" loading="lazy" />
-                    </div>
-                    <p class="deck-caption">Actual vs Predicted</p>
                   </div>
                 </div>
 
@@ -1104,28 +1084,13 @@
             <a href="/assets/projects/climbing-the-language-tree.pdf" download class="misc-btn">Download</a>
           </div>
 
-          <!-- FSU research photo gallery
-               Track order: [p3-clone | p1 | p2 | p3 | p1-clone]
-               Initial center: index 1 (p1) → shows 3 | 1 | 2
-               › (right) = revolve right = left card comes to center = decrement index
-               ‹ (left)  = revolve left  = right card comes to center = increment index
-          -->
+          <!-- FSU research photo gallery — infinite carousel (main.js); list each photo once -->
           <div class="photo-deck" id="ctlt-deck">
             <div class="deck-viewport">
               <div class="deck-track-inner">
 
-                <!-- index 0: clone of p3 (for seamless right-revolve) -->
+                <!-- p1 -->
                 <div class="deck-card">
-                  <div class="polaroid deck-polaroid">
-                    <div class="polaroid-photo deck-photo">
-                      <img src="/assets/projects/ctlt/ctlt3.jpg" alt="lunch break" class="w-full h-full object-cover" loading="lazy" />
-                    </div>
-                    <p class="deck-caption">lunch break!</p>
-                  </div>
-                </div>
-
-                <!-- index 1: p1 — initial center -->
-                <div class="deck-card active">
                   <div class="polaroid deck-polaroid">
                     <div class="polaroid-photo deck-photo">
                       <img src="/assets/projects/ctlt/ctlt1.jpg" alt="the team!" class="w-full h-full object-cover" loading="lazy" />
@@ -1134,7 +1099,7 @@
                   </div>
                 </div>
 
-                <!-- index 2: p2 -->
+                <!-- p2 -->
                 <div class="deck-card">
                   <div class="polaroid deck-polaroid">
                     <div class="polaroid-photo deck-photo">
@@ -1144,7 +1109,7 @@
                   </div>
                 </div>
 
-                <!-- index 3: p3 -->
+                <!-- p3 -->
                 <div class="deck-card">
                   <div class="polaroid deck-polaroid">
                     <div class="polaroid-photo deck-photo">
@@ -1154,21 +1119,9 @@
                   </div>
                 </div>
 
-                <!-- index 4: clone of p1 (for seamless left-revolve) -->
-                <div class="deck-card">
-                  <div class="polaroid deck-polaroid">
-                    <div class="polaroid-photo deck-photo">
-                      <img src="/assets/projects/ctlt/ctlt1.jpg" alt="the team!" class="w-full h-full object-cover" loading="lazy" />
-                    </div>
-                    <p class="deck-caption">the team!</p>
-                  </div>
-                </div>
-
               </div>
             </div>
-            <!-- ‹ = revolve left (right card to center) -->
             <button class="deck-arrow deck-arrow-prev" aria-label="Previous">&#8249;</button>
-            <!-- › = revolve right (left card to center) -->
             <button class="deck-arrow deck-arrow-next" aria-label="Next">&#8250;</button>
           </div>
 

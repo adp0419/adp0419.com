@@ -417,53 +417,107 @@ if (projFilters) {
   })
 }
 
-// ─── Polaroid photo deck (infinite sliding carousel) ─────────────────────────
-// Generic: works with any number of cards. Layout: [clone-of-last | real-1 ... real-N | clone-of-first].
-// Boundary at 0 → jump to lastReal. Boundary at cards.length-1 → jump to 1.
-// Optional .deck-description element swaps text per slide via data-descriptions JSON.
+// ─── Polaroid photo deck (infinite carousel) ─────────────────────────────────
+// Every card's position is computed each frame from one continuous `pos` that
+// can count up or down forever — there are no ends, so nothing ever has to
+// snap back or lock out clicks. Arrows only move `target`; rapid clicking just
+// glides further. Real cards are duplicated in JS when there are few of them,
+// so a card always wraps around while it's fully faded out at the edge.
+// Optional .deck-description swaps text per photo (see deckDescriptions).
 
 const deckReinits = new Map()
 
 const deckDescriptions = {
-  'house-deck': {
-    1: 'The model tracks actual sale prices well for homes under ~$750K, with dots clustering tightly around the ideal diagonal. Above $1M, predictions consistently fall short — the model underpredicts luxury homes.',
-    2: 'Location (Seattle) is the single strongest price driver, followed by above-ground living ratio and total square footage. Wealthy zip codes like WA 98112 and WA 98004 appear individually in the top 20.',
-    3: 'Square footage features are heavily intercorrelated (sqft_living and sqft_above at 0.87), revealing multicollinearity. Lot size has almost zero correlation with price (0.05), and above_ground_ratio shows a strong inverse relationship with basement size (-0.91).',
-    4: 'Residuals fan out in a funnel shape as predicted price increases — reasonably accurate for typical homes but errors exceeding $1M+ for high-value properties. This heteroscedasticity suggests a log-transformation or non-linear model could help.',
-  },
+  'house-deck': [
+    'The model tracks actual sale prices well for homes under ~$750K, with dots clustering tightly around the ideal diagonal. Above $1M, predictions consistently fall short — the model underpredicts luxury homes.',
+    'Location (Seattle) is the single strongest price driver, followed by above-ground living ratio and total square footage. Wealthy zip codes like WA 98112 and WA 98004 appear individually in the top 20.',
+    'Square footage features are heavily intercorrelated (sqft_living and sqft_above at 0.87), revealing multicollinearity. Lot size has almost zero correlation with price (0.05), and above_ground_ratio shows a strong inverse relationship with basement size (-0.91).',
+    'Residuals fan out in a funnel shape as predicted price increases — reasonably accurate for typical homes but errors exceeding $1M+ for high-value properties. This heteroscedasticity suggests a log-transformation or non-linear model could help.',
+  ],
 }
 
-document.querySelectorAll('.photo-deck').forEach((deck) => {
-  const track     = deck.querySelector('.deck-track-inner')
-  const viewport  = deck.querySelector('.deck-viewport')
-  const cards     = [...track.querySelectorAll('.deck-card')]
-  const descEl    = deck.querySelector('.deck-description')
-  const descs     = deckDescriptions[deck.id] || {}
-  const gap       = 24
-  const lastReal  = cards.length - 2   // last real card index
-  let current     = 1
-  let busy        = false
-  let pending     = 0
+const mod = (n, m) => ((n % m) + m) % m
 
-  function calcOffset(idx) {
-    const cw  = cards[0].offsetWidth
-    const vpW = viewport.offsetWidth
-    return -(idx * (cw + gap)) + (vpW - cw) / 2
+document.querySelectorAll('.photo-deck').forEach((deck) => {
+  const track    = deck.querySelector('.deck-track-inner')
+  const viewport = deck.querySelector('.deck-viewport')
+  const descEl   = deck.querySelector('.deck-description')
+  const descs    = deckDescriptions[deck.id] ?? []
+  const real     = [...track.querySelectorAll('.deck-card')]
+  const N        = real.length
+  const GAP      = 24
+  const FADE_END = 1.5   // cards this far from centre (in card widths) are fully faded
+
+  // Ring of slots: enough copies that the wrap point (half the ring away) is
+  // always beyond the visible range
+  const copies = Math.max(1, Math.ceil(6 / N))
+  const slots = []
+  for (let k = 0; k < copies; k++) {
+    real.forEach((card, i) => {
+      const el = k === 0 ? card : card.cloneNode(true)
+      if (k > 0) {
+        el.setAttribute('aria-hidden', 'true')
+        track.appendChild(el)
+      }
+      slots.push({ el, idx: k * N + i })
+    })
+  }
+  const M = slots.length
+
+  let pos = 0      // where the deck is right now (continuous)
+  let target = 0   // where it's heading (whole numbers, unbounded)
+  let raf = 0
+  let last = 0
+
+  function layout() {
+    const cw = real[0].offsetWidth
+    if (!cw) return
+    track.style.height = `${real[0].offsetHeight}px`
+    let centre = null
+    let centreDist = Infinity
+    for (const s of slots) {
+      const d = mod(s.idx - pos + M / 2, M) - M / 2   // signed distance from centre
+      const a = Math.abs(d)
+      const near = Math.max(0, 1 - a)                  // 1 at centre → 0 one card away
+      const opacity = a <= 1
+        ? 0.6 + 0.4 * near
+        : Math.max(0, 0.6 * (1 - (a - 1) / (FADE_END - 1)))
+      const st = s.el.style
+      st.transform = `translateX(-50%) translateX(${(d * (cw + GAP)).toFixed(2)}px) scale(${(0.88 + 0.12 * near).toFixed(4)})`
+      st.opacity = opacity.toFixed(3)
+      st.filter = near > 0.995 ? 'none' : `blur(${(2.5 * (1 - near)).toFixed(2)}px)`
+      st.zIndex = String(10 - Math.round(a * 2))
+      st.visibility = opacity < 0.005 ? 'hidden' : 'visible'
+      if (a < centreDist) { centreDist = a; centre = s }
+    }
+    slots.forEach((s) => s.el.classList.toggle('active', s === centre))
   }
 
-  let lastDir = 1 // 1 = next, -1 = prev
+  function tick(now) {
+    const dt = last ? Math.min(0.05, (now - last) / 1000) : 1 / 60
+    last = now
+    const k = reducedMotion.matches ? 1 : 1 - Math.exp(-dt * 11)
+    pos += (target - pos) * k
+    if (Math.abs(target - pos) < 0.0005) pos = target
+    layout()
+    if (pos !== target) raf = requestAnimationFrame(tick)
+    else { raf = 0; last = 0 }
+  }
 
-  function updateDesc(idx, dir) {
-    if (!descEl || !descs[idx]) return
-    if (dir) lastDir = dir
+  const run = () => { if (!raf) raf = requestAnimationFrame(tick) }
 
-    const outClass = lastDir > 0 ? 'slide-out-left' : 'slide-out-right'
-    const inClass  = lastDir > 0 ? 'slide-in-left'  : 'slide-in-right'
-
+  // Caption slides out the way the deck is moving, then the current one slides in.
+  // Reads `target` when it swaps, so rapid clicks always land on the right text.
+  let descTimer = 0
+  function updateDesc(dir) {
+    if (!descEl || !descs.length) return
+    const outClass = dir > 0 ? 'slide-out-left' : 'slide-out-right'
+    const inClass  = dir > 0 ? 'slide-in-left'  : 'slide-in-right'
+    descEl.classList.remove('slide-out-left', 'slide-out-right')
     descEl.classList.add(outClass)
-
-    setTimeout(() => {
-      descEl.textContent = descs[idx]
+    clearTimeout(descTimer)
+    descTimer = setTimeout(() => {
+      descEl.textContent = descs[mod(target, N)]
       descEl.classList.remove(outClass)
       descEl.classList.add(inClass)
       void descEl.offsetWidth
@@ -471,43 +525,14 @@ document.querySelectorAll('.photo-deck').forEach((deck) => {
     }, 210)
   }
 
-  function jumpTo(idx) {
-    track.style.transition = 'none'
-    cards.forEach((c) => { c.style.transition = 'none' })
-    cards.forEach((c, i) => c.classList.toggle('active', i === idx))
-    track.style.transform = `translateX(${calcOffset(idx)}px)`
-    current = idx
-    updateDesc(idx)
-    void track.offsetWidth
-    track.style.transition = ''
-    cards.forEach((c) => { c.style.transition = '' })
-    busy = false
+  function go(dir) {
+    target += dir
+    updateDesc(dir)
+    run()
   }
 
-  function slideTo(idx, dir) {
-    busy = true
-    cards.forEach((c, i) => c.classList.toggle('active', i === idx))
-    track.style.transform = `translateX(${calcOffset(idx)}px)`
-    current = idx
-    updateDesc(idx, dir)
-  }
-
-  function tryAdvance() {
-    if (busy) return
-    if (pending > 0) { pending--; slideTo(current + 1, 1) }
-    else if (pending < 0) { pending++; slideTo(current - 1, -1) }
-  }
-
-  track.addEventListener('transitionend', (e) => {
-    if (e.target !== track || e.propertyName !== 'transform') return
-    if (current >= cards.length - 1) jumpTo(1)
-    else if (current <= 0) jumpTo(lastReal)
-    else busy = false
-    tryAdvance()
-  })
-
-  deck.querySelector('.deck-arrow-next').addEventListener('click', () => { pending++; tryAdvance() })
-  deck.querySelector('.deck-arrow-prev').addEventListener('click', () => { pending--; tryAdvance() })
+  deck.querySelector('.deck-arrow-next').addEventListener('click', () => go(1))
+  deck.querySelector('.deck-arrow-prev').addEventListener('click', () => go(-1))
 
   // Swipe / drag to advance
   let swipeX = null
@@ -516,14 +541,25 @@ document.querySelectorAll('.photo-deck').forEach((deck) => {
     if (swipeX == null) return
     const dx = e.clientX - swipeX
     swipeX = null
-    if (Math.abs(dx) < 40) return
-    pending += dx < 0 ? 1 : -1
-    tryAdvance()
+    if (Math.abs(dx) >= 40) go(dx < 0 ? 1 : -1)
   })
   viewport.addEventListener('pointercancel', () => { swipeX = null })
   viewport.style.touchAction = 'pan-y'
 
-  deckReinits.set(deck.id, () => { pending = 0; jumpTo(1) })
+  window.addEventListener('resize', () => { if (deck.offsetParent) layout() })
+
+  deckReinits.set(deck.id, () => {
+    cancelAnimationFrame(raf)
+    raf = 0
+    last = 0
+    pos = target = 0
+    clearTimeout(descTimer)
+    if (descEl && descs.length) {
+      descEl.classList.remove('slide-out-left', 'slide-out-right')
+      descEl.textContent = descs[0]
+    }
+    layout()
+  })
 })
 
 // ─── Polaroid card swipe ──────────────────────────────────────────────────────
