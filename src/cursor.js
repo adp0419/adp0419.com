@@ -9,7 +9,7 @@ import { finePointer, reducedMotion } from './util.js'
 const INTERACTIVE = 'a, button, [role="button"], [data-modal], .exp-card, .proj-filter-opt, .proj-filter-clear, .proj-filter-trigger, .palette-item'
 const TEXT_ENTRY = 'input, textarea, [contenteditable="true"]'
 const LOCK_MAX_W = 1000     // lock onto elements up to this size (incl. experience
-const LOCK_MAX_H = 160      // cards and project rows)…
+const LOCK_MAX_H = 260      // cards, project rows, and gallery photos)…
 const LOCK_PAD = 6          // …with this much breathing room
 const FREE_SIZE = 22
 const OPEN_SIZE = 38

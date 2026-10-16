@@ -837,25 +837,6 @@ html {
     cursor: zoom-in;
   }
 
-  /* "expand" hint on the front photo */
-  .deck-card .deck-photo {
-    position: relative;
-  }
-
-  .deck-card.active .deck-photo::after {
-    content: '⤢ expand';
-    @apply absolute right-1.5 bottom-1.5 font-mono text-[10px] text-white bg-slate-900 px-1.5 py-0.5;
-    opacity: 0;
-    transform: translateY(3px);
-    transition: opacity 200ms ease, transform 200ms ease;
-  }
-
-  .deck-card.active:hover .deck-photo::after,
-  .deck-card.active:focus-visible .deck-photo::after {
-    opacity: 1;
-    transform: none;
-  }
-
   /* ─── Lightbox ─── */
   .lightbox {
     @apply fixed inset-0 flex items-center justify-center p-4 sm:p-12;
@@ -893,15 +874,11 @@ html {
   }
 
   .lightbox-caption {
-    @apply flex items-baseline justify-between gap-4 mt-3 text-sm text-slate-700;
-  }
-
-  .lightbox-count {
-    @apply font-mono text-xs text-slate-400 tabular-nums flex-shrink-0;
+    @apply mt-3 text-sm text-slate-700 text-center;
   }
 
   .lightbox-desc {
-    @apply text-xs text-slate-500 leading-relaxed mt-1.5;
+    @apply text-xs text-slate-500 leading-relaxed mt-1.5 mx-auto text-center;
     max-width: 70ch;
   }
 

@@ -453,10 +453,7 @@ const lightbox = (() => {
     <div class="lightbox-backdrop" data-lb-close></div>
     <figure class="lightbox-figure">
       <img class="lightbox-img" alt="" />
-      <figcaption class="lightbox-caption">
-        <span class="lightbox-title"></span>
-        <span class="lightbox-count"></span>
-      </figcaption>
+      <figcaption class="lightbox-caption"></figcaption>
       <p class="lightbox-desc"></p>
     </figure>
     <button type="button" class="lightbox-btn lightbox-prev" aria-label="Previous image">&#8249;</button>
@@ -465,8 +462,7 @@ const lightbox = (() => {
   document.body.appendChild(root)
 
   const img   = root.querySelector('.lightbox-img')
-  const title = root.querySelector('.lightbox-title')
-  const count = root.querySelector('.lightbox-count')
+  const title = root.querySelector('.lightbox-caption')
   const desc  = root.querySelector('.lightbox-desc')
   const closeBtn = root.querySelector('.lightbox-close')
   let deckApi = null
@@ -475,7 +471,6 @@ const lightbox = (() => {
   function render() {
     const cur = deckApi.current()
     title.textContent = cur.title
-    count.textContent = `${cur.i + 1} / ${cur.n}`
     desc.textContent = cur.desc
     desc.hidden = !cur.desc
     if (img.getAttribute('src') === cur.src) return
@@ -585,6 +580,7 @@ document.querySelectorAll('.photo-deck').forEach((deck) => {
       if (a < centreDist) { centreDist = a; centre = s }
     }
     slots.forEach((s) => s.el.classList.toggle('active', s === centre))
+    showDesc(mod(Math.round(pos), N))
   }
 
   function tick(now) {
@@ -600,28 +596,34 @@ document.querySelectorAll('.photo-deck').forEach((deck) => {
 
   const run = () => { if (!raf) raf = requestAnimationFrame(tick) }
 
-  // Caption slides out the way the deck is moving, then the current one slides in.
-  // Reads `target` when it swaps, so rapid clicks always land on the right text.
-  let descTimer = 0
-  function updateDesc(dir) {
-    if (!descEl || !descs.length) return
+  // Analysis text follows whichever photo is at the front: when a new one
+  // passes the centre, the old text slides out the way the deck is moving and
+  // the new one slides in. Swaps queue up so fast clicking can't strand it.
+  let shown = 0
+  let swapping = false
+  let lastDir = 1
+  function showDesc(i) {
+    if (!descEl || !descs.length || i === shown || swapping) return
+    swapping = true
+    const dir = lastDir
     const outClass = dir > 0 ? 'slide-out-left' : 'slide-out-right'
     const inClass  = dir > 0 ? 'slide-in-left'  : 'slide-in-right'
-    descEl.classList.remove('slide-out-left', 'slide-out-right')
     descEl.classList.add(outClass)
-    clearTimeout(descTimer)
-    descTimer = setTimeout(() => {
-      descEl.textContent = descs[mod(target, N)]
+    setTimeout(() => {
+      shown = mod(Math.round(pos), N)   // whatever is at the front *now*
+      descEl.textContent = descs[shown]
       descEl.classList.remove(outClass)
       descEl.classList.add(inClass)
       void descEl.offsetWidth
       descEl.classList.remove(inClass)
-    }, 210)
+      swapping = false
+      showDesc(mod(Math.round(pos), N))  // catch up if the deck moved on meanwhile
+    }, reducedMotion.matches ? 0 : 200)
   }
 
   function go(dir) {
     target += dir
-    updateDesc(dir)
+    lastDir = dir
     run()
   }
 
@@ -690,7 +692,8 @@ document.querySelectorAll('.photo-deck').forEach((deck) => {
     raf = 0
     last = 0
     pos = target = 0
-    clearTimeout(descTimer)
+    shown = 0
+    swapping = false
     if (descEl && descs.length) {
       descEl.classList.remove('slide-out-left', 'slide-out-right')
       descEl.textContent = descs[0]
