@@ -829,6 +829,110 @@ html {
     will-change: transform, opacity, filter;
   }
 
+  .deck-card {
+    cursor: pointer;
+  }
+
+  .deck-card.active {
+    cursor: zoom-in;
+  }
+
+  /* "expand" hint on the front photo */
+  .deck-card .deck-photo {
+    position: relative;
+  }
+
+  .deck-card.active .deck-photo::after {
+    content: '⤢ expand';
+    @apply absolute right-1.5 bottom-1.5 font-mono text-[10px] text-white bg-slate-900 px-1.5 py-0.5;
+    opacity: 0;
+    transform: translateY(3px);
+    transition: opacity 200ms ease, transform 200ms ease;
+  }
+
+  .deck-card.active:hover .deck-photo::after,
+  .deck-card.active:focus-visible .deck-photo::after {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ─── Lightbox ─── */
+  .lightbox {
+    @apply fixed inset-0 flex items-center justify-center p-4 sm:p-12;
+    z-index: 65;
+  }
+
+  .lightbox[hidden] {
+    display: none;
+  }
+
+  .lightbox-backdrop {
+    @apply absolute inset-0 bg-slate-900/60;
+    backdrop-filter: blur(3px);
+    animation: fade-in 200ms ease;
+  }
+
+  .lightbox-figure {
+    @apply relative bg-white border border-slate-200 p-3 sm:p-4 m-0;
+    max-width: min(1100px, 100%);
+    box-shadow: 4px 6px 0px rgba(0, 0, 0, 0.15);
+    animation: modal-in 320ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .lightbox.is-closing .lightbox-figure   { animation: modal-out 180ms ease forwards; }
+  .lightbox.is-closing .lightbox-backdrop { animation: fade-out 180ms ease forwards; }
+
+  .lightbox-img {
+    @apply block mx-auto w-auto h-auto max-w-full object-contain bg-white;
+    max-height: 72vh;
+    transition: opacity 160ms ease;
+  }
+
+  .lightbox-img.is-swapping {
+    opacity: 0;
+  }
+
+  .lightbox-caption {
+    @apply flex items-baseline justify-between gap-4 mt-3 text-sm text-slate-700;
+  }
+
+  .lightbox-count {
+    @apply font-mono text-xs text-slate-400 tabular-nums flex-shrink-0;
+  }
+
+  .lightbox-desc {
+    @apply text-xs text-slate-500 leading-relaxed mt-1.5;
+    max-width: 70ch;
+  }
+
+  .lightbox-desc[hidden] {
+    display: none;
+  }
+
+  .lightbox-btn {
+    @apply absolute w-10 h-10 flex items-center justify-center text-2xl leading-none
+           bg-white text-slate-900 border border-slate-900
+           hover:bg-slate-900 hover:text-white;
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.15);
+    transition: background-color 150ms ease, color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+  }
+
+  .lightbox-btn:hover {
+    box-shadow: none;
+    transform: translate(1px, 1px);
+  }
+
+  .lightbox-prev  { left: 1rem;  top: 50%; margin-top: -1.25rem; }
+  .lightbox-next  { right: 1rem; top: 50%; margin-top: -1.25rem; }
+  .lightbox-close { right: 1rem; top: 1rem; }
+
+  @media (max-width: 639px) {
+    .lightbox-prev,
+    .lightbox-next { top: auto; bottom: 1rem; margin-top: 0; }
+    .lightbox-prev { left: calc(50% - 3rem); }
+    .lightbox-next { right: calc(50% - 3rem); }
+  }
+
   .deck-polaroid {
     display: flex;
     flex-direction: column;

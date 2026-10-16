@@ -438,6 +438,100 @@ const deckDescriptions = {
 
 const mod = (n, m) => ((n % m) + m) % m
 
+// ─── Lightbox: expands a deck's front photo ──────────────────────────────────
+// One shared viewer. Arrows (and ← →) step the deck it came from, so the
+// gallery behind stays in sync. Esc / backdrop close only the lightbox.
+
+const lightbox = (() => {
+  const root = document.createElement('div')
+  root.className = 'lightbox'
+  root.hidden = true
+  root.setAttribute('role', 'dialog')
+  root.setAttribute('aria-modal', 'true')
+  root.setAttribute('aria-label', 'Image viewer')
+  root.innerHTML = `
+    <div class="lightbox-backdrop" data-lb-close></div>
+    <figure class="lightbox-figure">
+      <img class="lightbox-img" alt="" />
+      <figcaption class="lightbox-caption">
+        <span class="lightbox-title"></span>
+        <span class="lightbox-count"></span>
+      </figcaption>
+      <p class="lightbox-desc"></p>
+    </figure>
+    <button type="button" class="lightbox-btn lightbox-prev" aria-label="Previous image">&#8249;</button>
+    <button type="button" class="lightbox-btn lightbox-next" aria-label="Next image">&#8250;</button>
+    <button type="button" class="lightbox-btn lightbox-close" data-lb-close aria-label="Close">&times;</button>`
+  document.body.appendChild(root)
+
+  const img   = root.querySelector('.lightbox-img')
+  const title = root.querySelector('.lightbox-title')
+  const count = root.querySelector('.lightbox-count')
+  const desc  = root.querySelector('.lightbox-desc')
+  const closeBtn = root.querySelector('.lightbox-close')
+  let deckApi = null
+  let lastFocus = null
+
+  function render() {
+    const cur = deckApi.current()
+    title.textContent = cur.title
+    count.textContent = `${cur.i + 1} / ${cur.n}`
+    desc.textContent = cur.desc
+    desc.hidden = !cur.desc
+    if (img.getAttribute('src') === cur.src) return
+    img.classList.add('is-swapping')
+    const swap = () => { img.src = cur.src; img.alt = cur.alt }
+    setTimeout(swap, img.getAttribute('src') ? 120 : 0)
+  }
+  img.addEventListener('load', () => img.classList.remove('is-swapping'))
+
+  function open(api) {
+    deckApi = api
+    lastFocus = document.activeElement
+    img.removeAttribute('src')
+    render()
+    root.hidden = false
+    root.classList.remove('is-closing')
+    closeBtn.focus({ preventScroll: true })
+  }
+
+  function close() {
+    if (root.hidden || root.classList.contains('is-closing')) return
+    root.classList.add('is-closing')
+    setTimeout(() => {
+      root.hidden = true
+      root.classList.remove('is-closing')
+      lastFocus?.focus?.({ preventScroll: true })
+    }, reducedMotion.matches ? 0 : 180)
+  }
+
+  function step(dir) {
+    deckApi.go(dir)
+    render()
+  }
+
+  root.querySelectorAll('[data-lb-close]').forEach((el) => el.addEventListener('click', close))
+  root.querySelector('.lightbox-prev').addEventListener('click', () => step(-1))
+  root.querySelector('.lightbox-next').addEventListener('click', () => step(1))
+
+  // Capture phase so Esc closes only the lightbox, not the project modal under it
+  window.addEventListener('keydown', (e) => {
+    if (root.hidden) return
+    if (e.key === 'Escape') { e.preventDefault(); e.stopImmediatePropagation(); close() }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); e.stopImmediatePropagation(); step(-1) }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); e.stopImmediatePropagation(); step(1) }
+    else if (e.key === 'Tab') {
+      // keep focus within the lightbox's buttons
+      const btns = [...root.querySelectorAll('button')]
+      const i = btns.indexOf(document.activeElement)
+      e.preventDefault(); e.stopImmediatePropagation()
+      btns[mod(i + (e.shiftKey ? -1 : 1), btns.length)].focus()
+    }
+  }, true)
+
+  return { open }
+})()
+
 document.querySelectorAll('.photo-deck').forEach((deck) => {
   const track    = deck.querySelector('.deck-track-inner')
   const viewport = deck.querySelector('.deck-viewport')
@@ -534,14 +628,57 @@ document.querySelectorAll('.photo-deck').forEach((deck) => {
   deck.querySelector('.deck-arrow-next').addEventListener('click', () => go(1))
   deck.querySelector('.deck-arrow-prev').addEventListener('click', () => go(-1))
 
-  // Swipe / drag to advance
+  // What the lightbox needs: the photo currently heading to the front
+  const api = {
+    go,
+    current() {
+      const i = mod(target, N)
+      const card = real[i]
+      const im = card.querySelector('img')
+      return {
+        i, n: N,
+        src: im.currentSrc || im.src,
+        alt: im.alt,
+        title: card.querySelector('.deck-caption')?.textContent.trim() ?? '',
+        desc: descs[i] ?? '',
+      }
+    },
+  }
+
+  // Click the front photo to expand it; click a side photo to bring it forward
+  function activate(cardEl) {
+    const slot = slots.find((s) => s.el === cardEl)
+    if (!slot) return
+    const d = Math.round(mod(slot.idx - target + M / 2, M) - M / 2)
+    if (d === 0) lightbox.open(api)
+    else go(Math.sign(d))
+  }
+
+  real.forEach((card) => {
+    card.tabIndex = 0
+    card.setAttribute('role', 'button')
+    card.setAttribute('aria-label', `${card.querySelector('.deck-caption')?.textContent.trim() ?? 'Photo'} — expand`)
+    card.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter' && e.key !== ' ') return
+      e.preventDefault()
+      activate(card)
+    })
+  })
+
+  // Swipe / drag to advance (a swipe shouldn't also count as a click)
   let swipeX = null
-  viewport.addEventListener('pointerdown', (e) => { swipeX = e.clientX })
+  let swiped = false
+  viewport.addEventListener('pointerdown', (e) => { swipeX = e.clientX; swiped = false })
   viewport.addEventListener('pointerup', (e) => {
     if (swipeX == null) return
     const dx = e.clientX - swipeX
     swipeX = null
-    if (Math.abs(dx) >= 40) go(dx < 0 ? 1 : -1)
+    if (Math.abs(dx) >= 40) { swiped = true; go(dx < 0 ? 1 : -1) }
+  })
+  viewport.addEventListener('click', (e) => {
+    if (swiped) { swiped = false; return }
+    const cardEl = e.target.closest('.deck-card')
+    if (cardEl) activate(cardEl)
   })
   viewport.addEventListener('pointercancel', () => { swipeX = null })
   viewport.style.touchAction = 'pan-y'
