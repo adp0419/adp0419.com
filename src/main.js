@@ -4,11 +4,9 @@ import { initFx } from './fx.js'
 import { initProjectRows } from './preview.js'
 import { initPalette } from './palette.js'
 import { initCursor } from './cursor.js'
-import { initTrophies } from './trophies.js'
 
 initHero()
 initProjectRows()
-initTrophies()
 initFx()
 initPalette()
 initCursor()

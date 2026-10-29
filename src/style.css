@@ -1409,111 +1409,94 @@ html {
     transform-origin: left;
   }
 
-  /* ─── Trophy case ─── */
-  .trophy-shelf {
-    @apply grid grid-cols-3 gap-2 sm:gap-3 list-none p-0 m-0;
+  /* ─── Achievements ─── */
+  .award-list {
+    @apply flex flex-col gap-3 list-none p-0 m-0;
   }
 
-  .trophy {
-    @apply flex flex-col outline-none;
+  .award {
+    @apply grid gap-4 sm:gap-5 p-3 sm:p-4 border border-slate-200 bg-white;
+    grid-template-columns: 1fr;
+    transition: border-color 200ms ease, transform 200ms ease;
   }
 
-  /* Display cell: a pale case with a shelf edge and a soft shadow under the cup */
-  .trophy-cell {
-    @apply relative flex items-end justify-center border border-slate-200 bg-slate-50 overflow-hidden;
-    aspect-ratio: 4 / 3;
-    border-bottom: 2px solid #0f172a;
-    transition: border-color 200ms ease, background-color 200ms ease;
+  @media (min-width: 640px) {
+    .award { grid-template-columns: 220px 1fr; }
   }
 
-  .trophy-cell::after {
+  .award:hover {
+    @apply border-slate-300;
+    transform: translateY(-1px);
+  }
+
+  .award-thumb {
+    @apply block self-start overflow-hidden border border-slate-200 bg-slate-900;
+    aspect-ratio: 3 / 2;
+  }
+
+  .award-thumb img {
+    @apply block w-full h-full object-cover;
+    transition: transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .award:hover .award-thumb img {
+    transform: scale(1.03);
+  }
+
+  .award-body {
+    @apply min-w-0 flex flex-col;
+  }
+
+  .modal-body .award-body p {
+    @apply mb-0;
+  }
+
+  /* Winner ribbon: inverted rank + outlined track, sharing one border */
+  .award-badge {
+    @apply self-start inline-flex font-mono text-[11px] uppercase tracking-wider border border-slate-900;
+  }
+
+  .award-rank {
+    @apply px-2 py-0.5 bg-slate-900 text-white;
+  }
+
+  .award-track {
+    @apply px-2 py-0.5 text-slate-900;
+  }
+
+  .award-meta {
+    @apply font-mono text-xs text-slate-400 mt-2;
+  }
+
+  .award-title {
+    @apply text-base font-semibold text-slate-900 mt-1;
+  }
+
+  .award-desc {
+    @apply text-sm text-slate-600 mt-1 mb-3;
+  }
+
+  .award-body .proj-link-actions {
+    @apply mt-3;
+  }
+
+  /* Placeholder for future wins, with the same travelling line as the section heads */
+  .award-next {
+    @apply relative flex items-center justify-center gap-3 py-5 border border-dashed border-slate-300
+           font-mono text-xs text-slate-400;
+  }
+
+  .award-next::before,
+  .award-next::after {
     content: '';
-    @apply absolute left-1/2 bottom-0 h-1.5;
-    width: 34%;
-    transform: translateX(-50%);
-    background: radial-gradient(closest-side, rgb(15 23 42 / 0.18), transparent);
-    transition: width 300ms cubic-bezier(0.16, 1, 0.3, 1), opacity 300ms ease;
+    @apply h-px w-10;
+    background: linear-gradient(90deg, transparent, #0f172a, transparent) no-repeat #e2e8f0;
+    background-size: 50% 100%;
+    animation: line-sweep 2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
   }
 
-  .trophy-cup {
-    @apply relative block;
-    z-index: 1;
-    height: 72%;
-    margin-bottom: 2px;
-    transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .trophy-body { fill: #fff; }
-  .trophy-line {
-    fill: none;
-    stroke: #0f172a;
-    stroke-width: 1.5;
-    stroke-linejoin: round;
-    vector-effect: non-scaling-stroke;
-  }
-  .trophy-rank {
-    @apply font-mono;
-    font-size: 6.5px;
-    font-weight: 600;
-    fill: #0f172a;
-  }
-
-  /* A glint crosses the cup every few seconds, and again on hover */
-  .trophy-shine {
-    fill: #cbd5e1;
-    animation: trophy-glint 6s cubic-bezier(0.65, 0, 0.35, 1) 1.5s infinite;
-  }
-
-  @keyframes trophy-glint {
-    0%       { transform: skewX(-20deg) translateX(0); }
-    18%, 100% { transform: skewX(-20deg) translateX(68px); }
-  }
-
-  .trophy:not(.is-empty):is(:hover, :focus-visible) .trophy-cell {
-    @apply bg-white border-slate-300;
-    border-bottom-color: #0f172a;
-  }
-
-  .trophy:not(.is-empty):is(:hover, :focus-visible) .trophy-cup {
-    transform: translateY(-4px);
-  }
-
-  .trophy:not(.is-empty):is(:hover, :focus-visible) .trophy-cell::after {
-    width: 24%;
-    opacity: 0.7;
-  }
-
-  .trophy-plaque {
-    @apply pt-2.5 min-w-0;
-  }
-
-  .trophy-plaque p {
-    @apply mb-0 leading-snug;
-  }
-
-  .trophy-title {
-    @apply text-xs sm:text-sm font-semibold text-slate-900 leading-snug;
-  }
-
-  .trophy-event {
-    @apply text-xs text-slate-600 mt-0.5;
-  }
-
-  .trophy-date {
-    @apply font-mono text-[11px] text-slate-400 mt-0.5;
-  }
-
-  /* Empty slots: a dashed ghost of a cup, waiting */
-  .trophy.is-empty .trophy-cell {
-    @apply bg-white border-dashed;
-    border-bottom: 2px dashed #cbd5e1;
-  }
-  .trophy.is-empty .trophy-cell::after { display: none; }
-  .trophy.is-empty .trophy-body,
-  .trophy.is-empty .trophy-shine { display: none; }
-  .trophy.is-empty .trophy-line {
-    stroke: #cbd5e1;
-    stroke-dasharray: 3 3;
+  .award-next::after {
+    animation-direction: reverse;
   }
 
   /* ─── Footer ─── */

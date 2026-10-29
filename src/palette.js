@@ -62,12 +62,12 @@ function collectItems() {
     })
   })
 
-  document.querySelectorAll('.trophy:not(.is-empty)').forEach((el) => {
+  document.querySelectorAll('.award').forEach((el) => {
     items.push({
       group: 'Misc',
-      label: el.querySelector('.trophy-title')?.textContent.trim() ?? '',
-      sub: el.querySelector('.trophy-event')?.textContent.trim() ?? '',
-      keywords: 'trophy award achievement hackathon win',
+      label: el.querySelector('.award-title')?.textContent.trim() ?? '',
+      sub: el.querySelector('.award-badge')?.textContent.replace('Place', 'Place ·').trim() ?? '',
+      keywords: `${el.querySelector('.award-meta')?.textContent ?? ''} trophy award achievement hackathon win`,
       icon: '□',
       run: () => openModal('achievements'),
     })

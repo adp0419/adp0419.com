@@ -539,20 +539,32 @@
           <button class="modal-close" data-close-modal aria-label="Close">&times;</button>
         </div>
         <div class="modal-body">
-          <!-- Trophy case — one <li> per award; empty "next" slots are added by src/trophies.js
-               data-rank → engraved on the cup (keep it short: 1st, 2nd, 3rd, ★) -->
-          <div class="trophy-case">
-            <ul class="trophy-shelf">
-              <li class="trophy" data-rank="1st" tabindex="0">
-                <div class="trophy-cell"></div>
-                <div class="trophy-plaque">
-                  <p class="trophy-title">1st Place · Twinly Track</p>
-                  <p class="trophy-event">GatorHack V</p>
-                  <p class="trophy-date">Oct 26, 2026</p>
+          <!-- One .award per win, newest first. The dashed "more to come" slot stays last. -->
+          <ul class="award-list">
+            <li class="award">
+              <a class="award-thumb" href="https://devpost.com/software/sugarcoat-ypgmsi" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+                <img src="/assets/achievements/sugarcoat.jpg" alt="" loading="lazy" />
+              </a>
+              <div class="award-body">
+                <p class="award-badge"><span class="award-rank">1st Place</span><span class="award-track">Twinly Track</span></p>
+                <p class="award-meta">GatorHack V · Oct 26, 2026</p>
+                <h3 class="award-title">Sugarcoat</h3>
+                <p class="award-desc">Speech-to-speech tool that turns unfiltered rants into polished, professional messages, played back in your own cloned voice.</p>
+                <div class="tech-tags">
+                  <span class="tech-tag">Node.js</span>
+                  <span class="tech-tag">Supabase</span>
+                  <span class="tech-tag">Groq Whisper</span>
+                  <span class="tech-tag">Gemma</span>
+                  <span class="tech-tag">Twinly</span>
                 </div>
-              </li>
-            </ul>
-          </div>
+                <div class="proj-link-actions">
+                  <a href="https://devpost.com/software/sugarcoat-ypgmsi" class="proj-link-btn" target="_blank" rel="noopener">Devpost</a>
+                  <a href="https://github.com/adp0419/sugarcoat" class="proj-link-btn" target="_blank" rel="noopener">GitHub</a>
+                </div>
+              </div>
+            </li>
+            <li class="award-next" aria-hidden="true">more to come</li>
+          </ul>
         </div>
       </div>
     </div>
