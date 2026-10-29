@@ -425,7 +425,7 @@
 
           <div class="misc-btn-group">
             <button class="misc-btn magnetic hidden" data-modal="background">Background</button>
-            <button class="misc-btn magnetic" data-modal="achievements">Achievements</button>
+            <button class="misc-btn magnetic" data-modal="milestones">Milestones</button>
             <button class="misc-btn magnetic" data-modal="technologies">Technologies</button>
           </div>
         </div>
@@ -531,40 +531,30 @@
     </div>
 
     <!-- Technologies modal -->
-    <div id="modal-achievements" class="modal" role="dialog" aria-modal="true" aria-label="Achievements" hidden>
+    <div id="modal-milestones" class="modal" role="dialog" aria-modal="true" aria-label="Milestones" hidden>
       <div class="modal-backdrop" data-close-modal></div>
       <div class="modal-panel">
         <div class="modal-head">
-          <h2 class="modal-title font-semibold">Achievements</h2>
+          <h2 class="modal-title font-semibold">Milestones</h2>
           <button class="modal-close" data-close-modal aria-label="Close">&times;</button>
         </div>
         <div class="modal-body">
-          <!-- One .award per win, newest first. The dashed "more to come" slot stays last. -->
-          <ul class="award-list">
-            <li class="award">
-              <a class="award-thumb" href="https://devpost.com/software/sugarcoat-ypgmsi" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
-                <img src="/assets/achievements/sugarcoat.jpg" alt="" loading="lazy" />
-              </a>
-              <div class="award-body">
-                <p class="award-badge"><span class="award-rank">1st Place</span><span class="award-track">Twinly Track</span></p>
-                <p class="award-meta">GatorHack V · Oct 26, 2026</p>
-                <h3 class="award-title">Sugarcoat</h3>
-                <p class="award-desc">Speech-to-speech tool that turns unfiltered rants into polished, professional messages, played back in your own cloned voice.</p>
-                <div class="tech-tags">
-                  <span class="tech-tag">Node.js</span>
-                  <span class="tech-tag">Supabase</span>
-                  <span class="tech-tag">Groq Whisper</span>
-                  <span class="tech-tag">Gemma</span>
-                  <span class="tech-tag">Twinly</span>
-                </div>
-                <div class="proj-link-actions">
-                  <a href="https://devpost.com/software/sugarcoat-ypgmsi" class="proj-link-btn" target="_blank" rel="noopener">Devpost</a>
-                  <a href="https://github.com/adp0419/sugarcoat" class="proj-link-btn" target="_blank" rel="noopener">GitHub</a>
-                </div>
-              </div>
-            </li>
-            <li class="award-next" aria-hidden="true">more to come</li>
-          </ul>
+          <!-- Milestones, grouped by kind (hackathon | internship | award | other → sets the icon).
+               One <li> per milestone, newest first; use <div class="ms-card"> instead of <a> if there's no link. -->
+          <section class="ms-group" data-kind="hackathon">
+            <p class="ms-group-label">hackathons <span class="ms-count"></span></p>
+            <ul class="ms-grid">
+              <li class="ms-item">
+                <a class="ms-link" href="https://devpost.com/software/sugarcoat-ypgmsi" target="_blank" rel="noopener">
+                  <span class="ms-text">
+                    <span class="ms-title">1st Place · Twinly Track</span>
+                    <span class="ms-meta">GatorHack V · Oct 2026</span>
+                  </span>
+                </a>
+              </li>
+              <li class="ms-next" aria-hidden="true">more to come</li>
+            </ul>
+          </section>
         </div>
       </div>
     </div>

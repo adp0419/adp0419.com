@@ -56,20 +56,20 @@ function collectItems() {
     items.push({
       group: 'Misc',
       label: btn.textContent.trim(),
-      keywords: { technologies: 'skills stack languages tools', achievements: 'trophy awards hackathon wins' }[btn.dataset.modal] ?? '',
+      keywords: { technologies: 'skills stack languages tools', milestones: 'achievements awards trophy hackathon wins' }[btn.dataset.modal] ?? '',
       icon: '□',
       run: () => openModal(btn.dataset.modal),
     })
   })
 
-  document.querySelectorAll('.award').forEach((el) => {
+  document.querySelectorAll('.ms-item').forEach((el) => {
     items.push({
       group: 'Misc',
-      label: el.querySelector('.award-title')?.textContent.trim() ?? '',
-      sub: el.querySelector('.award-badge')?.textContent.replace('Place', 'Place ·').trim() ?? '',
-      keywords: `${el.querySelector('.award-meta')?.textContent ?? ''} trophy award achievement hackathon win`,
+      label: el.querySelector('.ms-title')?.textContent.trim() ?? '',
+      sub: el.querySelector('.ms-meta')?.textContent.trim() ?? '',
+      keywords: `${el.closest('.ms-group')?.dataset.kind ?? ''} milestone achievement`,
       icon: '□',
-      run: () => openModal('achievements'),
+      run: () => openModal('milestones'),
     })
   })
 

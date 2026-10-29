@@ -4,9 +4,11 @@ import { initFx } from './fx.js'
 import { initProjectRows } from './preview.js'
 import { initPalette } from './palette.js'
 import { initCursor } from './cursor.js'
+import { initMilestones } from './milestones.js'
 
 initHero()
 initProjectRows()
+initMilestones()
 initFx()
 initPalette()
 initCursor()
