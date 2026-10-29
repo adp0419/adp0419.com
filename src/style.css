@@ -1410,14 +1410,6 @@ html {
   }
 
   /* ─── Trophy case ─── */
-  .trophy-case {
-    @apply mb-6;
-  }
-
-  .trophy-case-label {
-    @apply font-mono text-xs text-slate-400 mb-3;
-  }
-
   .trophy-shelf {
     @apply grid grid-cols-3 gap-2 sm:gap-3 list-none p-0 m-0;
   }
@@ -1493,6 +1485,10 @@ html {
 
   .trophy-plaque {
     @apply pt-2.5 min-w-0;
+  }
+
+  .trophy-plaque p {
+    @apply mb-0 leading-snug;
   }
 
   .trophy-title {

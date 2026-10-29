@@ -56,7 +56,7 @@ function collectItems() {
     items.push({
       group: 'Misc',
       label: btn.textContent.trim(),
-      keywords: btn.dataset.modal === 'technologies' ? 'skills stack languages tools' : '',
+      keywords: { technologies: 'skills stack languages tools', achievements: 'trophy awards hackathon wins' }[btn.dataset.modal] ?? '',
       icon: '□',
       run: () => openModal(btn.dataset.modal),
     })
@@ -69,10 +69,7 @@ function collectItems() {
       sub: el.querySelector('.trophy-event')?.textContent.trim() ?? '',
       keywords: 'trophy award achievement hackathon win',
       icon: '□',
-      run: () => {
-        scrollToCenter(el)
-        setTimeout(() => flash(el), 450)
-      },
+      run: () => openModal('achievements'),
     })
   })
 

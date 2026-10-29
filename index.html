@@ -423,24 +423,9 @@
 
           <p class="text-sm text-slate-500 mb-5">other stuff</p>
 
-          <!-- Trophy case — one <li> per award; empty "next" slots are added by src/trophies.js
-               data-rank → engraved on the cup (keep it short: 1st, 2nd, 3rd, ★) -->
-          <div class="trophy-case" data-reveal-child>
-            <p class="trophy-case-label">trophy case</p>
-            <ul class="trophy-shelf">
-              <li class="trophy" data-rank="1st" tabindex="0">
-                <div class="trophy-cell"></div>
-                <div class="trophy-plaque">
-                  <p class="trophy-title">1st Place · Twinly Track</p>
-                  <p class="trophy-event">GatorHack V</p>
-                  <p class="trophy-date">Oct 26, 2026</p>
-                </div>
-              </li>
-            </ul>
-          </div>
-
           <div class="misc-btn-group">
             <button class="misc-btn magnetic hidden" data-modal="background">Background</button>
+            <button class="misc-btn magnetic" data-modal="achievements">Achievements</button>
             <button class="misc-btn magnetic" data-modal="technologies">Technologies</button>
           </div>
         </div>
@@ -546,6 +531,32 @@
     </div>
 
     <!-- Technologies modal -->
+    <div id="modal-achievements" class="modal" role="dialog" aria-modal="true" aria-label="Achievements" hidden>
+      <div class="modal-backdrop" data-close-modal></div>
+      <div class="modal-panel">
+        <div class="modal-head">
+          <h2 class="modal-title font-semibold">Achievements</h2>
+          <button class="modal-close" data-close-modal aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <!-- Trophy case — one <li> per award; empty "next" slots are added by src/trophies.js
+               data-rank → engraved on the cup (keep it short: 1st, 2nd, 3rd, ★) -->
+          <div class="trophy-case">
+            <ul class="trophy-shelf">
+              <li class="trophy" data-rank="1st" tabindex="0">
+                <div class="trophy-cell"></div>
+                <div class="trophy-plaque">
+                  <p class="trophy-title">1st Place · Twinly Track</p>
+                  <p class="trophy-event">GatorHack V</p>
+                  <p class="trophy-date">Oct 26, 2026</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div id="modal-technologies" class="modal" role="dialog" aria-modal="true" aria-label="Technologies" hidden>
       <div class="modal-backdrop" data-close-modal></div>
       <div class="modal-panel">
