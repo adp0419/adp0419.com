@@ -1457,7 +1457,7 @@ html {
     @apply flex flex-col;
   }
 
-  /* Object on its plinth, plaque in front, all resting on a shelf */
+  /* Object above its plaque, all resting on a shelf */
   .ms-link,
   .ms-card {
     @apply relative flex flex-col items-center flex-1 no-underline outline-none;
@@ -1478,7 +1478,6 @@ html {
 
   .ms-obj .ms-f { fill: #e2e8f0; stroke: #0f172a; stroke-width: 1.25; stroke-linejoin: round; }
   .ms-obj .ms-m { fill: #94a3b8; stroke: #0f172a; stroke-width: 1.25; stroke-linejoin: round; }
-  .ms-obj .ms-d { fill: #0f172a; }
   .ms-obj .ms-l { fill: none; stroke: #0f172a; stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; }
   .ms-obj .ms-hi { fill: none; stroke: #fff; stroke-width: 1.5; stroke-linecap: round; }
   .ms-obj .ms-seal { fill: #e0b83a; stroke: #6b4f0c; stroke-width: 1; stroke-linejoin: round; }
@@ -1563,11 +1562,11 @@ html {
 
   /* Ghost slot for whatever's next */
   .ms-item.is-next .ms-obj { filter: none; opacity: 0.6; }
-  .ms-item.is-next .ms-obj :is(.ms-f, .ms-m, .ms-l, .ms-seal) { fill: none; stroke: #94a3b8; stroke-dasharray: 2 2; }
-  .ms-item.is-next .ms-obj :is(.ms-d, .ms-hi) { fill: none; stroke: #cbd5e1; stroke-dasharray: 2 2; }
-  .ms-item.is-next .ms-text { @apply bg-transparent border-dashed border-slate-300; box-shadow: none; }
+  .ms-item.is-next .ms-obj :is(.ms-f, .ms-m, .ms-l, .ms-seal) { fill: none; stroke: #94a3b8; }
+  .ms-item.is-next .ms-obj .ms-hi { fill: none; stroke: #cbd5e1; }
+  .ms-item.is-next .ms-text { @apply bg-transparent border-slate-300; box-shadow: none; }
   .ms-item.is-next .ms-meta { @apply mt-0; }
-  .ms-item.is-next .ms-card::after { @apply bg-transparent; border-bottom: 2px dashed #cbd5e1; }
+  .ms-item.is-next .ms-card::after { @apply bg-transparent; border-bottom: 2px solid #cbd5e1; }
 
   /* ─── Footer ─── */
   .site-footer {

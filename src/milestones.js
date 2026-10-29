@@ -2,13 +2,11 @@ import { finePointer } from './util.js'
 
 // ─── Milestones ───────────────────────────────────────────────────────────────
 // Each .ms-group[data-kind] is a glass case: every item gets its object (by
-// kind) standing on a plinth above its plaque, the label gets a count, and a
+// kind) standing above its plaque, the label gets a count, and a
 // ghost "more to come" slot is added at the end. Adding a milestone = adding
 // one <li> to the right group; a new kind just needs an object below.
 // data-medal="gold | silver | bronze" on an item gives its object a metal finish.
 // data-preview="<image>" on an item shows that image in a small card on hover.
-
-const PLINTH = '<rect class="ms-d" x="8" y="31" width="16" height="6"/>'
 
 const OBJECTS = {
   hackathon: `
@@ -24,12 +22,10 @@ const OBJECTS = {
   award: `
     <path class="ms-m" d="M10 2H14.5L18 11H13.5Z M22 2H17.5L14 11H18.5Z"/>
     <circle class="ms-f" cx="16" cy="18" r="7"/>
-    <circle class="ms-l" cx="16" cy="18" r="4.25"/>
-    <path class="ms-l" d="M16 25V31"/>`,
+    <circle class="ms-l" cx="16" cy="18" r="4.25"/>`,
   academic: `
-    <path class="ms-l" d="M8 28V31 M24 28V31"/>
-    <path class="ms-f" d="M3 6H29V28H3Z"/>
-    <path class="ms-l" d="M5.5 8.5H26.5V25.5H5.5Z M10 12.5H22 M12 15.5H20 M9 20H15"/>
+    <path class="ms-f" d="M3 9H29V31H3Z"/>
+    <path class="ms-l" d="M5.5 11.5H26.5V28.5H5.5Z M10 15.5H22 M12 18.5H20 M9 23H15"/>
     <path class="ms-seal" d="M21.5 24.5L20.5 29.5L22.1 28.4L23 30L23 25.5 M24.5 24.5L25.5 29.5L23.9 28.4L23 30L23 25.5"/>
     <circle class="ms-seal" cx="23" cy="22.5" r="3"/>`,
   other: `
@@ -56,7 +52,7 @@ function object(kind, medal) {
       <stop offset="0.55" stop-color="${m[1]}"/><stop offset="1" stop-color="${m[2]}"/></linearGradient></defs>`
     style = ` style="--metal:url(#${id});--metal-edge:${m[3]}"`
   }
-  return `<svg class="ms-obj" viewBox="0 0 32 38" aria-hidden="true"${style}>${defs}${OBJECTS[kind] ?? OBJECTS.other}${PLINTH}</svg>`
+  return `<svg class="ms-obj" viewBox="0 0 32 32" aria-hidden="true"${style}>${defs}${OBJECTS[kind] ?? OBJECTS.other}</svg>`
 }
 
 export function initMilestones() {
