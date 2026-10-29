@@ -241,7 +241,7 @@
               </div>
             </div>
 
-            <div class="exp-card cursor-pointer" data-modal="exp-uf-data-studio" data-kind="Research" data-reveal-child tabindex="0" role="button">
+            <div class="exp-card cursor-pointer" data-modal="proj-aau" data-kind="Research" data-reveal-child tabindex="0" role="button">
               <a class="exp-logo-wrap" href="https://ufdatastudio.com/" target="_blank" rel="noopener" aria-label="UF Data Studio website">
                 <img src="/assets/logos/uf-data-studio.png" alt="UF Data Studio" class="exp-logo" />
               </a>
@@ -354,6 +354,15 @@
 
           <div class="proj-list" id="proj-list">
 
+            <div class="proj-item" data-categories="research machine-learning" data-modal="proj-aau" data-metric="86% F1" data-reveal-child tabindex="0" role="button">
+              <span class="proj-item-idx"></span>
+              <div class="proj-item-body">
+                <p class="proj-item-title">Agents Among Us</p>
+                <p class="proj-item-desc">Multi-agent social deduction framework for detecting deceptive LLM agents — 10,134 games, 19 models.</p>
+              </div>
+              <span class="proj-item-more">read more<span class="proj-item-arrow" aria-hidden="true">→</span></span>
+            </div>
+
             <div class="proj-item" data-categories="quantitative-finance" data-modal="proj-gap" data-metric="2.08 Sharpe" data-reveal-child tabindex="0" role="button">
               <span class="proj-item-idx"></span>
               <div class="proj-item-body">
@@ -363,7 +372,7 @@
               <span class="proj-item-more">read more<span class="proj-item-arrow" aria-hidden="true">→</span></span>
             </div>
 
-            <div class="proj-item" data-categories="full-stack machine-learning" data-modal="proj-echo" data-metric="Live app" data-reveal-child tabindex="0" role="button">
+            <div class="proj-item" data-categories="full-stack" data-modal="proj-echo" data-metric="Live app" data-reveal-child tabindex="0" role="button">
               <span class="proj-item-idx"></span>
               <div class="proj-item-body">
                 <p class="proj-item-title">Echo</p>
@@ -685,33 +694,6 @@
       </div>
     </div>
 
-    <div id="modal-exp-uf-data-studio" class="modal" role="dialog" aria-modal="true" aria-label="Undergraduate Research Assistant — UF Data Studio" hidden>
-      <div class="modal-backdrop" data-close-modal></div>
-      <div class="modal-panel">
-        <div class="modal-head">
-          <h2 class="modal-title font-semibold">Undergraduate Research Assistant — UF Data Studio</h2>
-          <button class="modal-close" data-close-modal aria-label="Close">&times;</button>
-        </div>
-        <div class="modal-body">
-          <p>
-            Scaled LLM inference across <strong>10,000+ adversarial multi-agent simulations</strong> by
-            integrating 20+ transformer models (7B–80B parameters) with 4-bit quantization and SLURM
-            multi-GPU scheduling on HiPerGator HPC.
-          </p>
-          <p>
-            Achieved <strong>85–90% F1 deceptive-agent detection</strong> across Logistic Regression, SVM,
-            and MLP classifiers by building a scikit-learn NLP pipeline with TF-IDF vectorization and NLTK
-            preprocessing over <strong>289,000+ labeled utterances</strong>.
-          </p>
-          <p>
-            Built an interactive research dashboard with <strong>Flask and JavaScript</strong> for real-time
-            ML suspicion scoring and agent visualization, enabling live behavioral monitoring across 20+ LLM
-            configurations with sub-500ms state refresh.
-          </p>
-        </div>
-      </div>
-    </div>
-
     <div id="modal-exp-mathnasium" class="modal" role="dialog" aria-modal="true" aria-label="Mathematics Tutor — Mathnasium Learning Center" hidden>
       <div class="modal-backdrop" data-close-modal></div>
       <div class="modal-panel">
@@ -855,6 +837,83 @@
       </div>
     </div>
 
+    <!-- Agents Among Us (also opened by the UF Data Studio experience card) -->
+    <div id="modal-proj-aau" class="modal" role="dialog" aria-modal="true" aria-label="Agents Among Us" hidden>
+      <div class="modal-backdrop" data-close-modal></div>
+      <div class="modal-panel">
+        <div class="modal-head">
+          <h2 class="modal-title font-semibold">Agents Among Us</h2>
+          <button class="modal-close" data-close-modal aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>
+            Research with <a href="https://ufdatastudio.com/" target="_blank" rel="noopener">UF Data Studio</a>
+            asking whether LLM agents can detect deception in multi-turn dialogue. We built a live social deduction
+            game where agents move, discuss, and vote, logging every decision across
+            <strong>10,134 games and 289,000+ utterances</strong> from 19 open-weight models.
+          </p>
+          <p>
+            Scaled LLM inference by integrating 20+ transformer models (7B–80B parameters) with 4-bit quantization
+            and SLURM multi-GPU scheduling on HiPerGator HPC.
+          </p>
+          <p>
+            Built the observer pipeline — a scikit-learn NLP classifier (TF-IDF, NLTK preprocessing; Logistic
+            Regression, SVM, MLP) reaching <strong>85–90% F1</strong> on deceptive-agent detection — whose
+            suspicion scores are fed back into the live game.
+          </p>
+          <p>
+            Built the interactive dashboard with <strong>Flask and JavaScript</strong> for real-time suspicion
+            scoring and agent visualization, with sub-500ms state refresh across 20+ LLM configurations.
+          </p>
+          <div class="proj-link-actions">
+            <a href="https://agents-among-us.rc.ufl.edu/" class="proj-link-btn" target="_blank" rel="noopener">Live Demo</a>
+            <a href="https://ufdatastudio.com/projects/agents-among-us/" class="proj-link-btn" target="_blank" rel="noopener">Project Page</a>
+            <a href="https://github.com/ufdatastudio/agents-among-us" class="proj-link-btn" target="_blank" rel="noopener">GitHub</a>
+          </div>
+
+          <div class="proj-pdf-wrap">
+            <iframe src="/assets/projects/agents-among-us.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" title="Agents Among Us paper PDF"></iframe>
+          </div>
+          <div class="proj-pdf-actions">
+            <a href="/assets/projects/agents-among-us.pdf" target="_blank" rel="noopener" class="misc-btn">Full Screen</a>
+            <a href="/assets/projects/agents-among-us.pdf" download class="misc-btn">Download</a>
+          </div>
+
+          <div class="proj-tags">
+            <div class="proj-tag-row">
+              <span class="proj-tag-label">Category</span>
+              <div class="tech-tags">
+                <span class="tech-tag">Research</span>
+                <span class="tech-tag">Machine Learning</span>
+              </div>
+            </div>
+            <div class="proj-tag-row">
+              <span class="proj-tag-label">Tools &amp; Tech</span>
+              <div class="tech-tags">
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">PyTorch</span>
+                <span class="tech-tag">Transformers</span>
+                <span class="tech-tag">scikit-learn</span>
+                <span class="tech-tag">NLTK</span>
+                <span class="tech-tag">Flask</span>
+                <span class="tech-tag">JavaScript</span>
+                <span class="tech-tag">SLURM</span>
+                <span class="tech-tag">HiPerGator HPC</span>
+              </div>
+            </div>
+            <div class="proj-tag-row">
+              <span class="proj-tag-label">Skills</span>
+              <div class="tech-tags">
+                <span class="tech-tag">Multi-Agent Systems</span>
+                <span class="tech-tag">LLM Evaluation</span>
+                <span class="tech-tag">Distributed Inference</span>
+                <span class="tech-tag">NLP Classification</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Echo -->
     <div id="modal-proj-echo" class="modal" role="dialog" aria-modal="true" aria-label="Echo" hidden>
@@ -884,7 +943,6 @@
               <span class="proj-tag-label">Category</span>
               <div class="tech-tags">
                 <span class="tech-tag">Full Stack</span>
-                <span class="tech-tag">Machine Learning</span>
                 <span class="tech-tag">GenAI</span>
               </div>
             </div>
@@ -1096,7 +1154,7 @@
           <p>
             Accepted into the <a href="https://ysp.osta.fsu.edu/" target="_blank" rel="noopener">Young Scholars Program</a> 
             at Florida State University. My team and I conducted a cross-linguistic statistical analysis of speech pause behavior 
-            under Dr. Michael Kaschak. We analyzed <strong>1,000+ audio recordings</strong> across 5 languages (English, Spanish, 
+            under <a href="https://psychology.fsu.edu/person/michael-kaschak" target="_blank" rel="noopener">Dr. Michael Kaschak</a>. We analyzed <strong>1,000+ audio recordings</strong> across 5 languages (English, Spanish, 
             French, Greek, Hindi).
           </p>
           <p>
