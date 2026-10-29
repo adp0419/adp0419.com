@@ -549,8 +549,9 @@
           <button class="modal-close" data-close-modal aria-label="Close">&times;</button>
         </div>
         <div class="modal-body">
-          <!-- Milestones, grouped by kind (hackathon | internship | award | other → sets the icon).
+          <!-- Milestones, grouped by kind (hackathon | academic | internship | award | other → sets the icon).
                data-medal="gold | silver | bronze" on an <li> gives it a metal finish (leave off for neutral).
+               data-preview="<image>" on an <li> pops that image up on hover (e.g. a certificate).
                One <li> per milestone, newest first (a "more to come" slot is added after); use <div class="ms-card"> instead of <a> if there's no link. -->
           <section class="ms-group" data-kind="hackathon">
             <p class="ms-group-label">hackathons <span class="ms-count"></span></p>
@@ -560,6 +561,28 @@
                   <span class="ms-text">
                     <span class="ms-title">1st Place · Twinly Track</span>
                     <span class="ms-meta">GatorHack V · Oct 2026</span>
+                  </span>
+                </a>
+              </li>
+            </ul>
+          </section>
+
+          <section class="ms-group" data-kind="academic">
+            <p class="ms-group-label">academics <span class="ms-count"></span></p>
+            <ul class="ms-grid">
+              <li class="ms-item" data-preview="/assets/certificates/deans-list-spring-2026.jpg">
+                <a class="ms-link" href="/assets/certificates/deans-list-spring-2026.pdf" target="_blank" rel="noopener">
+                  <span class="ms-text">
+                    <span class="ms-title">Dean's List</span>
+                    <span class="ms-meta">UF Engineering · Spring 2026</span>
+                  </span>
+                </a>
+              </li>
+              <li class="ms-item" data-preview="/assets/certificates/deans-list-fall-2025.jpg">
+                <a class="ms-link" href="/assets/certificates/deans-list-fall-2025.pdf" target="_blank" rel="noopener">
+                  <span class="ms-text">
+                    <span class="ms-title">Dean's List</span>
+                    <span class="ms-meta">UF Engineering · Fall 2025</span>
                   </span>
                 </a>
               </li>

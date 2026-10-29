@@ -1481,6 +1481,7 @@ html {
   .ms-obj .ms-d { fill: #0f172a; }
   .ms-obj .ms-l { fill: none; stroke: #0f172a; stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; }
   .ms-obj .ms-hi { fill: none; stroke: #fff; stroke-width: 1.5; stroke-linecap: round; }
+  .ms-obj .ms-seal { fill: #e0b83a; stroke: #6b4f0c; stroke-width: 1; stroke-linejoin: round; }
 
   .ms-link:is(:hover, :focus-visible) .ms-obj {
     transform: translateY(-4px);
@@ -1535,9 +1536,34 @@ html {
     @apply font-mono text-[11px] text-slate-400 mt-0.5;
   }
 
+  /* Hover preview (certificates) — lives on <body>, above the modal */
+  .ms-preview {
+    @apply fixed pointer-events-none bg-white p-1.5 border border-slate-200;
+    z-index: 70;
+    box-shadow: 0 18px 40px -12px rgb(15 23 42 / 0.35), 3px 3px 0 rgb(15 23 42 / 0.1);
+    opacity: 0;
+    transform: translateY(6px) scale(0.97);
+    transform-origin: 50% 100%;
+    transition: opacity 180ms ease, transform 260ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .ms-preview.is-below {
+    transform: translateY(-6px) scale(0.97);
+    transform-origin: 50% 0;
+  }
+
+  .ms-preview.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  .ms-preview img {
+    @apply block w-full h-auto;
+  }
+
   /* Ghost slot for whatever's next */
   .ms-item.is-next .ms-obj { filter: none; opacity: 0.6; }
-  .ms-item.is-next .ms-obj :is(.ms-f, .ms-m, .ms-l) { fill: none; stroke: #94a3b8; stroke-dasharray: 2 2; }
+  .ms-item.is-next .ms-obj :is(.ms-f, .ms-m, .ms-l, .ms-seal) { fill: none; stroke: #94a3b8; stroke-dasharray: 2 2; }
   .ms-item.is-next .ms-obj :is(.ms-d, .ms-hi) { fill: none; stroke: #cbd5e1; stroke-dasharray: 2 2; }
   .ms-item.is-next .ms-text { @apply bg-transparent border-dashed border-slate-300; box-shadow: none; }
   .ms-item.is-next .ms-meta { @apply mt-0; }

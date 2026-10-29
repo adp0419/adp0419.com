@@ -1,9 +1,12 @@
+import { finePointer } from './util.js'
+
 // ─── Milestones ───────────────────────────────────────────────────────────────
 // Each .ms-group[data-kind] is a glass case: every item gets its object (by
 // kind) standing on a plinth above its plaque, the label gets a count, and a
 // ghost "more to come" slot is added at the end. Adding a milestone = adding
 // one <li> to the right group; a new kind just needs an object below.
 // data-medal="gold | silver | bronze" on an item gives its object a metal finish.
+// data-preview="<image>" on an item shows that image in a small card on hover.
 
 const PLINTH = '<rect class="ms-d" x="8" y="31" width="16" height="6"/>'
 
@@ -23,6 +26,12 @@ const OBJECTS = {
     <circle class="ms-f" cx="16" cy="18" r="7"/>
     <circle class="ms-l" cx="16" cy="18" r="4.25"/>
     <path class="ms-l" d="M16 25V31"/>`,
+  academic: `
+    <path class="ms-l" d="M8 28V31 M24 28V31"/>
+    <path class="ms-f" d="M3 6H29V28H3Z"/>
+    <path class="ms-l" d="M5.5 8.5H26.5V25.5H5.5Z M10 12.5H22 M12 15.5H20 M9 20H15"/>
+    <path class="ms-seal" d="M21.5 24.5L20.5 29.5L22.1 28.4L23 30L23 25.5 M24.5 24.5L25.5 29.5L23.9 28.4L23 30L23 25.5"/>
+    <circle class="ms-seal" cx="23" cy="22.5" r="3"/>`,
   other: `
     <path class="ms-l" d="M10 3V31"/>
     <path class="ms-f" d="M10 4H25L22 9L25 14H10Z"/>`,
@@ -57,10 +66,60 @@ export function initMilestones() {
     items.forEach((item) => {
       item.querySelector('.ms-link, .ms-card')?.insertAdjacentHTML('afterbegin', object(kind, item.dataset.medal))
     })
+    items.forEach((item) => { if (item.dataset.preview) initPreview(item) })
     group.querySelector('.ms-count')?.append(String(items.length).padStart(2, '0'))
     group.querySelector('.ms-grid')?.insertAdjacentHTML('beforeend', `
       <li class="ms-item is-next" aria-hidden="true">
         <div class="ms-card">${object(kind)}<span class="ms-text"><span class="ms-meta">more to come</span></span></div>
       </li>`)
   })
+}
+
+// ─── Hover preview ────────────────────────────────────────────────────────────
+// One floating card on <body> (so the modal's scroll area can't clip it),
+// placed above the hovered item, or below when there's no room.
+
+let card = null
+
+function initPreview(item) {
+  const link = item.querySelector('.ms-link')
+  if (!link || !finePointer.matches) return
+  new Image().src = item.dataset.preview
+  const show = () => showPreview(link, item.dataset.preview, item.querySelector('.ms-title')?.textContent ?? '')
+  link.addEventListener('pointerenter', show)
+  link.addEventListener('focus', show)
+  link.addEventListener('pointerleave', hidePreview)
+  link.addEventListener('blur', hidePreview)
+  link.addEventListener('click', hidePreview)
+}
+
+function showPreview(link, src, alt) {
+  if (!card) {
+    card = document.createElement('div')
+    card.className = 'ms-preview'
+    card.setAttribute('aria-hidden', 'true')
+    card.innerHTML = '<img alt="" />'
+    document.body.append(card)
+    link.closest('.modal-body')?.addEventListener('scroll', hidePreview, { passive: true })
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') hidePreview() })
+  }
+  const img = card.querySelector('img')
+  if (img.getAttribute('src') !== src) img.src = src
+  img.alt = alt
+
+  const r = link.getBoundingClientRect()
+  const w = Math.min(300, window.innerWidth - 32)
+  const h = w * (img.naturalHeight / img.naturalWidth || 0.77)
+  const gap = 12
+  const above = r.top - h - gap > 8
+  const left = Math.max(16, Math.min(r.left + r.width / 2 - w / 2, window.innerWidth - w - 16))
+  card.style.width = `${w}px`
+  card.style.left = `${left}px`
+  card.style.top = `${above ? r.top - h - gap : r.bottom + gap}px`
+  card.classList.toggle('is-below', !above)
+  card.classList.add('is-visible')
+}
+
+function hidePreview() {
+  card?.classList.remove('is-visible')
 }
