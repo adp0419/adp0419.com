@@ -3,6 +3,7 @@
 // kind) standing on a plinth above its plaque, the label gets a count, and a
 // ghost "more to come" slot is added at the end. Adding a milestone = adding
 // one <li> to the right group; a new kind just needs an object below.
+// data-medal="gold | silver | bronze" on an item gives its object a metal finish.
 
 const PLINTH = '<rect class="ms-d" x="8" y="31" width="16" height="6"/>'
 
@@ -27,15 +28,34 @@ const OBJECTS = {
     <path class="ms-f" d="M10 4H25L22 9L25 14H10Z"/>`,
 }
 
-const object = (kind) =>
-  `<svg class="ms-obj" viewBox="0 0 32 38" aria-hidden="true">${OBJECTS[kind] ?? OBJECTS.other}${PLINTH}</svg>`
+// [highlight, body, shade, outline]
+const METALS = {
+  gold:   ['#fbeea8', '#e0b83a', '#a97f14', '#6b4f0c'],
+  silver: ['#ffffff', '#cfd6df', '#8d99a8', '#3f4a59'],
+  bronze: ['#f5c79c', '#c98345', '#8e5426', '#53300f'],
+}
+
+let gid = 0
+function object(kind, medal) {
+  const m = METALS[medal]
+  let defs = ''
+  let style = ''
+  if (m) {
+    const id = `ms-metal-${gid++}`
+    defs = `<defs><linearGradient id="${id}" x1="0" y1="0" x2="1" y2="0.35">
+      <stop offset="0" stop-color="${m[2]}"/><stop offset="0.3" stop-color="${m[0]}"/>
+      <stop offset="0.55" stop-color="${m[1]}"/><stop offset="1" stop-color="${m[2]}"/></linearGradient></defs>`
+    style = ` style="--metal:url(#${id});--metal-edge:${m[3]}"`
+  }
+  return `<svg class="ms-obj" viewBox="0 0 32 38" aria-hidden="true"${style}>${defs}${OBJECTS[kind] ?? OBJECTS.other}${PLINTH}</svg>`
+}
 
 export function initMilestones() {
   document.querySelectorAll('.ms-group').forEach((group) => {
     const kind = group.dataset.kind
     const items = group.querySelectorAll('.ms-item')
     items.forEach((item) => {
-      item.querySelector('.ms-link, .ms-card')?.insertAdjacentHTML('afterbegin', object(kind))
+      item.querySelector('.ms-link, .ms-card')?.insertAdjacentHTML('afterbegin', object(kind, item.dataset.medal))
     })
     group.querySelector('.ms-count')?.append(String(items.length).padStart(2, '0'))
     group.querySelector('.ms-grid')?.insertAdjacentHTML('beforeend', `

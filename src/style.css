@@ -1489,6 +1489,20 @@ html {
 
   .ms-link:is(:hover, :focus-visible) .ms-f { fill: #fff; transition: fill 200ms ease; }
 
+  /* Gold / silver / bronze: gradient body + matching outline, and a thin accent on the plaque */
+  .ms-item[data-medal] .ms-obj .ms-f,
+  .ms-item[data-medal] .ms-obj .ms-m { fill: var(--metal); stroke: var(--metal-edge); }
+  .ms-item[data-medal] .ms-obj .ms-l { stroke: var(--metal-edge); }
+  .ms-item[data-medal] .ms-link:is(:hover, :focus-visible) .ms-f { fill: var(--metal); }
+  .ms-item[data-medal] .ms-link:is(:hover, :focus-visible) .ms-obj {
+    filter: brightness(1.08) drop-shadow(0 9px 6px rgb(15 23 42 / 0.12));
+  }
+
+  .ms-item[data-medal] .ms-text { border-top: 2px solid var(--medal); }
+  .ms-item[data-medal="gold"]   { --medal: #d4a72c; }
+  .ms-item[data-medal="silver"] { --medal: #9aa5b4; }
+  .ms-item[data-medal="bronze"] { --medal: #b8713a; }
+
   /* The plaque */
   .ms-text {
     @apply relative z-[1] flex flex-col items-center text-center w-full flex-1 justify-center
