@@ -62,6 +62,20 @@ function collectItems() {
     })
   })
 
+  document.querySelectorAll('.trophy:not(.is-empty)').forEach((el) => {
+    items.push({
+      group: 'Misc',
+      label: el.querySelector('.trophy-title')?.textContent.trim() ?? '',
+      sub: el.querySelector('.trophy-event')?.textContent.trim() ?? '',
+      keywords: 'trophy award achievement hackathon win',
+      icon: '□',
+      run: () => {
+        scrollToCenter(el)
+        setTimeout(() => flash(el), 450)
+      },
+    })
+  })
+
   document.querySelectorAll('#links .link-item').forEach((a) => {
     items.push({
       group: 'Links',
