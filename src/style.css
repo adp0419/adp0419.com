@@ -1428,89 +1428,106 @@ html {
     @apply text-slate-300 tabular-nums;
   }
 
+  /* The case: pale back wall, inset edge, and a glare that drifts across the glass */
   .ms-grid {
-    @apply grid gap-2 list-none p-0 m-0;
-    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    @apply relative grid grid-cols-2 gap-x-3 sm:gap-x-5 gap-y-7 list-none m-0 px-3 pt-6 pb-4 sm:px-6 border border-slate-200 overflow-hidden;
+    background: linear-gradient(180deg, #f1f5f9, #f8fafc 70%);
+    box-shadow: inset 0 1px 0 #fff, inset 0 0 0 4px #fff, inset 0 0 0 5px #e2e8f0;
   }
 
+  @media (min-width: 640px) {
+    .ms-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+  }
+
+  .ms-grid::after {
+    content: '';
+    @apply absolute inset-0 pointer-events-none;
+    background: linear-gradient(115deg, transparent 42%, rgb(255 255 255 / 0.75) 48%, transparent 54%,
+                transparent 58%, rgb(255 255 255 / 0.5) 60%, transparent 63%) no-repeat;
+    background-size: 250% 100%;
+    animation: ms-glare 9s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  }
+
+  @keyframes ms-glare {
+    0%        { background-position: 120% 0; }
+    40%, 100% { background-position: -20% 0; }
+  }
+
+  .ms-item {
+    @apply flex flex-col;
+  }
+
+  /* Object on its plinth, plaque in front, all resting on a shelf */
   .ms-link,
   .ms-card {
-    @apply relative flex items-center gap-3 h-full p-2.5 pr-8 border border-slate-200 bg-white no-underline;
-    transition: border-color 200ms ease, transform 200ms ease;
+    @apply relative flex flex-col items-center flex-1 no-underline outline-none;
   }
 
-  .ms-link:hover,
-  .ms-link:focus-visible {
-    @apply border-slate-900 outline-none;
-    transform: translateY(-1px);
+  .ms-link::after,
+  .ms-card::after {
+    content: '';
+    @apply block self-stretch mt-3 h-1.5 bg-slate-200;
+    border-bottom: 2px solid #0f172a;
   }
 
-  .ms-link::after {
+  .ms-obj {
+    @apply block w-auto h-16 sm:h-20 mb-3;
+    filter: drop-shadow(0 4px 3px rgb(15 23 42 / 0.12));
+    transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1), filter 300ms ease;
+  }
+
+  .ms-obj .ms-f { fill: #e2e8f0; stroke: #0f172a; stroke-width: 1.25; stroke-linejoin: round; }
+  .ms-obj .ms-m { fill: #94a3b8; stroke: #0f172a; stroke-width: 1.25; stroke-linejoin: round; }
+  .ms-obj .ms-d { fill: #0f172a; }
+  .ms-obj .ms-l { fill: none; stroke: #0f172a; stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; }
+  .ms-obj .ms-hi { fill: none; stroke: #fff; stroke-width: 1.5; stroke-linecap: round; }
+
+  .ms-link:is(:hover, :focus-visible) .ms-obj {
+    transform: translateY(-4px);
+    filter: drop-shadow(0 9px 5px rgb(15 23 42 / 0.1));
+  }
+
+  .ms-link:is(:hover, :focus-visible) .ms-f { fill: #fff; transition: fill 200ms ease; }
+
+  /* The plaque */
+  .ms-text {
+    @apply relative z-[1] flex flex-col items-center text-center w-full flex-1 justify-center
+           px-3 py-2 bg-white border border-slate-200;
+    box-shadow: 2px 2px 0 rgb(15 23 42 / 0.08);
+    transition: border-color 200ms ease, box-shadow 200ms ease;
+  }
+
+  .ms-link:is(:hover, :focus-visible) .ms-text {
+    @apply border-slate-900;
+    box-shadow: 2px 2px 0 rgb(15 23 42 / 0.15);
+  }
+
+  .ms-link .ms-text::after {
     content: '↗';
-    @apply absolute top-2 right-2.5 text-xs text-slate-300;
+    @apply absolute top-1 right-1.5 text-[10px] text-slate-300;
     transition: color 200ms ease, transform 200ms ease;
   }
 
-  .ms-link:hover::after {
+  .ms-link:is(:hover, :focus-visible) .ms-text::after {
     @apply text-slate-900;
     transform: translate(1px, -1px);
   }
 
-  /* Small square plinth holding the line icon; inverts on hover */
-  .ms-icon {
-    @apply flex-shrink-0 grid place-items-center w-10 h-10 bg-slate-50 border border-slate-200;
-    border-bottom: 2px solid #0f172a;
-    transition: background-color 200ms ease, border-color 200ms ease;
-  }
-
-  .ms-icon svg {
-    @apply w-5 h-5;
-    fill: none;
-    stroke: #0f172a;
-    stroke-width: 1.5;
-    stroke-linejoin: round;
-    stroke-linecap: round;
-    transition: stroke 200ms ease, transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .ms-link:hover .ms-icon {
-    @apply bg-slate-900 border-slate-900;
-  }
-
-  .ms-link:hover .ms-icon svg {
-    stroke: #fff;
-    transform: translateY(-1px);
-  }
-
-  .ms-text {
-    @apply flex flex-col min-w-0;
-  }
-
   .ms-title {
-    @apply text-sm font-semibold text-slate-900 leading-snug;
+    @apply text-xs sm:text-sm font-semibold text-slate-900 leading-snug;
   }
 
   .ms-meta {
     @apply font-mono text-[11px] text-slate-400 mt-0.5;
   }
 
-  .ms-next {
-    @apply flex items-center justify-center gap-2 min-h-[3.75rem] border border-dashed border-slate-300
-           font-mono text-[11px] text-slate-400;
-  }
-
-  .ms-next::before,
-  .ms-next::after {
-    content: '';
-    @apply h-px w-6;
-    background: linear-gradient(90deg, transparent, #0f172a, transparent) no-repeat #e2e8f0;
-    background-size: 50% 100%;
-    animation: line-sweep 2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
-  }
-
-  .ms-next::after {
-    animation-direction: reverse;
-  }
+  /* Ghost slot for whatever's next */
+  .ms-item.is-next .ms-obj { filter: none; opacity: 0.6; }
+  .ms-item.is-next .ms-obj :is(.ms-f, .ms-m, .ms-l) { fill: none; stroke: #94a3b8; stroke-dasharray: 2 2; }
+  .ms-item.is-next .ms-obj :is(.ms-d, .ms-hi) { fill: none; stroke: #cbd5e1; stroke-dasharray: 2 2; }
+  .ms-item.is-next .ms-text { @apply bg-transparent border-dashed border-slate-300; box-shadow: none; }
+  .ms-item.is-next .ms-meta { @apply mt-0; }
+  .ms-item.is-next .ms-card::after { @apply bg-transparent; border-bottom: 2px dashed #cbd5e1; }
 
   /* ─── Footer ─── */
   .site-footer {
